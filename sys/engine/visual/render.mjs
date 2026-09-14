@@ -1,0 +1,41 @@
+import fs from 'node:fs/promises';import path from 'node:path';import crypto from 'node:crypto';import {spawn,spawnSync} from 'node:child_process';import {chromium} from 'playwright';
+import {startServer} from './server.mjs';import {validateProject,resolveTrack,cueTime} from './model.mjs';
+const root=path.resolve(import.meta.dirname,'../../..');const args=process.argv.slice(2);const get=(k,d)=>args.includes(k)?args[args.indexOf(k)+1]:d;
+const projectFile=path.resolve(get('--project','')),timelineFile=path.resolve(get('--timeline',''));const output=path.resolve(get('--output',path.join(root,'video')));
+const {server,url,project,timeline,brand}=await startServer(root,projectFile,timelineFile);let browser;
+function run(bin,args){return new Promise((yes,no)=>{const p=spawn(bin,args,{stdio:'inherit'});p.on('error',no);p.on('exit',code=>code===0?yes():no(Error(bin+' exited '+code)));});}
+const all=(es=[])=>es.flatMap(e=>[e,...all(e.children)]);
+async function hashFiles(dir){const out=[];for(const d of await fs.readdir(dir,{withFileTypes:true})){const p=path.join(dir,d.name);if(d.isDirectory())out.push(...await hashFiles(p));else out.push([p,await fs.readFile(p)]);}return out;}
+try{
+ const scenes=validateProject(project,timeline,brand);const start=Number(get('--start',0)),end=Number(get('--end',timeline.targetSeconds));if(start<0||end>timeline.targetSeconds+1/30||end<=start)throw Error('Invalid preview range');
+ await fs.mkdir(output,{recursive:true});const base=path.dirname(projectFile);const fps=30,first=Math.round(start*fps),last=Math.round(end*fps);
+ if(!project.audioMaster)throw Error('Provide audioMaster (relative PCM WAV)');await fs.access(path.resolve(base,project.audioMaster));
+ // Cache per scene; keep absolute start in the key because global progress and media seek use it.
+ const coreHash=crypto.createHash('sha256');for(const [name,bytes] of await hashFiles(import.meta.dirname))coreHash.update(path.basename(name)).update(bytes);for(const [name,bytes] of await hashFiles(path.join(root,'sys/engine/node_modules/@fontsource/be-vietnam-pro/files')))coreHash.update(path.basename(name)).update(bytes);coreHash.update(JSON.stringify(brand));for(const [name,bytes] of await hashFiles(path.join(root,'sys/templates/brand')))coreHash.update(path.basename(name)).update(bytes);const core=coreHash.digest('hex');
+ const caches=[];
+ for(const s of scenes){const normalized=JSON.parse(JSON.stringify(s));const shift=(obj)=>{if(!obj||typeof obj!=='object')return;if(Array.isArray(obj)){obj.forEach(shift);return;}for(const key of Object.keys(obj)){if(['at','enter','exit','cue'].includes(key)){obj[key]=cueTime(obj[key],timeline)-s.start;}else shift(obj[key]);}};shift(normalized);normalized.start=0;normalized.end=s.end-s.start;
+  const phrases=timeline.phrases.filter(p=>p.speechEnd>s.start&&p.speechStart<s.end).map(p=>({...p,start:p.start-s.start,end:p.end-s.start,speechStart:p.speechStart-s.start,speechEnd:p.speechEnd-s.start,audio:undefined}));
+  const h=crypto.createHash('sha256').update(core).update(JSON.stringify(normalized)).update(JSON.stringify(phrases)).update(JSON.stringify({start:s.start,total:timeline.targetSeconds,palette:project.palette,brandLine:project.brandLine,edition:project.edition,previousTheme:scenes[Math.max(0,scenes.indexOf(s)-1)].theme}));
+  for(const e of all(s.elements))if(e.src){const asset=e.src.startsWith('/sys/templates/')?path.join(root,e.src.slice(1)):path.resolve(base,e.src);h.update(await fs.readFile(asset));}
+  const dir=path.join(root,'sys/cache/visual',h.digest('hex').slice(0,20));await fs.mkdir(dir,{recursive:true});caches.push(dir);
+ }
+ browser=await chromium.launch({executablePath:process.env.CHROME_PATH||'/usr/bin/google-chrome',headless:true,args:['--no-sandbox','--enable-unsafe-swiftshader','--disable-dev-shm-usage']});const page=await browser.newPage({viewport:{width:1080,height:1920}});const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto(url);await page.waitForFunction(()=>window.filmReady,null,{timeout:60000});
+ let rendered=0,reused=0;const framePaths=[];const crops=[];
+ for(let n=first;n<last;n++){const t=n/fps,i=scenes.findIndex(s=>t>=s.start&&t<s.end);if(i<0)throw Error('Missing scene at '+t);const local=n-Math.round(scenes[i].start*fps),target=path.join(caches[i],String(local).padStart(7,'0')+'.png');let exists=true;try{await fs.access(target);}catch{exists=false;}
+  if(!exists){await page.evaluate(t=>window.renderFrame(t),t);const data=await page.evaluate(()=>document.querySelector('#film').toDataURL('image/png').split(',')[1]);await fs.writeFile(target,Buffer.from(data,'base64'));rendered++;}else reused++;
+  framePaths.push(target);if(n%90===0)console.log('frame',n,'/',last,'rendered',rendered,'reused',reused);
+ }
+ if(errors.length)throw Error(errors.join('\n'));
+ const concat=path.join(base,'render-frames.ffconcat');const quote=p=>p.replace(/'/g,"'\\''");await fs.writeFile(concat,'ffconcat version 1.0\n'+framePaths.map(p=>`file '${quote(p)}'\nduration ${1/fps}`).join('\n')+`\nfile '${quote(framePaths.at(-1))}'\n`);
+ const name=get('--name',first===0&&last===Math.round(timeline.targetSeconds*fps)?'final':'preview');if(!/^[\w-]+$/.test(name))throw Error('Invalid output name');const mp4=path.join(output,name+'.mp4');
+ await run('ffmpeg',['-y','-v','warning','-safe','0','-f','concat','-i',concat,'-ss',String(start),'-i',path.resolve(base,project.audioMaster),'-t',String((last-first)/fps),'-r','30','-c:v','libx264','-preset','fast','-crf','18','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k','-ar','48000','-movflags','+faststart',mp4]);
+ await fs.copyFile(framePaths[Math.floor(framePaths.length*.8)],path.join(output,name+'-cover.png'));
+ const stamp=t=>{let ms=Math.round(t*1000);return `${String(Math.floor(ms/3600000)).padStart(2,'0')}:${String(Math.floor(ms/60000)%60).padStart(2,'0')}:${String(Math.floor(ms/1000)%60).padStart(2,'0')},${String(ms%1000).padStart(3,'0')}`;};
+ await fs.writeFile(path.join(output,name+'.srt'),timeline.phrases.filter(p=>p.speechEnd>start&&p.speechStart<end).map((p,i)=>`${i+1}\n${stamp(Math.max(0,p.speechStart-start))} --> ${stamp(Math.min(end,p.speechEnd)-start)}\n${p.caption||p.text}`).join('\n\n')+'\n');
+ // Independent visual-region stillness check. Caption, header and progress bar are excluded.
+ const stats=spawnSync('ffmpeg',['-hide_banner','-i',mp4,'-vf','crop=920:1110:80:550,freezedetect=n=-45dB:d=4','-an','-f','null','-'],{encoding:'utf8',maxBuffer:4e6});const freeze=stats.stderr||'';await fs.writeFile(path.join(base,'freeze-check.log'),freeze);
+ const holds=[];let holdStart;for(const line of freeze.split('\n')){let m;if(m=line.match(/freeze_start: ([\d.]+)/))holdStart=Number(m[1]);if(m=line.match(/freeze_end: ([\d.]+)/)){holds.push({start:holdStart,end:Number(m[1])});holdStart=undefined;}}if(holdStart!==undefined)holds.push({start:holdStart,end:end-start});
+ const violations=holds.filter(h=>h.end-h.start>8&&!scenes.some(s=>s.holdReason&&h.start+start>=s.start&&h.end+start<=s.end));
+ const report={stylePreset:project.stylePreset,rendererVersion:project.rendererVersion,rendered,reused,frames:framePaths.length,seconds:(last-first)/fps,scenes:scenes.map(s=>({id:s.id,theme:s.theme,cache:caches[scenes.indexOf(s)]})),holds,violations,errors,mp4};await fs.writeFile(path.join(base,'visual-report.json'),JSON.stringify(report,null,2));console.log('OUTPUT',mp4);console.log('CACHE',rendered,reused);
+ if(violations.length)throw Error('Unexplained content hold >8 seconds; inspect visual-report.json before delivery');
+}finally{await browser?.close();await server.close();}

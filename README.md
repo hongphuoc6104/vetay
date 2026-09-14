@@ -12,7 +12,7 @@ node sys/engine/studio.mjs doctor
 node sys/engine/studio.mjs new-video-from-topic --slug bai-hoc --topic "Chủ đề cần hướng dẫn" --duration 30
 ```
 
-`setup` có thể tải mô hình giọng đọc miễn phí; những lần tạo giọng sau dùng local. Agent điền các cảnh và viết bộ dựng riêng cho dự án dưới `sys/work/<slug>/`. Các lệnh không tự sinh kịch bản hoặc hoạt ảnh bằng một mô hình AI tích hợp.
+`setup` có thể tải mô hình giọng đọc miễn phí; những lần tạo giọng sau dùng local. Agent viết nội dung cảnh bằng các thành phần **net-cinematic-v1** dưới `sys/work/<slug>/`; renderer dùng chung giữ nền, chữ, nét bút, camera và chuyển cảnh. Không cần tự viết renderer. Các lệnh không tự sinh kịch bản bằng một mô hình AI tích hợp.
 
 ```sh
 python3 sys/engine/timing.py sys/work/bai-hoc/speech.json --output sys/work/bai-hoc/timeline.json
@@ -20,14 +20,26 @@ node sys/engine/studio.mjs preview --slug bai-hoc --start 0 --end 5
 node sys/engine/studio.mjs render --slug bai-hoc
 ```
 
-Đọc quy tắc và định dạng thời gian trong `sys/skill/cinematic-tutorial-video/references/pause-policy.md`. Renderer nhận đường dẫn manifest, timeline đã kiểm tra, thư mục đầu ra và khoảng preview; phải sử dụng timeline chung cho lời, phụ đề và điểm nhấn hình.
+Đọc `sys/skill/cinematic-tutorial-video/references/visual-authoring.md` để viết cảnh và `references/pause-policy.md` trong cùng thư mục để xếp lời đọc. Renderer nhận manifest, timeline đã kiểm tra, thư mục đầu ra và khoảng preview; dùng cùng timeline cho lời, phụ đề và điểm nhấn hình. Mỗi cảnh dùng theme cụ thể; auto chọn sáng cho hướng dẫn và tối cho mở/kết.
+
+Kiểm tra bộ dựng bằng ví dụ trung tính không cần audio hoặc video demo cũ:
+
+```sh
+node sys/engine/examples/create-neutral.mjs
+node sys/engine/visual/render.mjs --project sys/work/neutral/project.json --timeline sys/work/neutral/timeline.json --output sys/work/neutral/output
+python3 -m unittest discover -s sys/engine/tests
+node --test sys/engine/tests/visual.test.mjs
+node sys/engine/tests/visual-browser.mjs
+```
+
+Ví dụ kiểm tra dài 3 giây, âm thanh im lặng có chủ đích để kiểm thử renderer. Không phải sản phẩm hướng dẫn. Video thực tế phải có giọng và qua bộ kiểm tra ngắt nghỉ. Report `visual-report.json` ghi cache, theme và khoảng đứng hình; vùng phụ đề không được dùng để che giấu nội dung đứng yên.
 
 ## Dữ liệu và giới hạn hiện tại
 
 - `sys/skill`, `sys/engine`, `sys/templates`: lõi dùng lại được đưa vào Git.
 - `sys/work`, `sys/models`, `sys/cache`, `sys/logs`, môi trường và thư viện đã cài: chỉ ở local.
 - `video/<nhóm>/<video>/`: sản phẩm xuất ra, không đưa vào Git.
-- Mã và kết quả demo, các phiên bản giọng thử, sơ đồ kiến trúc không có trong bản phát hành này.
+- Mã riêng và kết quả demo, các phiên bản giọng thử, sơ đồ kiến trúc không có trong repo. Thành phần phong cách được trích từ demo đã duyệt là lõi dùng chung và được phát hành.
 
 Skill được khám phá qua `.agents/skills`; các ứng dụng có quyền đọc/ghi và chạy lệnh local cũng có thể đọc trực tiếp SKILL.md. Chưa hoàn thiện bộ cài riêng và kiểm chứng trên tất cả ứng dụng desktop.
 

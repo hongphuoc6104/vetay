@@ -21,6 +21,9 @@
 !/sys/engine/package-lock.json
 !/sys/engine/requirements.txt
 !/sys/engine/tests/
+!/sys/engine/visual/
+!/sys/engine/examples/
+!/sys/engine/assemble.py
 __pycache__/
 *.pyc
 .env

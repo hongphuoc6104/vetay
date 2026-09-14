@@ -2,6 +2,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {spawnSync} from 'node:child_process';
+import {neutralProject} from './examples/neutral.mjs';
 const root=path.resolve(import.meta.dirname,'../..');
 const args=process.argv.slice(2),cmd=(args.shift()||'help').replace(/^\//,'');
 const get=(k,d)=>args.includes(k)?args[args.indexOf(k)+1]:d;
@@ -20,11 +21,12 @@ async function doctor(){
 }
 async function render(preview=false){
  const p=await read();if(!p.approved)throw Error('Scene content must be approved before production.');
- if(!p.renderScript)throw Error('Agent must author this project’s scene renderer before render; the demo will not be substituted.');
- const script=path.resolve(root,p.renderScript);if(!script.startsWith(path.join(root,'sys')+path.sep))throw Error('Renderer must live under sys/.');
+ const script=path.join(root,'sys/engine/visual/render.mjs');
+ if(p.stylePreset!=='net-cinematic-v1')throw Error('Migrate the project to net-cinematic-v1 before rendering.');
  const speech=path.join(work,'speech.json'),timeline=path.join(work,'timeline.json');
  if(!await exists(speech))throw Error('Author speech.json with measured phrase WAVs before rendering.');
  run('python3',['sys/engine/timing.py',speech,'--output',timeline]);
+ run(path.join(root,'sys/.venv/bin/python'),['sys/engine/assemble.py',speech,timeline,'--output',path.join(work,p.audioMaster||'master.wav')]);
  const output=path.join(root,'video',p.category||'huong-dan',slug);
  if(!/^[a-z0-9-]+$/.test(p.category||'huong-dan'))throw Error('Invalid category');
  await fs.mkdir(output,{recursive:true});
@@ -45,9 +47,12 @@ switch(cmd){
   if(await exists(manifest))throw Error('Project already exists. Choose another --slug.');
   const input=get(cmd.endsWith('topic')?'--topic':'--input','');if(!input)throw Error('Provide --topic or --input.');
   await fs.mkdir(work,{recursive:true});
-  const p={id:slug,title:input,inputType:cmd.endsWith('topic')?'topic':'research',input,format:{width:1080,height:1920,fps:30},durationTargetSec:Number(get('--duration','360')),palette:'technology',theme:'auto',voice:'Adam',approved:false,scenes:[],renderScript:null,revisions:[]};
+  const duration=Number(get('--duration','360'));if(!Number.isFinite(duration)||duration<=0)throw Error('Duration must be positive');
+  const p={...neutralProject(duration),id:slug,title:input,inputType:cmd.endsWith('topic')?'topic':'research',input,durationTargetSec:duration,voice:'Adam',approved:false,revisions:[]};
+  p.scenes[0].id='scene-1';p.scenes[0].label='BẢN NHÁP / CẦN VIẾT NỘI DUNG';p.scenes[0].title=['Nội dung cảnh đầu tiên.'];
   await fs.writeFile(manifest,JSON.stringify(p,null,2));
-  console.log('Created '+manifest+'\nAgent: research the input, populate scenes, obtain content approval, then author a renderer under sys/.');break;
+  await fs.writeFile(path.join(work,'speech.json'),JSON.stringify({targetSeconds:duration,fps:30,phrases:[]},null,2));
+  console.log('Created '+manifest+'\nAgent: research the input, author scenes using visual-authoring.md and the shared components, then obtain content approval. Do not write a custom renderer.');break;
  }
  case 'revise-scene':{
   const p=await read(),id=get('--scene',''),note=get('--note','');if(!p.scenes.some(s=>s.id===id)||!note)throw Error('Provide existing --scene and --note.');
