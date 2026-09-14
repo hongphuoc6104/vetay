@@ -2,6 +2,8 @@
 
 Skill tạo video hướng dẫn tiếng Việt: tư liệu thật, nét vẽ dẫn mắt, giọng Adam và hai bộ màu với template sáng/tối. AI đọc `sys/skill/cinematic-tutorial-video/SKILL.md`, lập nội dung cảnh để người dùng duyệt, sau đó sản xuất trên máy local.
 
+Để giao việc cho AI khác, mở repo và yêu cầu: “Đọc AGENTS.md, dùng skill cinematic-tutorial-video tạo video về [chủ đề] cho [người xem], dài [thời lượng]. Làm theo step-by-step.md và clean-pen-direction.md; dùng bộ dựng có sẵn, trình nội dung từng cảnh để tôi duyệt.” Không cần đưa kèm cuộc trò chuyện hoặc các bản demo riêng.
+
 ## Bắt đầu
 
 Yêu cầu: Node.js 20.15 trở lên, npm, Python 3.12, uv, FFmpeg/ffprobe và Chrome. Bộ công cụ hiện được kiểm tra trên Linux; cấu hình trình duyệt bằng `CHROME_PATH` khi cần.
