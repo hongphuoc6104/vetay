@@ -1,0 +1,20 @@
+{
+  "name": "cinematic-tutorial-studio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "setup": "node studio.mjs setup",
+    "doctor": "node studio.mjs doctor",
+    "test": "python3 -m unittest discover -s tests"
+  },
+  "dependencies": {
+    "@motion-canvas/core": "3.17.2",
+    "@motion-canvas/2d": "3.17.2",
+    "@motion-canvas/vite-plugin": "3.17.2",
+    "@motion-canvas/ffmpeg": "3.17.2",
+    "three": "0.180.0",
+    "vite": "5.4.21",
+    "playwright": "1.55.1",
+    "@fontsource/be-vietnam-pro": "5.2.7"
+  }
+}

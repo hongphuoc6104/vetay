@@ -1,0 +1,15 @@
+{
+  "id":"adam-alert-v2",
+  "voice":"Adam",
+  "mode":"v3turbo",
+  "backend":"onnx",
+  "device":"cpu",
+  "precision":"fp32",
+  "temperatures":[0.65,0.75],
+  "silence_p":0.05,
+  "speeds":{"hook":1.05,"body":1.0,"close":1.05},
+  "eq":"highpass=f=75,equalizer=f=130:t=q:w=0.9:g=1.0,equalizer=f=390:t=q:w=1.1:g=-2.0,equalizer=f=2800:t=q:w=1.2:g=1.8,equalizer=f=6500:t=q:w=1.6:g=-1.0,acompressor=threshold=-22dB:ratio=2:attack=12:release=100:makeup=1.5",
+  "targetLufs":-15.5,
+  "targetTruePeak":-2.3,
+  "guidance":"Use natural short semantic phrases, no pitch shifting. Generate two takes, check intelligibility and select before timing. Keep action labels attached to visual actions. Do not slow speech to fill a scene; place purposeful short pauses and adjust emphasis anchors instead. Final encoded true peak must be <= -1.8 dBTP."
+}
