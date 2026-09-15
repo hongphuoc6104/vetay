@@ -28,7 +28,7 @@ export function drawTemplate(ctx:CanvasRenderingContext2D,e:any,t:number,theme:s
   }
   (s.items||[]).forEach((item:any,i:number)=>{const a=fade(item.cue);if(a>0&&a<1){const x=540+(132-540)*a,y=900+(1255+i*110-900)*a;ctx.fillStyle=C.gold;ctx.beginPath();ctx.arc(x,y,9,0,Math.PI*2);ctx.fill();}ctx.save();ctx.globalAlpha*=a;if(a>0){P.rr(ctx,120,1210+i*110,840,90,22,theme==='light'?C.panel:C.captionDark);text(item.id,item.text,160,1223+i*110,760,40);}ctx.restore();});
  }else if(s.id==='layers'){
-  const key=env.palette;let rig=rigs.get(key);if(!rig){rig=new LayerStack([C.teal,C.gold,C.paper]);rigs.set(key,rig);}const split=fade(s.splitCue,1.2),join=fade(s.joinCue,1.2);rig.draw(ctx,split*(1-join),.12*(1-split));
+  const key=env.palette;let rig=rigs.get(key);if(!rig){rig=new LayerStack([C.teal,C.gold,C.paper],C.ink);rigs.set(key,rig);}const split=fade(s.splitCue,1.2),join=fade(s.joinCue,1.2);rig.draw(ctx,split*(1-join),.12*(1-split));
   (s.items||[]).forEach((item:any,i:number)=>{const a=fade(item.cue);if(a>0){ctx.save();ctx.globalAlpha*=a;text(item.id,item.text,148,1320+i*90,790,40);ctx.restore();}});
  }else if(s.id==='editor'){
   const media=assets[s.src];if(!media)throw Error('Missing editor capture');const [x,y,w,h]=s.mediaBox||[98,600,884,740];P.rr(ctx,x-8,y-8,w+16,h+16,30,C.panel);ctx.drawImage(media,x,y,w,h);diagnostics.media={time:(media as HTMLVideoElement).currentTime,ready:(media as HTMLVideoElement).readyState,width:(media as HTMLVideoElement).videoWidth,duration:(media as HTMLVideoElement).duration};
