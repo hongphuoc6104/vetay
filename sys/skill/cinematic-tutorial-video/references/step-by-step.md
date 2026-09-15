@@ -7,7 +7,7 @@ All commands run from the repository root. Replace `lesson` with the project's l
 
 ## 1. Establish the working environment
 
-Read root `AGENTS.md`, this skill and `production.md`. Confirm that local file access, shell execution and a browser are available. Run:
+Read root `AGENTS.md`, this skill, `production.md` and `publication.md`. Confirm that local file access, shell execution and a browser are available. Run:
 
 ```sh
 node sys/engine/studio.mjs setup
@@ -32,6 +32,8 @@ node sys/engine/studio.mjs new-video-from-topic --slug lesson --topic "Requested
 For supplied research use `new-video-from-research --slug lesson --input PATH --duration 360`. The helper creates files only; you must research and author the content.
 
 Create `brief.md` inside the project with audience, learning outcome, target duration and topic boundaries. Read primary sources for claims that need verification. Keep research and provenance locally. Propose scenes with: what the viewer learns, narration summary, evidence/action shown, and takeaway. Ask for approval of these contents once. Preserve prior approval. Do not treat a scaffold as an approved script.
+
+Before authoring scenes, fill `publication.title`, `primaryKeyword`, `seriesLabel` and `coverFrame`. Keep the first scene's keyword and title readable at frame 0. Give the final scene one to three concise takeaways or use `outro.takeaways`; select the avatar with `avatarTheme: "scene"` unless a fixed theme is intentional.
 
 ## 3. Decide what changes on screen
 
@@ -92,6 +94,6 @@ On interruption, use `resume --slug lesson`; check the report for reused frames.
 
 ## 8. Deliver and preserve reusable improvements
 
-Deliver the MP4, subtitles, cover, scene outline and concise verification result under `video/<category>/<slug>/`. Explain only material limits. Do not claim another agent/model has been independently validated unless it actually produced a video from this repo without extra private context.
+Deliver the MP4, subtitles, cover, scene outline, publishing notes (`*-publishing.json` and `*-publishing.md`) and concise verification result under `video/<category>/<slug>/`. Check frame 0, the configured cover frame, the transition into the body and the final avatar frame. Explain only material limits. Do not claim another agent/model has been independently validated unless it actually produced a video from this repo without extra private context.
 
 Keep outputs, takes, sources and video-specific code outside Git. Improve the shared skill/components only when a concrete failure justifies it; publish those changes only within the user's authorization. No architecture diagrams or experimental media belong in the public commit.

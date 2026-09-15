@@ -55,7 +55,8 @@ switch(cmd){
   const input=get(cmd.endsWith('topic')?'--topic':'--input','');if(!input)throw Error('Provide --topic or --input.');
   await fs.mkdir(work,{recursive:true});
   const duration=Number(get('--duration','360'));if(!Number.isFinite(duration)||duration<=0)throw Error('Duration must be positive');
-  const p={...neutralProject(duration),id:slug,title:input,inputType:cmd.endsWith('topic')?'topic':'research',input,durationTargetSec:duration,voice:'Adam',approved:false,revisions:[]};
+  const keyword=input.trim().replace(/[!?.,:;]+/g,'').replace(/\s+/g,' ').split(' ').slice(0,5).join(' ').slice(0,42);
+  const p={...neutralProject(duration),id:slug,title:input,inputType:cmd.endsWith('topic')?'topic':'research',input,durationTargetSec:duration,voice:'Adam',approved:false,revisions:[],publication:{title:input.trim().slice(0,120),primaryKeyword:keyword,seriesLabel:'NÉT / HƯỚNG DẪN',coverFrame:15,intro:{enabled:true,holdSec:1.5},outro:{enabled:true,avatarTheme:'scene',durationSec:4,renderTakeaways:true,takeaways:['Thay bằng ý chính cần nhớ.']}}};
   p.scenes[0].id='scene-1';p.scenes[0].label='BẢN NHÁP / CẦN VIẾT NỘI DUNG';p.scenes[0].title=['Nội dung cảnh đầu tiên.'];
   await fs.writeFile(manifest,JSON.stringify(p,null,2));
   await fs.writeFile(path.join(work,'speech.json'),JSON.stringify({targetSeconds:duration,fps:30,phrases:[]},null,2));
