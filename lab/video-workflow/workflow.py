@@ -3,6 +3,7 @@ import struct
 import argparse,contextlib,fcntl,hashlib,json,math,os,re,shutil,signal,subprocess,sys,tempfile,time,urllib.request,wave
 from pathlib import Path
 from channel_schema import validate_channel
+from voice_config import resolve_voice, spoken_text, speech_key
 HERE=Path(__file__).resolve().parent;REPO=HERE.parents[1]
 CACHE=Path(os.environ.get('VIDEO_LAB_CACHE',REPO.parent/'video-lab-cache')).resolve()
 RUNTIME=Path(os.environ.get('VIDEO_LAB_MC_RUNTIME',CACHE/'runtimes/motion-canvas')).resolve()
@@ -27,10 +28,28 @@ def config():
 def doctor():
  c=config();checks={k:bool(v and Path(v).exists()) for k,v in c.items()};checks['motion_canvas']=(RUNTIME/'node_modules/@motion-canvas/core/package.json').exists()
  return {'paths':c,'checks':checks,'cache':str(CACHE),'runtime':str(RUNTIME)}
+def episode_folder(name):
+ if re.fullmatch(r'[a-z0-9][a-z0-9-]*',name):return EPISODES/name
+ folder=(REPO/name).resolve()
+ if not folder.is_relative_to((REPO/'channels').resolve()) or folder.parent.name!='episodes':raise ValueError('Invalid episode path; use channels/<channel>/episodes/<id>')
+ return folder
+
+def destination(s):
+ channel=s.get('_channel_id')
+ return OUT/channel/s['id'] if channel else OUT/s['id']
+
 def load(name):
- if not re.fullmatch(r'[a-z0-9][a-z0-9-]*',name):raise ValueError('Invalid episode ID')
- folder=EPISODES/name;s=json.loads((folder/'episode.json').read_text())
- if s['id']!=name:raise ValueError('Episode id differs from folder')
+ folder=episode_folder(name);s=json.loads((folder/'episode.json').read_text())
+ if s['id']!=folder.name or not re.fullmatch(r'[a-z0-9][a-z0-9-]*',s['id']):raise ValueError('Episode id differs from folder')
+ if folder.is_relative_to(REPO/'channels'):
+  channel_root=folder.parent.parent
+  cfg=json.loads((channel_root/'channel.json').read_text())
+  s['_channel_id']=channel_root.name
+  if cfg['id']!=channel_root.name:raise ValueError('Channel identity mismatch')
+  if s.get('channel',{}).get('kind')!=channel_root.name:raise ValueError('Episode channel mismatch')
+  s['voice']=dict(cfg.get('voice',{}),**s.get('voice',{}))
+ resolve_voice(s)
+
  for k in ['title','audience','language','domain','duration','width','height','fps','scenes','assets','sources','status']:
   if k not in s:raise ValueError('Missing '+k)
  if s['domain'] not in ['story','science']:raise ValueError('Invalid domain')
@@ -39,6 +58,10 @@ def load(name):
  if not ids or len(ids)!=len(set(ids)):raise ValueError('Missing or duplicate scene IDs')
  for x in s['scenes']:
   if not all(x.get(k) for k in ['id','action','camera']) or not isinstance(x.get('text'),str) or x['seconds']<=0:raise ValueError('Incomplete scene')
+ for x in s['scenes']:
+  for key in ['pause_before','pause_after']:
+   if not isinstance(x.get(key,0),(int,float)) or not 0<=x.get(key,0)<=3:raise ValueError('Invalid narration pause')
+  spoken_text(x,resolve_voice(s))
  if abs(sum(x['seconds'] for x in s['scenes'])-s['duration'])>.01:raise ValueError('Scene durations must sum to episode duration')
  for f in ['scene.tsx','script.md','design.md','checks.md','handoff.md']:
   if not (folder/f).is_file():raise ValueError('Missing '+f)
@@ -53,9 +76,12 @@ def load(name):
  return folder,s
 
 def fingerprint(folder):
- return hashlib.sha256(b''.join(p.relative_to(folder).as_posix().encode()+p.read_bytes() for p in sorted(folder.rglob('*')) if p.is_file() and '__pycache__' not in str(p))).hexdigest()
+ files=[p for p in sorted(folder.rglob('*')) if p.is_file() and '__pycache__' not in str(p)]
+ data=b''.join(p.relative_to(folder).as_posix().encode()+p.read_bytes() for p in files)
+ if folder.parent.name=='episodes' and (folder.parent.parent/'channel.json').exists():data+=(folder.parent.parent/'channel.json').read_bytes()
+ return hashlib.sha256(data).hexdigest()
 def schedule(s,durations=None):
- minimum=[(math.ceil((durations[i]+.25)*s['fps'])/s['fps'] if durations else 0) for i in range(len(s['scenes']))]
+ minimum=[(math.ceil((durations[i]+x.get('pause_before',0)+max(.25,x.get('pause_after',0)))*s['fps'])/s['fps'] if durations else 0) for i,x in enumerate(s['scenes'])]
  if sum(minimum)>s['duration']:raise ValueError('Narration exceeds duration: revise script; audio will not be clipped or sped up')
  lengths=[max(x['seconds'],minimum[i]) for i,x in enumerate(s['scenes'])]
  excess=sum(lengths)-s['duration']
@@ -71,9 +97,10 @@ def schedule(s,durations=None):
  return {'duration':s['duration'],'scenes':rows}
 
 def speech(folder,s):
- c=config();audio=OUT/'audio';audio.mkdir(parents=True,exist_ok=True);rows=[]
+ c=config();audio=OUT/'audio';audio.mkdir(parents=True,exist_ok=True);rows=[];profile=resolve_voice(s)
  for x in s['scenes']:
-  if not x['text'].strip() and not x.get('audio'):
+  text=spoken_text(x,profile)
+  if not text.strip() and not x.get('audio'):
    p=audio/'silence.wav'
    if not p.exists():
     with wave.open(str(p),'wb') as f:f.setparams((1,2,48000,0,'NONE','none'));f.writeframes(bytes(9600))
@@ -82,9 +109,9 @@ def speech(folder,s):
    p=(folder/x['audio']).resolve()
    if not p.is_file():raise ValueError('Imported WAV missing')
   else:
-   key=hashlib.sha256(('adam-v3turbo-fp32-0.85-v2'+x['text']).encode()).hexdigest();p=audio/(key+'.wav')
+   key=speech_key(text,profile,digest(HERE/'voice.py'));p=audio/(key+'.wav')
    if not p.exists():
-    spec=audio/(key+'.json');dump(spec,{'text':x['text'],'output':str(p)})
+    spec=audio/(key+'.json');dump(spec,{'text':text,'output':str(p),'voice':profile})
     env=os.environ.copy();env.update(HF_HOME=c['models'],HF_HUB_OFFLINE='1',OMP_NUM_THREADS='2',OPENBLAS_NUM_THREADS='2')
     subprocess.run([c['voice_python'],str(HERE/'voice.py'),str(spec)],env=env,check=True,timeout=240)
   try:
@@ -102,7 +129,7 @@ def captions(timeline,audio):
  rows=[]
  for i,s in enumerate(timeline['scenes']):
   words=s['text'].split();chunks=[' '.join(words[j:j+8]) for j in range(0,len(words),8)];duration=audio[i]['duration']
-  weights=[len(x) for x in chunks];start=s['start']
+  weights=[len(x) for x in chunks];start=s['start']+s.get('pause_before',0)
   for txt,n in zip(chunks,weights):
    end=start+duration*n/sum(weights);rows.append({'start':start,'end':end,'text':txt});start=end
  return rows
@@ -117,9 +144,10 @@ def probe(p,s):
  return {'decode':'pass','duration':s['duration'],'width':v['width'],'height':v['height'],'frames':v['nb_frames'],'sha256':digest(p),'full_speed_review':False,'auditory_review':False}
 
 def render(folder,s,timeline,caps,scale,audio=None):
- budget();c=config();rendername=s['id']+'-'+str(time.time_ns());dest=OUT/s['id'];dest.mkdir(parents=True,exist_ok=True)
+ budget();c=config();rendername=s['id']+'-'+str(time.time_ns());dest=destination(s);dest.mkdir(parents=True,exist_ok=True)
  if not (RUNTIME/'node_modules/@motion-canvas/core').exists():raise ValueError('Missing Motion Canvas runtime; run doctor and follow README restore instructions')
- shutil.copytree(folder,RUNTIME/'episode',dirs_exist_ok=True)
+ if (RUNTIME/'episode').exists():shutil.rmtree(RUNTIME/'episode')
+ shutil.copytree(folder,RUNTIME/'episode')
  dump(RUNTIME/'timeline.json',timeline);dump(RUNTIME/'captions.json',caps)
  (RUNTIME/'workflow.tsx').write_text("""import {makeScene2D,Node,Rect,Txt} from '@motion-canvas/2d';import {all,tween} from '@motion-canvas/core';import scene from './episode/scene';import timeline from './timeline.json';import captions from './captions.json';export default makeScene2D(function*(view){const layer=new Node({zIndex:100});view.add(layer);const box=new Rect({y:"""+str(s['height']/2-335)+""",width:"""+str(s['width']-160)+""",height:156,radius:20,fill:'#041019dd'});const txt=new Txt({y:"""+str(s['height']/2-335)+""",width:"""+str(s['width']-220)+""",fontFamily:'DejaVu Sans',fontSize:42,lineHeight:56,fill:'#fff',textAlign:'center',textWrap:true});layer.add(box);layer.add(txt);yield* all(scene(view,timeline),tween(timeline.duration,p=>{const c=captions.find(c=>p*timeline.duration>=c.start&&p*timeline.duration<c.end);txt.text(c?.text||'');box.opacity(c?1:0);}));});""")
  (RUNTIME/'workflow-project.ts').write_text("import {makeProject} from '@motion-canvas/core';import scene from './workflow?scene';export default makeProject({scenes:[scene]});")
@@ -140,7 +168,7 @@ def render(folder,s,timeline,caps,scale,audio=None):
   wav=dest/'mix.wav'
   if audio:
    inputs=[];filters=[]
-   for i,(a,scene) in enumerate(zip(audio,timeline['scenes'])):inputs+=['-i',a['path']];filters.append(f'[{i}:a]adelay={round(scene["start"]*1000)}:all=1[a{i}]')
+   for i,(a,scene) in enumerate(zip(audio,timeline['scenes'])):inputs+=['-i',a['path']];filters.append(f'[{i}:a]adelay={round((scene["start"]+scene.get("pause_before",0))*1000)}:all=1[a{i}]')
    mixlabels=''.join(f'[a{i}]' for i in range(len(audio)));count=len(audio)
    if s.get('effects'):
     sr=48000;samples=[0.0]*round(s['duration']*sr)
@@ -170,15 +198,15 @@ def render(folder,s,timeline,caps,scale,audio=None):
   log.close()
 
 def main():
- ap=argparse.ArgumentParser();ap.add_argument('command',choices=['doctor','init','validate','rough','ready','produce','check']);ap.add_argument('episode',nargs='?');ap.add_argument('--scale',type=float,default=1,choices=[.5,1]);args=ap.parse_args()
+ ap=argparse.ArgumentParser();ap.add_argument('command',choices=['doctor','init','validate','rough','ready','produce','check','voice']);ap.add_argument('episode',nargs='?');ap.add_argument('--scale',type=float,default=1,choices=[.5,1]);args=ap.parse_args()
  if args.command=='doctor':print(json.dumps(doctor(),indent=2));return
  if args.command=='init':
-  if not args.episode or not re.fullmatch(r'[a-z0-9][a-z0-9-]*',args.episode):raise ValueError('Invalid episode ID')
-  folder=EPISODES/args.episode;folder.mkdir(parents=True,exist_ok=False)
-  dump(folder/'episode.json',{'id':args.episode,'title':'','domain':'story','language':'vi','audience':'15+ phổ thông','duration':30,'width':1080,'height':1920,'fps':30,'status':'draft','scenes':[],'assets':[],'sources':[]})
+  if not args.episode:raise ValueError('Episode required')
+  folder=episode_folder(args.episode);folder.mkdir(parents=True,exist_ok=False)
+  dump(folder/'episode.json',{'id':folder.name,'title':'','domain':'story','language':'vi','audience':'15+ phổ thông','duration':30,'width':1080,'height':1920,'fps':30,'status':'draft','scenes':[],'assets':[],'sources':[]})
   for f in ['script.md','design.md','checks.md','handoff.md']:(folder/f).write_text('Draft — agent must complete before validation.\n')
   return
- folder,s=load(args.episode);dest=OUT/s['id']
+ folder,s=load(args.episode);dest=destination(s)
  if args.command=='validate':print('Package valid; readiness is checked separately');return
  if args.command=='check':print(json.dumps(probe(dest/'final.mp4',s),indent=2));return
  if args.command=='ready':
@@ -189,6 +217,8 @@ def main():
   if report['input_digest']!=fingerprint(folder):raise ValueError('Rough render stale; render it again')
   dump(dest/'ready.json',{'input_digest':fingerprint(folder),'note':'Technical preparation complete; see episode handoff for visual review'});return
  with lock():
+  if args.command=='voice':
+   budget();dest.mkdir(parents=True,exist_ok=True);dump(dest/'audio.json',speech(folder,s));print(dest/'audio.json');return
   if args.command=='rough':render(folder,s,schedule(s),[],.5);return
   ready=json.loads((dest/'ready.json').read_text())
   if ready['input_digest']!=fingerprint(folder):raise ValueError('Preparation changed; rerun rough and ready')
