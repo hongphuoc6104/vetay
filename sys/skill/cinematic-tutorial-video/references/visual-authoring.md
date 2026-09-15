@@ -6,6 +6,8 @@ Use `stylePreset: net-cinematic-v1`, `rendererVersion: 1.0.0`, technology palett
 
 Author `project.json`, `speech.json`, narration WAVs and assets under `sys/work/<slug>/`. `studio.mjs preview/render/resume` validates speech timing, assembles narration and calls the shared renderer. Set `audioMaster` to `master.wav`. To preserve a deliberately mixed music/foley master, render it with the low-level shared renderer after validating timing; the studio path assembles a narration-only master.
 
+For new videos, add the `publication` block described in [publication.md](publication.md). It owns the frame-0 keyword intro, the deterministic `coverFrame` and the final light/dark avatar; scene content owns the explanation and takeaway text.
+
 The renderer loads Be Vietnam Pro before drawing, uses the brand file as the color source, renders every frame and caches scene-local frames. Theme `auto` resolves `hook`, `chapter`, `recap` to dark; other roles to light. Do not leave a whole explanatory film dark by ignoring its theme metadata.
 
 ## Scene contract

@@ -47,6 +47,10 @@ Skill được khám phá qua `.agents/skills`; các ứng dụng có quyền đ
 
 Không yêu cầu dịch vụ trả phí. Giữ ghi nhận nguồn tư liệu nội bộ; chỉ hiện nguồn khi cần cho số liệu, trích dẫn, phát biểu theo nguồn hoặc giấy phép. Logo do chủ dự án cung cấp; các thư viện và mô hình giữ giấy phép riêng của nhà phát hành.
 
+## Intro, cover and outro
+
+New projects include `publication` metadata. The shared renderer keeps the main keyword and title visible from frame 0, extracts the configured `coverFrame` (default frame 15 at 30fps), and shows the supplied light or dark avatar in a separate final region. It writes `*-publishing.json` and `*-publishing.md` beside the MP4 with the exact cover frame and posting notes. Read [publication.md](sys/skill/cinematic-tutorial-video/references/publication.md) before authoring.
+
 ## Template-first production
 
 Run `node sys/engine/studio.mjs templates` and read [the template workflow](sys/skill/cinematic-tutorial-video/references/templates.md). New projects use content slots with measured narration cues. The expanded templates are candidates pending visual review, not automatically approved designs. `AGENTS.md`, `CLAUDE.md` and `GEMINI.md` route local agents to the same rules; this does not prove that every desktop application auto-loads them.

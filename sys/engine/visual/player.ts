@@ -4,10 +4,11 @@ import {PlaybackManager,PlaybackStatus,PlaybackState,Logger,SharedWebGLContext,V
 import {ReadOnlyTimeEvents} from '@motion-canvas/core/lib/scenes/timeEvents/ReadOnlyTimeEvents';
 import {createPrimitives,ramp,smooth,mix,clamp} from './primitives';import {PaperCamera} from './camera';
 import {drawTemplate} from './templates/draw';
-import {validateProject,resolveTrack,interpolate,cueTime} from './model.mjs';
+import {validateProject,resolveTrack,interpolate,cueTime,publicationMeta} from './model.mjs';
 const {project,timeline,brand,assetBase}=await fetch('/__net/project').then(r=>r.json());
 const query=new URLSearchParams(location.search);if(query.has('theme')){project.theme=query.get('theme');project.scenes.forEach((s:any)=>s.theme=project.theme);}if(query.has('palette'))project.palette=query.get('palette');
 const scenes=validateProject(project,timeline,brand);const C={...brand.shared,...brand.palettes[project.palette]};const P=createPrimitives(C);const W=1080,H=1920;
+const publication=publicationMeta(project,timeline);
 await Promise.all([400,500,600,700].map(w=>document.fonts.load(`${w} 48px "Be Vietnam Pro"`,'Tiếng Việt đủ dấu ABC xyz 0123')));await document.fonts.ready;
 const assets:Record<string,HTMLImageElement|HTMLVideoElement>={};const assetURL=(p:string)=>p.startsWith('/sys/templates/')?p:assetBase+p.split('/').map(encodeURIComponent).join('/');
 const diagnostics:any={text:[],holds:[],assets:[]};
@@ -29,6 +30,30 @@ function textBlock(ctx:CanvasRenderingContext2D,e:any,theme:string){
  if(e.height&&height>e.height+.1)throw Error('Text overflow: '+e.id+'; split or enlarge instead of shrinking');
  if(e.recordBounds)diagnostics.text.push({id:e.id,lines,height,width});
  lines.forEach((s,i)=>P.txt(ctx,s,e.align==='center'?width/2:0,size+i*lineHeight,size,color(e.color,theme),weight,e.align==='center'?'center':'left'));
+}
+function drawIntro(ctx:CanvasRenderingContext2D,s:any,theme:string,index:number){
+ if(index!==0||publication.intro?.enabled!==true||!publication.primaryKeyword)return;
+ const keyword=publication.primaryKeyword.toUpperCase();ctx.font='700 31px "Be Vietnam Pro"';const width=ctx.measureText(keyword).width+56;
+ if(width>920)throw Error('publication.primaryKeyword is too wide for the intro chip');
+ P.rr(ctx,80,292,width,70,28,C.teal);
+ P.txt(ctx,keyword,108,338,31,theme==='light'?C.navy:C.paper,700);
+}
+function drawOutro(ctx:CanvasRenderingContext2D,s:any,theme:string,index:number,t:number){
+ if(index!==scenes.length-1||publication.outro?.enabled!==true)return;
+ const duration=publication.outro.durationSec||4;const start=Math.max(s.start,s.end-duration);if(t<start)return;
+ const a=smooth(t,start,Math.min(s.end,start+.55));
+ P.alpha(ctx,a,()=>{
+  const takeaways=Array.isArray(publication.outro.takeaways)&&publication.outro.takeaways.length&&publication.outro.renderTakeaways!==false?publication.outro.takeaways:[];
+  const rows=takeaways.map((item:string)=>{const lines=wrapped(ctx,item,470,38,500);if(lines.length>2)throw Error('Split long publication.outro.takeaways item before rendering');return lines;});
+  if(takeaways.length){
+   const rowHeight=rows.some((lines:string[])=>lines.length>1)?90:70,panelHeight=42+rows.length*rowHeight;P.rr(ctx,70,1205,640,panelHeight,28,theme==='light'?C.panel:C.captionDark,C.border);
+   rows.forEach((lines:string[],i:number)=>{const y=1232+i*rowHeight;P.rr(ctx,106,y-20,34,34,12,C.gold);P.txt(ctx,String(i+1),123,y+6,22,C.navy,700,'center');lines.forEach((line:string,j:number)=>P.txt(ctx,line,160,y+j*43,36,theme==='light'?C.ink:C.paper,500));});
+  }
+  const hasTakeaways=takeaways.length>0,y=hasTakeaways?1318:1505,avatarX=hasTakeaways?750:390,avatarCenter=hasTakeaways?875:540;P.rr(ctx,avatarX,y-18,hasTakeaways?250:300,190,34,theme==='light'?C.panel:C.captionDark,C.border);
+  const avatarTheme=publication.outro.avatarTheme==='scene'?theme:(publication.outro.avatarTheme||theme);
+  ctx.save();ctx.beginPath();ctx.arc(avatarCenter,y+72,78,0,7);ctx.clip();ctx.drawImage(logos[avatarTheme],avatarCenter-78,y-6,156,156);ctx.restore();
+  ctx.strokeStyle=C.gold;ctx.lineWidth=4;ctx.beginPath();ctx.arc(avatarCenter,y+72,86,-.8,Math.PI*1.8);ctx.stroke();
+ });
 }
 const projections=new Map<string,{surface:HTMLCanvasElement,rig:PaperCamera}>();
 function values(e:any,t:number){const x={...e};for(const [key,track] of Object.entries(e._tracks||{}))x[key]=interpolate(track,t,e[key]);return x;}
@@ -59,6 +84,7 @@ function paint(ctx:CanvasRenderingContext2D,t:number){
  ctx.save();const cam=s.camera||{};const v=(k:string,d:number)=>cam[k]?interpolate(resolveTrack(cam[k],timeline),t,d):d;ctx.translate(540,1050);ctx.scale(v('zoom',1),v('zoom',1));ctx.translate(-540+v('x',0),-1050+v('y',0));drawElements(ctx,s.elements||[],t,s.theme);ctx.restore();
  if(s.logo){P.alpha(ctx,smooth(t,s.end-1.7,s.end-1.2),()=>{ctx.save();ctx.beginPath();ctx.arc(540,1450,90,0,7);ctx.clip();ctx.drawImage(logos[s.theme],450,1360,180,180);ctx.restore();});}
  if(index>0&&!drawingFirst){const p=ramp(t,s.start-.05,s.start+.65);if(p>0&&p<1){ctx.save();ctx.translate(-400+p*1900,0);ctx.rotate(-.08);ctx.globalAlpha=Math.sin(p*Math.PI)*.48;ctx.fillStyle=C.teal;ctx.fillRect(-100,-100,130,2200);ctx.fillStyle=C.gold;ctx.fillRect(46,-100,10,2200);ctx.restore();}}
+
  const phrase=timeline.phrases.find((p:any)=>t>=p.speechStart&&t<p.speechEnd);
  if(phrase&&project.captionMode!=='sidecar'){const text=phrase.caption||phrase.text;const lines=wrapped(ctx,text,820,28,500);if(lines.length>2)throw Error('Caption exceeds two lines: '+phrase.id);const height=lines.length===1?104:130;P.rr(ctx,96,1700,888,height,23,light>.5?C.captionLight:C.captionDark);lines.forEach((line:string,i:number)=>P.txt(ctx,line,540,1749+i*40,28,fg,500,'center'));}
  if(!drawingFirst){ctx.fillStyle=light>.5?C.ruleLight:C.ruleDark;ctx.fillRect(80,1870,920,3);ctx.fillStyle=C.gold;ctx.fillRect(80,1870,920*t/timeline.targetSeconds,3);}

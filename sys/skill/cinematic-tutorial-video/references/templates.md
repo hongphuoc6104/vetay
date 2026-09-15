@@ -1,6 +1,6 @@
 # Templates, free drawing and efficient export
 
-Read before authoring a new video. Run `node sys/engine/studio.mjs templates` for the actual catalog. Select a template by what the audience needs to understand, not by visual variety. Templates currently marked `candidate` need a user-reviewed passage before being promoted to a standard style. The approved four-demo request authorizes preview production; it does not approve their appearance in advance.
+Read before authoring a new video. Run `node sys/engine/studio.mjs templates` for the actual catalog. Select a template by what the audience needs to understand, not by visual variety. Templates currently marked `candidate` need a user-reviewed passage before being promoted to a standard style. The approved four-demo request authorizes preview production; it does not approve their appearance in advance. For the fixed opening keyword, cover frame and closing avatar, also read [publication.md](publication.md); these are shared publication frames, not content templates.
 
 ## Production sequence
 1. Setup and doctor; inspect the catalog and this interface.
@@ -35,7 +35,7 @@ Keep `stylePreset: net-cinematic-v1`, `rendererVersion: 1.0.0`, `format: {width:
 - `cards`: up to three items, optional `mergeCue` to collect them into one workspace.
 - `steps`: ordered items connected in vertical sequence.
 - `compare`: two full-width states; use labels to identify them.
-- `recap`: three aligned takeaways; use scene `logo:true` for the closing brand.
+- `recap`: three aligned takeaways. Legacy projects may use `scene.logo:true`; new projects use the publication outro so the avatar has its own reserved region.
 - `freehand`: `drawings` plus optional items below the drawing. Paths can explain an object, concept or relationship; do not present a conceptual brain drawing as neuroscience evidence.
 - `layers`: three geometry layers. `splitCue` opens them, `joinCue` collects them; item labels remain in screen space to stay readable.
 - `editor`: real captured image/video in `src`; for video specify `mediaType:"video"`. Optional `sourceStart` is a seconds offset. Capture actual operations and record provenance; label purpose-built local applications. Image annotations need measured `protectedRegions` in output coordinates. Never pretend a screenshot is an interactive application.
