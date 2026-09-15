@@ -29,14 +29,7 @@ def c(pid,edge='speechStart',offset=0):return {'phrase':pid,'edge':edge,'offset'
 class Film:
  def __init__(self,ep):
   self.ep=ep;self.base=root/'sys/work/example-bridge';self.story=json.loads((self.base/'storyboard.json').read_text());self.lib={};self.groups={};self.labels={}
-  if os.environ.get('NET_LAYOUT_CHECK'):
-   spec=json.loads((self.base/'narration.json').read_text());phrases=[]
-   for b in range(1,21):
-    rows=[p for p in spec['phrases'] if p['sceneId']==f's{b:02}'];step=8/len(rows)
-    for j,row in enumerate(rows):
-     start=(b-1)*9+j*step;phrases.append({**row,'start':start,'speechStart':start,'speechEnd':start+step-.05,'end':start+step})
-   self.t={'valid':True,'targetSeconds':180,'phrases':phrases};self.base=root/f'sys/work/ai-net-layout-{ep}';self.base.mkdir(exist_ok=True);(self.base/'timeline.json').write_text(json.dumps(self.t,ensure_ascii=False,indent=2))
-  else:self.t=json.loads((self.base/'timeline.json').read_text())
+  self.t=json.loads((self.base/'timeline.json').read_text())
   self.rows={i:[p for p in self.t['phrases'] if p['sceneId']==f's{i:02}'] for i in range(1,21)}
  def start(self,b):return 0 if b==1 else c(self.rows[b][0]['id'])
  def end(self,b):return self.t['targetSeconds'] if b==20 else self.start(b+1)
@@ -65,18 +58,7 @@ class Film:
    if id in self.lib:self.lib[id]['exit']=self.end(last);self.groups[id]=(self.groups[id][0],last)
   if self.ep=='01':
    self.lib['ai']['box']=[800,480,110,110]
-  if self.ep=='02':
-   for i in range(3):
-    self.lib['paper'+str(i)]['exit']=self.start(7);self.groups['paper'+str(i)]=(4,6)
-    self.lib['pile'+str(i)]['box']=[230+i*160,370+i*20,180,300]
-   self.lib['history']['box']=[760,330,140,280]
-   self.lib['digest-mark']['box']=[257,952,85,70]
-   self.lib['three-boxes']['box']=[330,365,370,390]
-   for id in ['goal','limit','next']:self.lib[id]['box'][1]-=65
-   for id in ['three-boxes','goal','limit','next']:self.move(id,16,'x',0,150)
-  if self.ep=='03':
-   self.lib['reading']['box']=[525,600,160,110]
-  titles={'01':'AI bịa mà rất tự tin.','02':'Càng chat, càng lạc ý?','03':'Sao AI làm sai ý mình?'}
+  titles={'01':'AI bịa mà rất tự tin.'}
   scenes=[]
   for b in range(1,21):
    label=self.labels.get(b,'Minh họa' if b==1 else '')

@@ -20,7 +20,7 @@ function run(binary,argv,options={}){const p=spawnSync(binary,argv,{cwd:root,std
 async function read(){if(!await exists(manifest))throw Error('No project manifest: '+manifest);return JSON.parse(await fs.readFile(manifest,'utf8'));}
 async function doctor(){
  const checks={};for(const bin of ['node','npm','uv','ffmpeg','ffprobe']){const result=spawnSync(bin,[bin.startsWith('ff')?'-version':'--version'],{stdio:'ignore'});checks[bin]=!result.error&&result.status===0;}
- checks.chrome=await exists(process.env.CHROME_PATH||'/usr/bin/google-chrome');checks.engine=await exists(path.join(root,'sys/engine/node_modules/@motion-canvas/core/package.json'));
+ checks.chrome=spawnSync(process.env.CHROME_PATH||'/usr/bin/google-chrome',['--version'],{stdio:'ignore'}).status===0;checks.engine=await exists(path.join(root,'sys/engine/node_modules/@motion-canvas/core/package.json'));
  checks.font=await exists(path.join(root,'sys/engine/node_modules/@fontsource/be-vietnam-pro/files/be-vietnam-pro-vietnamese-400-normal.woff2'));
  checks.encoder=spawnSync('ffmpeg',['-hide_banner','-encoders'],{encoding:'utf8'}).stdout?.includes('libx264')||false;
  checks.adam=spawnSync(path.join(root,'sys/.venv/bin/python'),['sys/engine/prepare-models.py','--check'],{cwd:root,stdio:'inherit'}).status===0;

@@ -5,7 +5,7 @@
   "scripts": {
     "setup": "node studio.mjs setup",
     "doctor": "node studio.mjs doctor",
-    "test": "python3 -m unittest discover -s tests && node --test tests/visual.test.mjs tests/drawing.test.mjs tests/transport.test.mjs",
+    "test": "python3 -m unittest discover -s tests && node --test tests/visual.test.mjs tests/drawing.test.mjs tests/branch.test.mjs tests/transport.test.mjs",
     "test:browser": "node tests/visual-browser.mjs",
     "example": "node examples/create-neutral.mjs",
     "test:transport": "node tests/transport-browser.mjs",

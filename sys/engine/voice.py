@@ -14,7 +14,9 @@ from timing import measure,build
 
 def run(input_path):
  base=input_path.resolve().parent;root=Path(__file__).resolve().parents[2]
- spec=json.loads(input_path.read_text());profile=json.loads((root/'sys/skill/cinematic-tutorial-video/references/adam-delivery.json').read_text())
+ spec=json.loads(input_path.read_text());
+ if not spec.get('phrases'):raise ValueError('Author narration phrases before generating voice')
+ profile=json.loads((root/'sys/skill/cinematic-tutorial-video/references/adam-delivery.json').read_text())
  out=base/'audio';out.mkdir(exist_ok=True);engine=None;voice=None;rows=[];log=[]
  for index,p in enumerate(spec['phrases']):
   pid=p['id']
