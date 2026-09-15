@@ -61,6 +61,8 @@ def download(entry):
         return dest
     if entry.get('kind') == 'quickdraw-prefix': return quickdraw(entry, dest)
     part=dest.with_name(dest.name+'.part')
+    if part.exists() and entry.get('sha256') and sha(part)==entry['sha256']:
+        part.rename(dest); return dest
     maximum=entry.get('max_download_bytes',1_000_000_000)
     for attempt in range(4):
         try:
