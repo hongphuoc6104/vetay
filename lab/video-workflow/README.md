@@ -90,3 +90,7 @@ Các lỗi từng gặp cần tránh: tay không chạm đúng gương; phản c
 ### Âm thanh theo sự kiện
 
 Hồ sơ có thể thêm `effects`: mỗi mục gồm scene (mã cảnh), offset (giây từ đầu cảnh), frequency (Hz), duration (giây), gain (0–0.08). Bộ dựng tổng hợp tiếng ngắn có độ tắt dần tại local. Đây là âm gợi ý sự kiện, không phải âm thu thực tế. Cảnh có text rỗng được giữ im lặng có chủ đích; không buộc phải thêm lời giải thích.
+
+## Hai kênh riêng
+
+Đọc `CHANNEL-PREPARATION.md` để thêm hợp đồng biên tập phù hợp kênh. `channel/science` và `channel/storytelling` có định hướng riêng ở `CHANNEL.md`; bộ dựng vẫn chung. Các gói cũ chưa có trường channel được chấp nhận để chạy hồi quy; gói mới phải dùng mẫu hồ sơ kênh. Validator kiểm tra đủ thông tin, không tự xác nhận tính đúng của nguồn. `NEXT-AGENT.md` là hướng dẫn bàn giao ngắn cho phiên mới.
