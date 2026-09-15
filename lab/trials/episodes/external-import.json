@@ -1,0 +1,18 @@
+{
+  "id": "external-import",
+  "style": "vector",
+  "series": "Tiệm đổi điều ước",
+  "title": "Thử nhập ảnh nền ngoài",
+  "episode": "01",
+  "scenes": [
+    {
+      "id": "s01",
+      "heading": "Thử nhập nền · chưa sinh ảnh AI",
+      "text": "Nam tìm thấy một cửa tiệm bán điểm mười. Giá chỉ là một ký ức vui. Cậu lập tức gật đầu.",
+      "actor": "boy",
+      "symbol": "note",
+      "label": "MỘT KÝ ỨC = MỘT ĐIỂM 10",
+      "external": "import-background"
+    }
+  ]
+}

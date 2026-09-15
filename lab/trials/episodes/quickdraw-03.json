@@ -1,0 +1,42 @@
+{
+  "id": "quickdraw-03",
+  "style": "quickdraw",
+  "series": "Đoán trước nét cuối",
+  "title": "Một chuyến ra ngoài",
+  "episode": "03",
+  "scenes": [
+    {
+      "id": "s01",
+      "heading": "Vòng 1 · Hai vòng tròn",
+      "text": "Hai vòng tròn chưa đủ để kết luận đâu. Hãy nhìn phần nối ở giữa. Bạn nghĩ đó là phương tiện gì?",
+      "actor": "",
+      "symbol": "star",
+      "label": "XE ĐẠP",
+      "drawing": "bicycle",
+      "sample": 1,
+      "fixedSeconds": 9
+    },
+    {
+      "id": "s02",
+      "heading": "Vòng 2 · Lớn lên mỗi ngày",
+      "text": "Thứ này không đi đâu nhưng mỗi ngày lại cao thêm. Chú ý phần phía trên đang xuất hiện nhé.",
+      "actor": "",
+      "symbol": "star",
+      "label": "CÁI CÂY",
+      "drawing": "tree",
+      "sample": 3,
+      "fixedSeconds": 9
+    },
+    {
+      "id": "s03",
+      "heading": "Vòng 3 · Hai bên giống nhau",
+      "text": "Hình cuối có hai bên gần giống nhau. Nó có thể bay, nhưng không phải chim. Bạn đã có đáp án chưa?",
+      "actor": "",
+      "symbol": "star",
+      "label": "BƯƠM BƯỚM",
+      "drawing": "butterfly",
+      "sample": 3,
+      "fixedSeconds": 9
+    }
+  ]
+}

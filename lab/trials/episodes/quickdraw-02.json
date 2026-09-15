@@ -1,0 +1,42 @@
+{
+  "id": "quickdraw-02",
+  "style": "quickdraw",
+  "series": "Đoán trước nét cuối",
+  "title": "Trong nhà có gì?",
+  "episode": "02",
+  "scenes": [
+    {
+      "id": "s01",
+      "heading": "Vòng 1 · Đừng nhìn giờ",
+      "text": "Vật này luôn chạy nhưng chẳng đi đâu cả. Bạn đoán ra trước khi vòng tròn khép lại không?",
+      "actor": "",
+      "symbol": "star",
+      "label": "ĐỒNG HỒ",
+      "drawing": "clock",
+      "sample": 1,
+      "fixedSeconds": 9
+    },
+    {
+      "id": "s02",
+      "heading": "Vòng 2 · Mở ra điều gì?",
+      "text": "Bên trong vật này có thể là cả một thế giới. Chờ thêm vài nét, rồi đưa ra đáp án nhé.",
+      "actor": "",
+      "symbol": "star",
+      "label": "QUYỂN SÁCH",
+      "drawing": "book",
+      "sample": 3,
+      "fixedSeconds": 9
+    },
+    {
+      "id": "s03",
+      "heading": "Vòng 3 · Một vật quen thuộc",
+      "text": "Buổi sáng bạn thường cầm vật này. Đáp án có một chiếc quai. Bạn được mấy điểm trong vòng này?",
+      "actor": "",
+      "symbol": "star",
+      "label": "CHIẾC CỐC",
+      "drawing": "cup",
+      "sample": 4,
+      "fixedSeconds": 9
+    }
+  ]
+}

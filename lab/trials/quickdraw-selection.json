@@ -1,0 +1,602 @@
+[
+  {
+    "category": "cat",
+    "sample": 0,
+    "key_id": "5201136883597312",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "cat",
+    "sample": 1,
+    "key_id": "4647694628814848",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "cat",
+    "sample": 2,
+    "key_id": "6411036099870720",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "cat",
+    "sample": 3,
+    "key_id": "6196755135725568",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "cat",
+    "sample": 4,
+    "key_id": "4597292839469056",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "rainbow",
+    "sample": 0,
+    "key_id": "4773497005932544",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "rainbow",
+    "sample": 1,
+    "key_id": "5852010706370560",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "rainbow",
+    "sample": 2,
+    "key_id": "4804482397372416",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "rainbow",
+    "sample": 3,
+    "key_id": "6670490678591488",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "rainbow",
+    "sample": 4,
+    "key_id": "4769670089408512",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "umbrella",
+    "sample": 0,
+    "key_id": "5060802019065856",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "umbrella",
+    "sample": 1,
+    "key_id": "4916738481192960",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "umbrella",
+    "sample": 2,
+    "key_id": "5171915670945792",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "umbrella",
+    "sample": 3,
+    "key_id": "4685148610101248",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "umbrella",
+    "sample": 4,
+    "key_id": "5471481188319232",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "apple",
+    "sample": 0,
+    "key_id": "4986110117675008",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "apple",
+    "sample": 1,
+    "key_id": "6489082920173568",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "apple",
+    "sample": 2,
+    "key_id": "4587619411296256",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "apple",
+    "sample": 3,
+    "key_id": "5198601426829312",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "apple",
+    "sample": 4,
+    "key_id": "4826235060355072",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "banana",
+    "sample": 0,
+    "key_id": "5837948178137088",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "banana",
+    "sample": 1,
+    "key_id": "4950117624840192",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "banana",
+    "sample": 2,
+    "key_id": "5203844831117312",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "banana",
+    "sample": 3,
+    "key_id": "6085297920016384",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "banana",
+    "sample": 4,
+    "key_id": "4920145464000512",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "bicycle",
+    "sample": 0,
+    "key_id": "6426650621247488",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "bicycle",
+    "sample": 1,
+    "key_id": "5122624227115008",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "bicycle",
+    "sample": 2,
+    "key_id": "5694967496310784",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "bicycle",
+    "sample": 3,
+    "key_id": "6187667635044352",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "bicycle",
+    "sample": 4,
+    "key_id": "4947404178587648",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "bird",
+    "sample": 1,
+    "key_id": "5357674197680128",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "bird",
+    "sample": 2,
+    "key_id": "5553672849195008",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "bird",
+    "sample": 3,
+    "key_id": "5635633911431168",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "bird",
+    "sample": 4,
+    "key_id": "5633137012899840",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "bird",
+    "sample": 5,
+    "key_id": "5266996419624960",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "book",
+    "sample": 0,
+    "key_id": "6181511223050240",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "book",
+    "sample": 1,
+    "key_id": "5793065870557184",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "book",
+    "sample": 2,
+    "key_id": "4923762363334656",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "book",
+    "sample": 3,
+    "key_id": "5996507952054272",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "book",
+    "sample": 4,
+    "key_id": "4610490804207616",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "butterfly",
+    "sample": 0,
+    "key_id": "4817223078117376",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "butterfly",
+    "sample": 1,
+    "key_id": "6574914117042176",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "butterfly",
+    "sample": 2,
+    "key_id": "5418544609099776",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "butterfly",
+    "sample": 3,
+    "key_id": "5955720593801216",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "butterfly",
+    "sample": 4,
+    "key_id": "5627133969825792",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "car",
+    "sample": 0,
+    "key_id": "4819414685843456",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "car",
+    "sample": 1,
+    "key_id": "6193826576203776",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "car",
+    "sample": 2,
+    "key_id": "5648885127053312",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "car",
+    "sample": 3,
+    "key_id": "4858658959654912",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "car",
+    "sample": 4,
+    "key_id": "6557111481794560",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "clock",
+    "sample": 0,
+    "key_id": "5872011228217344",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "clock",
+    "sample": 1,
+    "key_id": "5638304160546816",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "clock",
+    "sample": 2,
+    "key_id": "5134292143308800",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "clock",
+    "sample": 3,
+    "key_id": "6205518982938624",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "clock",
+    "sample": 4,
+    "key_id": "6204702670716928",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "cloud",
+    "sample": 0,
+    "key_id": "4746105067667456",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "cloud",
+    "sample": 1,
+    "key_id": "4791745197899776",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "cloud",
+    "sample": 2,
+    "key_id": "5175490744680448",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "cloud",
+    "sample": 3,
+    "key_id": "5868899880927232",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "cloud",
+    "sample": 4,
+    "key_id": "5007611478933504",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "cup",
+    "sample": 0,
+    "key_id": "6213134442299392",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "cup",
+    "sample": 1,
+    "key_id": "4792342953328640",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "cup",
+    "sample": 2,
+    "key_id": "4768314142228480",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "cup",
+    "sample": 3,
+    "key_id": "5157881462652928",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "cup",
+    "sample": 4,
+    "key_id": "5427346402181120",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "fish",
+    "sample": 0,
+    "key_id": "6591076297080832",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "fish",
+    "sample": 1,
+    "key_id": "6721582066040832",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "fish",
+    "sample": 2,
+    "key_id": "5385703221362688",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "fish",
+    "sample": 3,
+    "key_id": "5751665556717568",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "fish",
+    "sample": 4,
+    "key_id": "6528113636802560",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "flower",
+    "sample": 0,
+    "key_id": "5042339162619904",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "flower",
+    "sample": 1,
+    "key_id": "5797384460173312",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "flower",
+    "sample": 2,
+    "key_id": "5229761800437760",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "flower",
+    "sample": 3,
+    "key_id": "6482842538213376",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "flower",
+    "sample": 4,
+    "key_id": "5537834100326400",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "house",
+    "sample": 0,
+    "key_id": "5054419760578560",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "house",
+    "sample": 1,
+    "key_id": "6190295400054784",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "house",
+    "sample": 2,
+    "key_id": "4774272331415552",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "house",
+    "sample": 3,
+    "key_id": "5515902256676864",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "house",
+    "sample": 4,
+    "key_id": "5372917690925056",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "ice cream",
+    "sample": 0,
+    "key_id": "6101352801370112",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "ice cream",
+    "sample": 1,
+    "key_id": "5869313103757312",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "ice cream",
+    "sample": 2,
+    "key_id": "6168769023967232",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "ice cream",
+    "sample": 3,
+    "key_id": "6654306302296064",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "ice cream",
+    "sample": 4,
+    "key_id": "4774113333739520",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "moon",
+    "sample": 0,
+    "key_id": "5431885159202816",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "moon",
+    "sample": 1,
+    "key_id": "5783988255850496",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "moon",
+    "sample": 2,
+    "key_id": "4985243645771776",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "moon",
+    "sample": 3,
+    "key_id": "4677704068628480",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "moon",
+    "sample": 4,
+    "key_id": "5252141214072832",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "star",
+    "sample": 0,
+    "key_id": "5260413706960896",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "star",
+    "sample": 1,
+    "key_id": "4853913289228288",
+    "status": "reject-ambiguous"
+  },
+  {
+    "category": "star",
+    "sample": 2,
+    "key_id": "4624556264259584",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "star",
+    "sample": 3,
+    "key_id": "4729612393250816",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "star",
+    "sample": 4,
+    "key_id": "5130650279477248",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "tree",
+    "sample": 0,
+    "key_id": "4593716037681152",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "tree",
+    "sample": 1,
+    "key_id": "5194627692888064",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "tree",
+    "sample": 2,
+    "key_id": "5374156503777280",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "tree",
+    "sample": 3,
+    "key_id": "6718527320883200",
+    "status": "visual-pass-contact-sheet"
+  },
+  {
+    "category": "tree",
+    "sample": 4,
+    "key_id": "4866136313167872",
+    "status": "visual-pass-contact-sheet"
+  }
+]

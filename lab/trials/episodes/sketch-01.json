@@ -1,0 +1,72 @@
+{
+  "id": "sketch-01",
+  "style": "sketch",
+  "series": "Cuốn sổ ngày mai",
+  "title": "Bức vẽ trước bình minh",
+  "episode": "01",
+  "scenes": [
+    {
+      "id": "s01",
+      "heading": "Cuốn sổ vẽ trước ngày mai",
+      "text": "Mỗi nửa đêm, cuốn sổ của Linh tự vẽ một chuyện ngày mai. Đêm đầu tiên là chiếc cốc vỡ.",
+      "actor": "doodle-reading",
+      "symbol": "book",
+      "label": "00:00",
+      "setting": "home"
+    },
+    {
+      "id": "s02",
+      "heading": "Lần thứ hai trùng hợp",
+      "text": "Sáng hôm sau, chiếc cốc rơi đúng như hình. Đêm tiếp theo, trang giấy hiện một người đứng giữa đường.",
+      "actor": "doodle-sitting",
+      "symbol": "note",
+      "label": "KHÔNG CÒN LÀ TRÙNG HỢP",
+      "setting": "home"
+    },
+    {
+      "id": "s03",
+      "heading": "Chiếc khăn đỏ",
+      "text": "Người ấy quàng khăn đỏ giống em trai Linh. Bên cạnh là chiếc xe đang lao tới. Linh thức trắng cả đêm.",
+      "actor": "doodle-clumsy",
+      "symbol": "scarf",
+      "label": "MỘT MANH MỐI",
+      "setting": "street"
+    },
+    {
+      "id": "s04",
+      "heading": "Cô thay đổi ngày mai",
+      "text": "Sáng ra, cô giấu chiếc khăn và giữ em ở nhà. Đến chiều, trang giấy vẫn không biến mất.",
+      "actor": "doodle-reading",
+      "symbol": "scarf",
+      "label": "TƯƠNG LAI VẪN CÒN?",
+      "setting": "home"
+    },
+    {
+      "id": "s05",
+      "heading": "Người trong bức vẽ",
+      "text": "Linh chạy ra ngã tư tìm câu trả lời. Gió thổi chiếc khăn đỏ trong túi cô bay xuống lòng đường.",
+      "actor": "doodle-running",
+      "symbol": "car",
+      "label": "NGƯỜI ĐÓ LÀ AI?",
+      "setting": "street"
+    },
+    {
+      "id": "s06",
+      "heading": "Chi tiết bị bỏ qua",
+      "text": "Cô cúi xuống nhặt rồi khựng lại. Người trong hình đeo chiếc đồng hồ của cô, không phải của em.",
+      "actor": "doodle-sitting",
+      "symbol": "clock",
+      "label": "CHIẾC ĐỒNG HỒ",
+      "setting": "street"
+    },
+    {
+      "id": "s07",
+      "heading": "Trang giấy cuối",
+      "text": "Linh lùi một bước, xe vụt qua. Đêm ấy sổ chỉ vẽ một trang trắng. Lần đầu tiên, cô thấy nhẹ lòng.",
+      "actor": "doodle-strolling",
+      "symbol": "book",
+      "label": "NGÀY MAI CHƯA VIẾT",
+      "setting": "home"
+    }
+  ]
+}

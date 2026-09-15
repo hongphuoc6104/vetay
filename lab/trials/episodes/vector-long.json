@@ -1,0 +1,252 @@
+{
+  "id": "vector-long",
+  "style": "vector",
+  "series": "Tiệm đổi điều ước",
+  "title": "Ngày cả khu phố đem lời hứa đi bán",
+  "episode": "Đặc biệt",
+  "scenes": [
+    {
+      "id": "s01",
+      "heading": "Căn tiệm đầy giấy",
+      "text": "Sáng thứ bảy, Nam thấy tiệm điều ước đóng kín. Những tờ giấy tràn qua khe cửa, mỗi tờ là một lời hứa chưa thực hiện của ai đó trong phố.",
+      "actor": "boy",
+      "symbol": "door",
+      "label": "NHỮNG LỜI HỨA BỊ BÁN",
+      "setting": "shop"
+    },
+    {
+      "id": "s02",
+      "heading": "Một cuộc đổi chác",
+      "text": "Ông chủ nói: Tiệm nhận mua lời hứa. Người bán sẽ quên cảm giác áy náy, nhưng người chờ vẫn nhớ. Chỉ người đã hứa mới được bán lời của mình.",
+      "actor": "keeper",
+      "symbol": "note",
+      "label": "NGƯỜI CHỜ VẪN NHỚ",
+      "setting": "shop"
+    },
+    {
+      "id": "s03",
+      "heading": "Tờ giấy quen thuộc",
+      "text": "Nam nhận ra nét chữ mình: Thứ bảy, tớ sẽ sửa chiếc xe sách cùng Linh. Hôm qua cậu đã bán lời hứa ấy để khỏi lo, vì cứ nghĩ bạn sẽ tự làm được.",
+      "actor": "boy",
+      "symbol": "book",
+      "label": "MỘT LỜI HỨA CỦA NAM",
+      "setting": "shop"
+    },
+    {
+      "id": "s04",
+      "heading": "Chiếc xe đứng yên",
+      "text": "Tới thư viện, Nam thấy Linh cạnh chiếc xe sách hỏng bánh. Bạn chỉ hỏi: Tớ chờ từ sáng. Sao cậu không nhắn rằng mình không tới được?",
+      "actor": "friend",
+      "symbol": "clock",
+      "label": "MỘT BUỔI SÁNG ĐÃ MẤT",
+      "setting": "classroom"
+    },
+    {
+      "id": "s05",
+      "heading": "Chuyến đi bị hủy",
+      "text": "Xe phải đưa sách tới chung cư chiều nay. Nhiều em nhỏ đang chờ đọc truyện. Linh cần Nam giữ trục bánh để lắp, một mình bạn không làm nổi.",
+      "actor": "friend",
+      "symbol": "book",
+      "label": "XE SÁCH CHƯA THỂ ĐI",
+      "setting": "classroom"
+    },
+    {
+      "id": "s06",
+      "heading": "Không tìm lại cảm giác",
+      "text": "Nam kể chuyện đã bán lời hứa. Cậu không thấy áy náy như trước, nhưng nhìn đôi tay bẩn dầu của Linh, cậu biết việc mình làm đã khiến bạn vất vả.",
+      "actor": "boy",
+      "symbol": "heart",
+      "label": "BIẾT MÌNH ĐÃ LÀM SAI",
+      "setting": "classroom"
+    },
+    {
+      "id": "s07",
+      "heading": "Mua lại bằng gì",
+      "text": "Nam quay về tiệm xin mua lại. Ông chủ nói tiệm chỉ hoàn trả giấy khi người bán thực hiện lời hứa, hoặc người chờ đồng ý sửa nó thành một việc khả thi.",
+      "actor": "keeper",
+      "symbol": "key",
+      "label": "THỰC HIỆN HOẶC CÙNG SỬA",
+      "setting": "shop"
+    },
+    {
+      "id": "s08",
+      "heading": "Không thể sửa một mình",
+      "text": "Nam định gạch chữ thứ bảy, đổi thành chủ nhật. Tờ giấy trở lại nguyên vẹn. Ông chủ lắc đầu: Cháu không thể tự quyết rằng người khác sẽ chờ thêm một ngày.",
+      "actor": "keeper",
+      "symbol": "note",
+      "label": "CẦN NGƯỜI CHỜ ĐỒNG Ý",
+      "setting": "shop"
+    },
+    {
+      "id": "s09",
+      "heading": "Một đề nghị cụ thể",
+      "text": "Nam trở lại xin lỗi Linh: Tớ có thể ở đây một giờ để sửa bánh, rồi cùng đẩy xe. Nếu không xong, mình báo lại sớm. Linh đặt cờ lê vào tay cậu.",
+      "actor": "boy",
+      "symbol": "key",
+      "label": "LÀM VIỆC NGAY BÂY GIỜ",
+      "setting": "classroom"
+    },
+    {
+      "id": "s10",
+      "heading": "Bánh xe quay lại",
+      "text": "Hai bạn giữ trục, siết ốc và thử xe trên đoạn sân ngắn. Khi bánh quay đều, tờ giấy trong túi Nam hóa thành trang trắng. Cậu thấy nhẹ người, lần này có lý do.",
+      "actor": "friend",
+      "symbol": "star",
+      "label": "MỘT LỜI HỨA ĐÃ XONG",
+      "setting": "street"
+    },
+    {
+      "id": "s11",
+      "heading": "Những chỗ trống khác",
+      "text": "Tới chung cư, hai bạn không thấy bạt, ghế hay nước. Trưởng nhóm nhắn ba người phụ trách đều bỏ việc, dù vẫn nhớ rõ những gì đã nhận lời.",
+      "actor": "boy",
+      "symbol": "door",
+      "label": "BUỔI ĐỌC THIẾU MỌI THỨ",
+      "setting": "street"
+    },
+    {
+      "id": "s12",
+      "heading": "Cơn mưa sắp tới",
+      "text": "Mây đen kéo đến. Linh nhìn xe sách: Nếu mưa, mình phải dừng. Nam nghĩ tới đống giấy trong tiệm; có lẽ mọi người đã chọn nhẹ lòng giống cậu.",
+      "actor": "friend",
+      "symbol": "clock",
+      "label": "CHỈ CÒN HAI GIỜ",
+      "setting": "street"
+    },
+    {
+      "id": "s13",
+      "heading": "Một điều ước thật lớn",
+      "text": "Nam chạy về tiệm, xin đổi mọi tờ giấy lấy một lời hứa của mình: Cháu sẽ làm hết. Ông chủ không nhận. Cháu không phải người đã bán, nên không có quyền đổi thay họ.",
+      "actor": "boy",
+      "symbol": "star",
+      "label": "KHÔNG THỂ HỨA THAY",
+      "setting": "shop"
+    },
+    {
+      "id": "s14",
+      "heading": "Không mang bí mật đi",
+      "text": "Nam muốn đem giấy ra tìm từng người. Ông chủ cũng từ chối, vì đó là chuyện riêng của khách. Nhưng ông cho phép treo thông báo: Ai muốn hoàn thành lời hứa, hãy tới thư viện.",
+      "actor": "keeper",
+      "symbol": "note",
+      "label": "MỖI NGƯỜI TỰ QUYẾT",
+      "setting": "shop"
+    },
+    {
+      "id": "s15",
+      "heading": "Tấm bảng ngoài cửa",
+      "text": "Linh đồng ý đặt bảng ở thư viện. Nam ghi những việc thiếu, thời hạn và chỗ báo hủy. Cậu không viết tên ai, cũng không hỏi ai từng tới tiệm.",
+      "actor": "boy",
+      "symbol": "book",
+      "label": "CẦN GHẾ, NƯỚC, CHỖ TRÚ",
+      "setting": "classroom"
+    },
+    {
+      "id": "s16",
+      "heading": "Người đầu tiên trở lại",
+      "text": "Người phụ trách ghế tới, thú nhận chỉ mượn được sáu chiếc thay vì hai mươi. Linh nói sáu chiếc vẫn hữu ích; trẻ có thể ngồi trên thảm, người lớn nhường ghế cho người cần.",
+      "actor": "friend",
+      "symbol": "heart",
+      "label": "SÁU CHIẾC VẪN CÓ ÍCH",
+      "setting": "classroom"
+    },
+    {
+      "id": "s17",
+      "heading": "Lời hứa được sửa",
+      "text": "Người ấy gọi trưởng nhóm, xin đổi số ghế trong lời hứa. Hai bên cùng đồng ý. Một tờ giấy xuất hiện trong túi rồi trắng dần, báo rằng điều chỉnh đã được chấp nhận.",
+      "actor": "boy",
+      "symbol": "note",
+      "label": "ĐỔI SAU KHI CÙNG ĐỒNG Ý",
+      "setting": "classroom"
+    },
+    {
+      "id": "s18",
+      "heading": "Một việc không thể làm",
+      "text": "Người phụ trách nước báo đang ở bệnh viện với người nhà. Nam định nhờ họ tìm người thay, nhưng Linh ngăn lại: Việc này nhóm mình giải quyết được, đừng thêm một lời hứa khó giữ.",
+      "actor": "friend",
+      "symbol": "cup",
+      "label": "BÁO KHÔNG THỂ CŨNG CẦN THIẾT",
+      "setting": "classroom"
+    },
+    {
+      "id": "s19",
+      "heading": "Chia nhỏ công việc",
+      "text": "Trưởng nhóm đồng ý hủy phần việc ấy, rồi dùng bình nước của thư viện. Nam ghi rõ ai mang cốc, ai kéo xe. Mỗi người chỉ nhận phần mình có thể làm trước giờ bắt đầu.",
+      "actor": "boy",
+      "symbol": "cup",
+      "label": "MỖI NGƯỜI MỘT VIỆC RÕ RÀNG",
+      "setting": "classroom"
+    },
+    {
+      "id": "s20",
+      "heading": "Mái bạt không tới",
+      "text": "Chỉ còn người lo mái bạt không liên lạc được. Gió mạnh dần, Nam không dám hứa trời sẽ tạnh. Cậu kiểm tra phòng đọc tầng trệt, nhưng xe sách quá rộng để qua cửa.",
+      "actor": "boy",
+      "symbol": "door",
+      "label": "PHẢI CÓ PHƯƠNG ÁN KHÁC",
+      "setting": "street"
+    },
+    {
+      "id": "s21",
+      "heading": "Mang sách bằng tay",
+      "text": "Linh đề nghị để xe dưới mái hiên và chuyển từng chồng sách vào. Nam cùng mọi người làm ngay. Sáu chiếc ghế được đặt sát tường, khoảng sàn giữa phòng trải những tấm thảm sạch.",
+      "actor": "friend",
+      "symbol": "book",
+      "label": "ĐỔI CHỖ, GIỮ BUỔI ĐỌC",
+      "setting": "classroom"
+    },
+    {
+      "id": "s22",
+      "heading": "Mưa xuống đúng giờ",
+      "text": "Mưa đổ xuống khi những em nhỏ đầu tiên tới. Nam đứng ngoài hướng dẫn từng gia đình sang phòng đọc. Một người hỏi sao đổi chỗ, cậu giải thích ngắn gọn, không đổ lỗi cho ai.",
+      "actor": "boy",
+      "symbol": "door",
+      "label": "BUỔI ĐỌC VẪN BẮT ĐẦU",
+      "setting": "street"
+    },
+    {
+      "id": "s23",
+      "heading": "Một chỗ còn thiếu",
+      "text": "Giữa buổi, người phụ trách bạt tới muộn. Anh nhìn căn phòng rồi nói mình sợ bị trách nên tắt điện thoại. Nam chỉ chỗ cạnh xe: Anh giúp lau sách ướt được không?",
+      "actor": "friend",
+      "symbol": "heart",
+      "label": "VẪN CÒN VIỆC ĐỂ LÀM",
+      "setting": "classroom"
+    },
+    {
+      "id": "s24",
+      "heading": "Không xóa chuyện đã qua",
+      "text": "Anh nhận việc, xin lỗi trưởng nhóm. Họ thống nhất lần sau phải báo sớm. Tờ giấy chưa trắng ngay; anh còn phải hoàn thành việc vừa nhận.",
+      "actor": "keeper",
+      "symbol": "note",
+      "label": "LỜI XIN LỖI ĐI CÙNG HÀNH ĐỘNG",
+      "setting": "classroom"
+    },
+    {
+      "id": "s25",
+      "heading": "Cuối buổi chiều",
+      "text": "Khi cuốn sách cuối được lau khô, cơn mưa cũng dứt. Nam và Linh đẩy xe về. Buổi đọc nhỏ hơn dự định, nhưng không em nào phải đứng chờ trước một cánh cửa khóa.",
+      "actor": "boy",
+      "symbol": "book",
+      "label": "KHÔNG AI BỊ BỎ CHỜ",
+      "setting": "street"
+    },
+    {
+      "id": "s26",
+      "heading": "Tờ giấy Nam giữ",
+      "text": "Tối đó, Nam ngang tiệm. Giấy đã vơi, vẫn còn nhiều tờ chưa lấy lại. Cậu giữ trang trắng, viết lịch trực tuần sau rồi nhắn Linh xác nhận.",
+      "actor": "boy",
+      "symbol": "clock",
+      "label": "HẸN SAU KHI ĐÃ KIỂM TRA",
+      "setting": "shop"
+    },
+    {
+      "id": "s27",
+      "heading": "Một lời hứa vừa sức",
+      "text": "Linh hỏi có chắc không. Nam xem lịch rồi đáp: Tớ làm được sáng thứ bảy; có thay đổi, tớ sẽ báo. Trong túi, trang giấy nằm yên, không cần phép màu.",
+      "actor": "friend",
+      "symbol": "star",
+      "label": "MỘT LỜI HỨA CÓ THỂ GIỮ",
+      "setting": "home"
+    }
+  ]
+}

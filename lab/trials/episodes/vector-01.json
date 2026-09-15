@@ -1,0 +1,72 @@
+{
+  "id": "vector-01",
+  "style": "vector",
+  "series": "Tiệm đổi điều ước",
+  "title": "Điểm mười bị đánh đổi",
+  "episode": "01",
+  "scenes": [
+    {
+      "id": "s01",
+      "heading": "Một điểm 10 giá bao nhiêu?",
+      "text": "Nam tìm thấy một cửa tiệm bán điểm mười. Giá chỉ là một ký ức vui. Cậu lập tức gật đầu.",
+      "actor": "boy",
+      "symbol": "note",
+      "label": "MỘT KÝ ỨC = MỘT ĐIỂM 10",
+      "setting": "shop"
+    },
+    {
+      "id": "s02",
+      "heading": "Cậu tự chọn cái giá",
+      "text": "Nam chọn chiều mẹ dạy mình viết tên. Chuyện nhỏ thôi, cậu nghĩ. Mình vẫn nhớ mẹ là ai mà.",
+      "actor": "keeper",
+      "symbol": "book",
+      "label": "CHUYỆN NHỎ THÔI?",
+      "setting": "shop"
+    },
+    {
+      "id": "s03",
+      "heading": "Món hời thành sự thật",
+      "text": "Sáng hôm sau, bài kiểm tra được điểm tuyệt đối. Nhưng lúc ký tên, tay Nam bỗng đứng yên.",
+      "actor": "boy",
+      "symbol": "star",
+      "label": "10 / 10",
+      "setting": "classroom"
+    },
+    {
+      "id": "s04",
+      "heading": "Tên của chính mình",
+      "text": "Cậu nhớ từng công thức khó. Cậu đọc được tên mình trên thẻ học sinh. Chỉ nét chữ quen thuộc là biến mất.",
+      "actor": "boy",
+      "symbol": "note",
+      "label": "BÀN TAY KHÔNG NHỚ",
+      "setting": "classroom"
+    },
+    {
+      "id": "s05",
+      "heading": "Không có hoàn trả",
+      "text": "Nam chạy về tiệm. Ông chủ nói: Cháu bán buổi chiều ấy, cả niềm tin rằng mình có thể học cũng đi theo.",
+      "actor": "keeper",
+      "symbol": "door",
+      "label": "KÝ ỨC KHÔNG CHỈ LÀ HÌNH ẢNH",
+      "setting": "shop"
+    },
+    {
+      "id": "s06",
+      "heading": "Một trang giấy mới",
+      "text": "Tối đó, Nam thú nhận với mẹ. Mẹ đặt trước cậu tờ giấy trắng: Vậy chúng ta bắt đầu lại nhé.",
+      "actor": "friend",
+      "symbol": "heart",
+      "label": "BẮT ĐẦU LẠI",
+      "setting": "home"
+    },
+    {
+      "id": "s07",
+      "heading": "Điểm số đầu tiên",
+      "text": "Lần này, tên Nam viết xiêu vẹo. Nhưng cậu giữ tờ giấy ấy lâu hơn tất cả những bài kiểm tra điểm mười.",
+      "actor": "boy",
+      "symbol": "book",
+      "label": "CÓ NHỮNG ĐIỀU KHÔNG ĐỂ ĐỔI",
+      "setting": "home"
+    }
+  ]
+}

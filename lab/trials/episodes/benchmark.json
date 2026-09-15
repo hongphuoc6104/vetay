@@ -1,0 +1,29 @@
+{
+  "id": "benchmark",
+  "style": "vector",
+  "series": "Tiệm đổi điều ước",
+  "title": "Một ký ức đổi lấy điểm mười",
+  "episode": "01",
+  "scenes": [
+    {
+      "id": "s01",
+      "heading": "Một điểm 10 giá bao nhiêu?",
+      "text": "Một điểm mười đổi lấy một ký ức. Nam chọn buổi mẹ dạy viết tên, nghĩ rằng chuyện nhỏ ấy chẳng đáng giữ.",
+      "actor": "boy",
+      "symbol": "note",
+      "label": "ĐIỂM 10",
+      "fixedSeconds": 7.5,
+      "prop": "prop-note"
+    },
+    {
+      "id": "s02",
+      "heading": "Nhưng ký ức nào?",
+      "text": "Bài kiểm tra đạt điểm tuyệt đối. Nhưng khi ký tên, tay Nam đứng yên. Nét chữ quen thuộc đã biến mất rồi.",
+      "actor": "keeper",
+      "symbol": "heart",
+      "label": "CÁI GIÁ KHÔNG GHI TRÊN BẢNG",
+      "fixedSeconds": 7.5,
+      "prop": "prop-heart"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+ "vector":{"name":"Tiệm đổi điều ước","rule":"Mỗi món đổi phải có hậu quả cụ thể, nhân vật tự tìm cách sửa bằng hành động.","characters":["boy","keeper","friend"],"palette":["#f5efdf","#173f46","#e98653"],"avoid":"Không lặp lại cùng bài học bằng cách thay tên đồ vật."},
+ "sketch":{"name":"Cuốn sổ ngày mai","rule":"Hai manh mối nhìn thấy trước lời giải; lời giải thay đổi cách hiểu tình huống.","characters":["doodle-reading","doodle-running","doodle-sitting"],"palette":["#f6f0dd","#302c48","#dd665b"]},
+ "kenney":{"name":"NPC nhớ mọi thứ","rule":"Thế giới game có quy tắc nhất quán; xung đột xuất phát từ lựa chọn của nhân vật.","characters":["npc-idle","npc-think","npc-talk"],"palette":["#15283b","#f1dfac","#5ed7a3"]},
+ "quickdraw":{"name":"Đoán trước nét cuối","rule":"Ba vòng; câu gợi ý không đọc đáp án; đáp án chỉ hiện sau khi phần lớn nét đã vẽ.","attribution":"Quick, Draw! dataset by Google, CC BY 4.0 https://creativecommons.org/licenses/by/4.0/"}
+}

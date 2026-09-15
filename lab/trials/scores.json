@@ -1,0 +1,12 @@
+{
+ "method":"Editorial assessment of the first prototypes by the implementing agent, not audience data. Effort score estimates repeatability; human editing minutes not measured.",
+ "weights":{"clarity_and_interest":30,"visuals":20,"repeatability":25,"hardware":15,"series_potential":10},
+ "rows":[
+  {"branch":"lab/vector-story","scores":[26,17,20,14,9],"total":86,"reason":"A recurring cast and causal story are clear. Current limited poses still need scene-specific acting."},
+  {"branch":"lab/quickdraw","scores":[23,16,23,15,8],"total":85,"reason":"Native strokes and simple question format are reusable. Recognizability requires curation; limited long-story use."},
+  {"branch":"lab/sketch-story","scores":[25,16,18,14,8],"total":81,"reason":"Good mystery premise, but library poses do not always depict the actual clue. Needs custom props."},
+  {"branch":"lab/kenney-story","scores":[25,14,17,14,9],"total":79,"reason":"Promising fictional game world; prototype lacks interactions and enough distinct scenery."}
+ ],
+ "default_selection":["vector","quickdraw"],
+ "manual_edit_under_30_minutes":"Not established: no human editing session measured. Automation/cache timing measured separately."
+}

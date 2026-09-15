@@ -1,0 +1,111 @@
+{
+  "boy": {
+    "path": "assets/openpeeps/5e532c33f3aa4b390f1bd62f_peep-3.svg",
+    "style": "vector",
+    "source": "https://www.openpeeps.com/",
+    "license": "CC0-1.0 · Pablo Stanley"
+  },
+  "keeper": {
+    "path": "assets/openpeeps/5e53505d9588e04da17ab336_peep-4.svg",
+    "style": "vector",
+    "source": "https://www.openpeeps.com/",
+    "license": "CC0-1.0 · Pablo Stanley"
+  },
+  "friend": {
+    "path": "assets/openpeeps/5e5350f9d399238698511b2f_peep-7.svg",
+    "style": "vector",
+    "source": "https://www.openpeeps.com/",
+    "license": "CC0-1.0 · Pablo Stanley"
+  },
+  "doodle-reading": {
+    "path": "assets/opendoodles/reading.svg",
+    "style": "sketch",
+    "source": "https://www.opendoodles.com/",
+    "license": "CC0-1.0 · Pablo Stanley"
+  },
+  "doodle-sitting": {
+    "path": "assets/opendoodles/sitting.svg",
+    "style": "sketch",
+    "source": "https://www.opendoodles.com/",
+    "license": "CC0-1.0 · Pablo Stanley"
+  },
+  "doodle-running": {
+    "path": "assets/opendoodles/running.svg",
+    "style": "sketch",
+    "source": "https://www.opendoodles.com/",
+    "license": "CC0-1.0 · Pablo Stanley"
+  },
+  "doodle-clumsy": {
+    "path": "assets/opendoodles/clumsy.svg",
+    "style": "sketch",
+    "source": "https://www.opendoodles.com/",
+    "license": "CC0-1.0 · Pablo Stanley"
+  },
+  "doodle-loving": {
+    "path": "assets/opendoodles/loving.svg",
+    "style": "sketch",
+    "source": "https://www.opendoodles.com/",
+    "license": "CC0-1.0 · Pablo Stanley"
+  },
+  "doodle-strolling": {
+    "path": "assets/opendoodles/strolling.svg",
+    "style": "sketch",
+    "source": "https://www.opendoodles.com/",
+    "license": "CC0-1.0 · Pablo Stanley"
+  },
+  "npc-idle": {
+    "path": "assets/kenney/toon-characters/Male person/PNG/Poses/character_malePerson_idle.png",
+    "style": "kenney",
+    "source": "https://kenney.nl/assets/toon-characters",
+    "license": "CC0-1.0 · Kenney"
+  },
+  "npc-think": {
+    "path": "assets/kenney/toon-characters/Male person/PNG/Poses/character_malePerson_think.png",
+    "style": "kenney",
+    "source": "https://kenney.nl/assets/toon-characters",
+    "license": "CC0-1.0 · Kenney"
+  },
+  "npc-walk0": {
+    "path": "assets/kenney/toon-characters/Male person/PNG/Poses/character_malePerson_walk0.png",
+    "style": "kenney",
+    "source": "https://kenney.nl/assets/toon-characters",
+    "license": "CC0-1.0 · Kenney"
+  },
+  "npc-cheer1": {
+    "path": "assets/kenney/toon-characters/Male person/PNG/Poses/character_malePerson_cheer1.png",
+    "style": "kenney",
+    "source": "https://kenney.nl/assets/toon-characters",
+    "license": "CC0-1.0 · Kenney"
+  },
+  "npc-talk": {
+    "path": "assets/kenney/toon-characters/Male person/PNG/Poses/character_malePerson_talk.png",
+    "style": "kenney",
+    "source": "https://kenney.nl/assets/toon-characters",
+    "license": "CC0-1.0 · Kenney"
+  },
+  "npc-fall": {
+    "path": "assets/kenney/toon-characters/Male person/PNG/Poses/character_malePerson_fall.png",
+    "style": "kenney",
+    "source": "https://kenney.nl/assets/toon-characters",
+    "license": "CC0-1.0 · Kenney"
+  },
+  "prop-note": {
+    "path": "trials/props/note.svg",
+    "style": "vector",
+    "source": "Video Lab original code-generated SVG",
+    "license": "original project asset"
+  },
+  "prop-heart": {
+    "path": "trials/props/heart.svg",
+    "style": "vector",
+    "source": "Video Lab original code-generated SVG",
+    "license": "original project asset"
+  },
+  "import-background": {
+    "path": "trials/imports/import-background.png",
+    "source": "https://kenney.nl/assets/rpg-urban-pack",
+    "license": "CC0-1.0; Kenney; existing library image, not AI-generated",
+    "style": "external",
+    "sha256": "7e8891b85b79bb3cc944edddd05996452f8fbc6cb9753831b9c9db30b0b8bbdd"
+  }
+}

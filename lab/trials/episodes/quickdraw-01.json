@@ -1,0 +1,39 @@
+{
+  "id": "quickdraw-01",
+  "style": "quickdraw",
+  "series": "Đoán trước nét cuối",
+  "title": "Ba hình, ba thử thách",
+  "episode": "01",
+  "scenes": [
+    {
+      "id": "s01",
+      "heading": "Vòng 1 · Nhìn nét đầu",
+      "text": "Đoán trước nét cuối nhé. Con gì có hai tai nhọn? Bạn có năm giây.",
+      "actor": "",
+      "symbol": "star",
+      "label": "MÈO",
+      "drawing": "cat",
+      "fixedSeconds": 8
+    },
+    {
+      "id": "s02",
+      "heading": "Vòng 2 · Nhanh hơn một chút",
+      "text": "Hình này xuất hiện sau cơn mưa. Bạn nhận ra chưa? Hãy chờ nét cuối cùng.",
+      "actor": "",
+      "symbol": "star",
+      "label": "CẦU VỒNG",
+      "drawing": "rainbow",
+      "fixedSeconds": 8
+    },
+    {
+      "id": "s03",
+      "heading": "Vòng 3 · Đừng nhìn đáp án",
+      "text": "Vật này giữ bạn khô ráo. Đừng nhìn đáp án vội. Bạn đoán đúng mấy câu?",
+      "actor": "",
+      "symbol": "star",
+      "label": "CHIẾC Ô",
+      "drawing": "umbrella",
+      "fixedSeconds": 9
+    }
+  ]
+}

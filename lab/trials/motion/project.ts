@@ -1,0 +1,3 @@
+import {makeProject} from '@motion-canvas/core';
+import story from './story?scene';
+export default makeProject({scenes:[story]});
