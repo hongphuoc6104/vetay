@@ -94,3 +94,7 @@ Hồ sơ có thể thêm `effects`: mỗi mục gồm scene (mã cảnh), offset
 ## Hai kênh riêng
 
 Đọc `CHANNEL-PREPARATION.md` để thêm hợp đồng biên tập phù hợp kênh. `channel/science` và `channel/storytelling` có định hướng riêng ở `CHANNEL.md`; bộ dựng vẫn chung. Các gói cũ chưa có trường channel được chấp nhận để chạy hồi quy; gói mới phải dùng mẫu hồ sơ kênh. Validator kiểm tra đủ thông tin, không tự xác nhận tính đúng của nguồn. `NEXT-AGENT.md` là hướng dẫn bàn giao ngắn cho phiên mới.
+
+## Cấu trúc kênh và giọng đọc mới
+
+Đọc [CHANNELS.md](CHANNELS.md) cho đường dẫn gói theo kênh, hồ sơ giọng riêng, chữ đọc khác phụ đề, khoảng nghỉ và lệnh tạo mẫu nghe. Nội dung riêng nằm trong channels/<kênh> trên đúng nhánh; main chỉ giữ bộ sản xuất chung. Hướng dẫn lệnh ID ở trên vẫn dùng cho ví dụ hồi quy.

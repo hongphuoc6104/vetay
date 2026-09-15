@@ -14,6 +14,6 @@ Người dùng cung cấp đề tài. Agent chọn đúng loại nội dung, thu
 
 Không gọi kiểm tra giải mã là đã xem/nghe toàn video. Báo riêng kiểm tra tự động, khung hình, nghe và xem tốc độ thường. Không gọi bài mẫu kỹ thuật là đã chứng minh chất lượng nội dung hoặc thị hiếu. Không hứa số tập/ngày trước khi đo quá trình làm tập mới.
 
-## Công việc tiếp sau nghiệm thu hai tập kỹ thuật
+## Sau nâng cấp hai kênh
 
-Kênh truyện: tạo tập hư cấu đời thường về hiểu lầm do trả lời tin nhắn chậm; bài học thể hiện qua hành động, không diễn thuyết. Kênh khoa học: chọn một bài nghiên cứu có bản gốc truy cập được, xác minh nguồn rồi chuẩn bị tập paper-review một kết quả và giới hạn. Hai tập này là vòng nội dung tiếp theo, chưa được tạo trong đợt kiểm chứng shadow-key/speaker.
+Đọc CHANNELS.md và channels/<kênh>/CHANNEL.md. Dùng đường dẫn gói đầy đủ trong repo để sản xuất nội dung kênh; ID ngắn dành cho ví dụ hồi quy. channel.json quyết định giọng mặc định, tập có thể ghi đè. Tập mới cần kiểm tra nội dung và khung hình riêng. Không coi giọng tạm đã được người dùng chọn. Tình trạng từng pilot nằm ở handoff.md của nó, ưu tiên hơn danh sách công việc cũ ở trên.
