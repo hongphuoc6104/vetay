@@ -1,0 +1,45 @@
+{
+  "version": "map-v1",
+  "seconds": 5,
+  "config": {
+    "version": "map-v1",
+    "name": "Bản đồ học thuật",
+    "avatar": "/sys/templates/brand/logo-light.png",
+    "palette": "technology",
+    "introSeconds": 1.5,
+    "coverSeconds": 0.9,
+    "outroMinSeconds": 5,
+    "cta": "Hãy follow kênh và nhấn thích nhé."
+  },
+  "selection": [
+    {
+      "id": "cta",
+      "text": "Hãy follow kênh và nhấn thích nhé.",
+      "selected": 1,
+      "candidates": [
+        {
+          "take": 1,
+          "duration": 1.6,
+          "front": 0.03,
+          "back": 0.030000000000000027,
+          "internalSilence": 0.08000000000000007
+        },
+        {
+          "take": 2,
+          "duration": 1.72,
+          "front": 0.03,
+          "back": 0.030000000000000027,
+          "internalSilence": 0.11999999999999988
+        }
+      ],
+      "selectionBasis": "silence measurement; auditory quality not automatically verified"
+    }
+  ],
+  "files": {
+    "outro.mp4": "c5fee2cb534304a6cab9ecba5f94290b57a42a9c75f35670516f8fc4a7a6cb32",
+    "outro.srt": "3bcc5d988407be58c9503b0a483e9084f392b399a696f55bde63c79e53f66763",
+    "outro.wav": "c2c641d2529b3f1e8feee7ca920d4fe1c2b66af9549b35a714c443794bb61676",
+    "timeline.json": "42f224a2945565be9da98ed3663b86006f150587d7578d0ad25a15bce4882978",
+    "outro-cover.png": "136b11878d80bd08ff8c35bb77d1d930c1755f3e504d88c3a013746248d73e0c"
+  }
+}

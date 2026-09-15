@@ -64,7 +64,7 @@ class Film:
    label=self.labels.get(b,'Minh họa' if b==1 else '')
    items=[{'id':f'label-{b}','text':label,'plain':True,'x':150,'y':255,'width':760,'cue':self.start(b)}] if label else []
    scenes.append({'id':f's{b:02}','start':self.start(b),'end':self.end(b),'theme':'light','title':[],'template':{'id':'freehand','version':'1.0.0','items':items,'drawings':[{'ref':id} for id,(first,last) in self.groups.items() if first<=b<=last]}})
-  p={'id':'example-bridge','title':titles[self.ep],'category':'ai-qua-net-ve','stylePreset':'net-cinematic-v1','rendererVersion':'1.0.0','palette':'technology','format':{'width':1080,'height':1920,'fps':30},'layout':'drawing-first','drawingCoordinateLayout':'drawing-first','captionMode':'sidecar','coverFrame':1050,'styleReviewStatus':'approved','approved':True,'audioMaster':'master.wav','drawingLibrary':self.lib,'scenes':scenes}
+  p={'id':'example-bridge','keyword':'AI bịa','title':titles[self.ep],'category':'ai-qua-net-ve','stylePreset':'net-cinematic-v1','rendererVersion':'1.0.0','palette':'technology','format':{'width':1080,'height':1920,'fps':30},'layout':'drawing-first','drawingCoordinateLayout':'drawing-first','captionMode':'sidecar','coverFrame':1050,'styleReviewStatus':'approved','approved':True,'audioMaster':'master.wav','drawingLibrary':self.lib,'scenes':scenes}
   (self.base/'project.json').write_text(json.dumps(p,ensure_ascii=False,indent=2));print(self.ep,len(self.lib),'drawings',self.t['targetSeconds'],'seconds')
 def episode1(f):
  box=f.bridge('opening-',1,6);f.add('walker','person',[200,605,100,200],2,0,2,last=6);f.add('ai','robot',[760,330,140,140],2,1,2,color='teal',last=6)

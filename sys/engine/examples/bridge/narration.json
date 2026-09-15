@@ -1,7 +1,7 @@
 {
   "durationRange": [
-    160,
-    180
+    158.5,
+    173.5
   ],
   "phrases": [
     {
@@ -55,16 +55,6 @@
       }
     },
     {
-      "id": "b02p3",
-      "sceneId": "s02",
-      "text": "Cảm giác yên tâm đến trước khi ta thấy được bằng chứng.",
-      "role": "body",
-      "after": {
-        "kind": "scene",
-        "seconds": 0.5
-      }
-    },
-    {
       "id": "b03p1",
       "sceneId": "s03",
       "text": "Nhưng một câu trả lời gồm nhiều chi tiết.",
@@ -112,16 +102,6 @@
       "after": {
         "kind": "sentence",
         "seconds": 0.35
-      }
-    },
-    {
-      "id": "b04p3",
-      "sceneId": "s04",
-      "text": "Nét trang trí không giúp kiểm chứng điều đang được nói ra.",
-      "role": "body",
-      "after": {
-        "kind": "scene",
-        "seconds": 0.5
       }
     },
     {
@@ -502,16 +482,6 @@
       "after": {
         "kind": "sentence",
         "seconds": 0.35
-      }
-    },
-    {
-      "id": "b17p4",
-      "sceneId": "s17",
-      "text": "Hãy đối chiếu từng biểu tượng trước khi xem đáp án xuất hiện.",
-      "role": "body",
-      "after": {
-        "kind": "scene",
-        "seconds": 0.5
       }
     },
     {

@@ -10,7 +10,7 @@ test('topic scaffold is drawing-only and independent of caller working directory
   const r=spawnSync(process.execPath,[path.join(root,'sys/engine/studio.mjs'),'new-video-from-topic','--slug',slug,'--topic','Đặt sách vào túi'],{cwd:'/tmp',encoding:'utf8'});
   assert.equal(r.status,0,r.stderr);
   const p=JSON.parse(await fs.readFile(path.join(dir,'project.json'))),n=JSON.parse(await fs.readFile(path.join(dir,'narration.json')));
-  assert.equal(p.layout,'drawing-first');assert.equal(p.captionMode,'sidecar');assert.equal(p.scenes[0].template.id,'freehand');assert.equal(p.outputLayouts,undefined);assert.equal(p.publication,undefined);assert.deepEqual(n.durationRange,[165,180]);assert.equal(p.approved,false);
+  assert.equal(p.layout,'drawing-first');assert.equal(p.captionMode,'sidecar');assert.equal(p.scenes[0].template.id,'freehand');assert.equal(p.outputLayouts,undefined);assert.equal(p.publication,undefined);assert.deepEqual(n.durationRange,[158.5,173.5]);assert.equal(p.approved,false);
   const rejected=spawnSync(process.execPath,[path.join(root,'sys/engine/studio.mjs'),'render','--slug',slug,'--layout','both'],{encoding:'utf8'});
   assert.notEqual(rejected.status,0);assert.match(rejected.stderr,/drawing-first only/);
  } finally {await fs.rm(dir,{recursive:true,force:true});}

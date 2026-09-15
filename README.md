@@ -33,3 +33,7 @@ python3 sys/engine/package-core.py --help
 ```
 
 Xem [kết quả kiểm chứng](sys/skill/cinematic-tutorial-video/references/verification.md) để biết phạm vi đã thử và giới hạn thực tế.
+
+## Nhận diện Bản đồ học thuật
+
+Intro đường bản đồ 1,5 giây, chỉ đổi từ khóa; outro có avatar, tên kênh và lời Adam đã dựng sẵn. Studio tự ghép và dịch phụ đề. Mỗi project cần `keyword` 1–4 từ. Thân bài mặc định 158,5–173,5 giây để tổng video giữ 165–180 giây. Xem [hướng dẫn nhận diện](sys/skill/cinematic-tutorial-video/references/identity.md). Media nhận diện có phiên bản là ngoại lệ duy nhất được commit; audio/video từng tập vẫn chỉ lưu local.

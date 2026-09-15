@@ -38,3 +38,5 @@ __pycache__/
 
 !/sys/engine/voice.py
 !/sys/engine/package-core.py
+
+!/sys/engine/identity.mjs

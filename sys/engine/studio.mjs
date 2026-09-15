@@ -5,6 +5,7 @@ import {spawnSync} from 'node:child_process';
 import {catalog,compileTemplates} from './visual/templates/registry.mjs';
 import {cacheCommand} from './visual/cache.mjs';
 import {validateProject} from './visual/model.mjs';
+import {brandedRender,bodyRange,readyOutro,config as identityConfig} from './identity.mjs';
 import {neutralProject} from './examples/neutral.mjs';
 
 const root=path.resolve(import.meta.dirname,'../..');
@@ -40,8 +41,7 @@ async function render(preview=false){
  await fs.mkdir(output,{recursive:true});
  if(p.layout!=='drawing-first'||p.captionMode!=='sidecar')throw Error('Use drawing-first with sidecar captions on this branch.');
  const measured=JSON.parse(await fs.readFile(timeline,'utf8'));
- if(!preview&&(measured.targetSeconds<165||measured.targetSeconds>180))throw Error('Full videos must be 165–180 seconds; revise narration.');
- run(process.execPath,[script,'--project',manifest,'--timeline',timeline,'--output',output,'--name',preview?'preview':'final','--transport',get('--transport','binary-pipe'),...(preview?['--start',get('--start','0'),'--end',get('--end','38')]:[])]);
+ await brandedRender({p,manifest,timeline,output,work,preview,start:Number(get('--start','0')),end:Number(get('--end','28')),transport:get('--transport','binary-pipe')});
 
 }
 switch(cmd){
@@ -65,10 +65,11 @@ switch(cmd){
   const input=get(cmd.endsWith('topic')?'--topic':'--input','');if(!input)throw Error('Provide --topic or --input.');
   await fs.mkdir(work,{recursive:true});
   const duration=Number(get('--duration','175'));if(!Number.isFinite(duration)||duration<165||duration>180)throw Error('Full video target must be 165–180 seconds');
-  const p={...neutralProject(duration),id:slug,title:input,inputType:cmd.endsWith('topic')?'topic':'research',input,durationTargetSec:duration,voice:'Adam',approved:false,revisions:[],layout:'drawing-first',captionMode:'sidecar',drawingCoordinateLayout:'drawing-first',styleReviewStatus:'approved',drawingLibrary:{}};
-  p.scenes=[{id:'s01',start:0,end:duration,role:'body',theme:'light',title:[],template:{id:'freehand',version:'1.0.0',items:[],drawings:[]}}];
+  const p={...neutralProject(duration),id:slug,title:input,inputType:cmd.endsWith('topic')?'topic':'research',input,durationTargetSec:duration,keyword:get('--keyword',input.trim().split(/\s+/).length<=4?input:''),voice:'Adam',approved:false,revisions:[],layout:'drawing-first',captionMode:'sidecar',drawingCoordinateLayout:'drawing-first',styleReviewStatus:'approved',drawingLibrary:{}};
+  const identity=await readyOutro();const range=bodyRange(identity.seconds);
+  p.scenes=[{id:'s01',start:0,end:duration-identityConfig.introSeconds-identity.seconds,role:'body',theme:'light',title:[],template:{id:'freehand',version:'1.0.0',items:[],drawings:[]}}];
   await fs.writeFile(manifest,JSON.stringify(p,null,2));
-  await fs.writeFile(path.join(work,'narration.json'),JSON.stringify({durationRange:[165,180],phrases:[]},null,2));
+  await fs.writeFile(path.join(work,'narration.json'),JSON.stringify({durationRange:range,phrases:[]},null,2));
   await fs.writeFile(path.join(work,'storyboard.md'),'# '+input+'\n\nWrite 18–24 beats: initial object → drawing action → result → narration → labels → carried objects.\n');
   await fs.writeFile(path.join(work,'sources.md'),'# Sources\n\nRecord claim, primary source URL, access date, and whether the scene is an analogy or invented example.\n');
   console.log('Created '+manifest+'\nAuthor the storyboard and narration, run voice, bind measured cues, self-review preview, then render. See the skill.');break;

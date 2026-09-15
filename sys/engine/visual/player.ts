@@ -3,6 +3,7 @@ import {makeScene2D,Node} from '@motion-canvas/2d';
 import {PlaybackManager,PlaybackStatus,PlaybackState,Logger,SharedWebGLContext,Vector2,Stage,waitFor} from '@motion-canvas/core';
 import {ReadOnlyTimeEvents} from '@motion-canvas/core/lib/scenes/timeEvents/ReadOnlyTimeEvents';
 import {createPrimitives,ramp,smooth,mix,clamp} from './primitives';import {PaperCamera} from './camera';
+import {drawIdentity} from './identity';
 import {drawTemplate} from './templates/draw';
 import {validateProject,resolveTrack,interpolate,cueTime,publicationMeta} from './model.mjs';
 const {project,timeline,brand,assetBase}=await fetch('/__net/project').then(r=>r.json());
@@ -18,6 +19,7 @@ for(const e of scenes.flatMap((s:any)=>allElements(s.elements||[]))){
  e._tracks=Object.fromEntries(Object.entries(e.animate||{}).map(([k,v])=>[k,resolveTrack(v,timeline)]));
 }
 const logos:Record<string,HTMLImageElement>={};for(const theme of ['light','dark']){const i=new Image();i.src='/sys/templates/brand/'+brand.templates[theme].logo;await i.decode();logos[theme]=i;}
+let identityAvatar=logos.light;if(project.identity){identityAvatar=new Image();identityAvatar.src=assetURL(project.identity.avatar);await identityAvatar.decode();}
 const color=(token:string|undefined,theme:string)=>token==='none'?'':token==='foreground'||!token?theme==='light'?C.ink:C.paper:token==='accent'?C.gold:C[token];
 function wrapped(ctx:CanvasRenderingContext2D,text:string,width:number,size:number,weight:number){
  ctx.font=`${weight} ${size}px "Be Vietnam Pro"`;let lines:string[]=[];
@@ -72,6 +74,7 @@ function drawElements(ctx:CanvasRenderingContext2D,items:any[],t:number,theme:st
  }
  ctx.restore();}}
 function paint(ctx:CanvasRenderingContext2D,t:number){
+ if(project.identity){drawIdentity(ctx,t,project.identity,P,C,identityAvatar);return;}
  const s=scenes.find((s:any)=>t>=s.start&&t<s.end)||scenes.at(-1),index=scenes.indexOf(s),previous=scenes[Math.max(0,index-1)];let light=s.theme==='light'?1:0;
  if(previous.theme!==s.theme)light=mix(previous.theme==='light'?1:0,light,smooth(t,s.start,s.start+.65));
  const drawingFirst=project.layout==='drawing-first';

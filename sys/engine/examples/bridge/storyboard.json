@@ -24,7 +24,7 @@
       "initial": "Cầu vừa vẽ",
       "action": "Vẽ nhân vật bên bờ, bước tới mép rồi dừng",
       "result": "Một quyết định đang chờ",
-      "narration": "Một câu trả lời của AI cũng có thể tạo cảm giác như thế: gọn gàng, trôi chảy, khiến bạn muốn dùng ngay. Cảm giác yên tâm đến trước khi ta thấy được bằng chứng.",
+      "narration": "Một câu trả lời của AI cũng có thể tạo cảm giác như thế: gọn gàng, trôi chảy, khiến bạn muốn dùng ngay.",
       "labels": [
         "AI"
       ],
@@ -50,7 +50,7 @@
       "initial": "Cầu và ba biểu tượng",
       "action": "Vẽ một dấu tích lớn rồi thu nhỏ, đặt ra ngoài cầu",
       "result": "Dấu tích đẹp không trở thành trụ đỡ",
-      "narration": "Câu văn nghe hợp lý không tự biến thành bằng chứng. Dấu tích này chỉ cho thấy cảm giác tin tưởng của người đọc. Nét trang trí không giúp kiểm chứng điều đang được nói ra.",
+      "narration": "Câu văn nghe hợp lý không tự biến thành bằng chứng. Dấu tích này chỉ cho thấy cảm giác tin tưởng của người đọc.",
       "labels": [],
       "carry": "Cầu",
       "guidedNarration": "Câu văn nghe hợp lý không tự biến thành bằng chứng. Dấu tích này chỉ cho thấy cảm giác tin tưởng của người đọc. Nét trang trí không giúp kiểm chứng điều đang được nói ra."
@@ -220,7 +220,7 @@
       "initial": "Tờ nguồn mới",
       "action": "Vẽ đồng hồ 9 giờ, rồi thêm thời lượng 30 phút chỉ ở bản tóm tắt",
       "result": "Câu hỏi kiểm tra chuyển giao",
-      "narration": "Đến lượt bạn: nguồn chỉ ghi bắt đầu lúc chín giờ. Bản tóm tắt nói cuộc họp kéo dài ba mươi phút. Chi tiết nào cần kiểm tra thêm? Hãy đối chiếu từng biểu tượng trước khi xem đáp án xuất hiện.",
+      "narration": "Đến lượt bạn: nguồn chỉ ghi bắt đầu lúc chín giờ. Bản tóm tắt nói cuộc họp kéo dài ba mươi phút. Chi tiết nào cần kiểm tra thêm?",
       "labels": [
         "30 phút?"
       ],
