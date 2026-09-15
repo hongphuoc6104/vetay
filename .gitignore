@@ -40,3 +40,11 @@ __pycache__/
 !/sys/engine/package-core.py
 
 !/sys/engine/identity.mjs
+
+# Experimental branches: only source, lock files, licenses and small samples.
+!/lab/
+/lab/**/node_modules/
+/lab/**/output/
+/lab/**/__pycache__/
+/lab/**/*.pyc
+/lab/**/.env*
