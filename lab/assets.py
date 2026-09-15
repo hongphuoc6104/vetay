@@ -91,11 +91,12 @@ def extract(entry,path):
     if zipfile.is_zipfile(path):
         with zipfile.ZipFile(path) as z:
             infos=z.infolist()
+            if entry.get('skip_symlinks'): infos=[i for i in infos if not stat.S_ISLNK(i.external_attr>>16)]
             for i in infos:
                 safe(i.filename)
                 if stat.S_ISLNK(i.external_attr>>16): raise ValueError('Archive symlink rejected')
             expanded=sum(i.file_size for i in infos); budget(expanded)
-            out.mkdir(parents=True,exist_ok=True); z.extractall(out)
+            out.mkdir(parents=True,exist_ok=True); z.extractall(out, members=infos)
     else:
         with tarfile.open(path) as z:
             infos=z.getmembers()
