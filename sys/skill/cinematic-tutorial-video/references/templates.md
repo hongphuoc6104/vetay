@@ -55,3 +55,5 @@ The current templates use fixed coordinates and prohibit custom scene camera tra
 - Cache keys include source, assets, font, timing, style and encoder. Hash-verified complete chunks survive interruption. Never reuse `.partial.mp4` files.
 - Performance JSON distinguishes browser drawing, PNG encoding, upload and encoder write wait. Upload includes write wait; do not add overlapping numbers to claim a percent bottleneck. Linux process-tree RSS can count shared memory more than once.
 - Preserve the user's prior requirements in production.md, pause-policy.md and adam-delivery.json. Successful encoding or the right palette is not proof of good visual direction.
+
+To check a clean install without demo files, run `node sys/engine/examples/template.mjs cards`, then render `sys/work/example-cards/project.json` and its `timeline.json` with the shared renderer. This three-second silent fixture verifies the template pipeline only; production narration still follows the audio workflow.

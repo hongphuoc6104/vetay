@@ -52,7 +52,7 @@ function paint(ctx:CanvasRenderingContext2D,t:number){
  const {fg}=P.background(ctx,light,project.brandLine||'AI / RESEARCH / LEARNING',project.edition||'NÉT  —  01');
  P.txt(ctx,s.label||'',80,267,28,fg,600);
  for(let i=0;i<3;i++)P.rr(ctx,824+i*61,244,43,5,2,i<=Math.min(2,index)?C.teal:'#8ea49e55');
- const a=smooth(t,s.start,s.start+.5);P.alpha(ctx,a,()=>s.title.forEach((line:string,i:number)=>P.txt(ctx,line,80,375+i*89+(1-a)*38,68,i===1&&s.theme==='dark'?C.gold:fg,600)));
+ const a=smooth(t,s.start,s.start+.5);ctx.font='600 68px "Be Vietnam Pro"';for(const line of s.title)if(ctx.measureText(line).width>920)throw Error('Title overflow; split or shorten: '+s.id);P.alpha(ctx,a,()=>s.title.forEach((line:string,i:number)=>P.txt(ctx,line,80,375+i*89+(1-a)*38,68,i===1&&s.theme==='dark'?C.gold:fg,600)));
  ctx.save();const cam=s.camera||{};const v=(k:string,d:number)=>cam[k]?interpolate(resolveTrack(cam[k],timeline),t,d):d;ctx.translate(540,1050);ctx.scale(v('zoom',1),v('zoom',1));ctx.translate(-540+v('x',0),-1050+v('y',0));drawElements(ctx,s.elements||[],t,s.theme);ctx.restore();
  if(s.logo){P.alpha(ctx,smooth(t,s.end-1.7,s.end-1.2),()=>{ctx.save();ctx.beginPath();ctx.arc(540,1450,90,0,7);ctx.clip();ctx.drawImage(logos[s.theme],450,1360,180,180);ctx.restore();});}
  if(index>0){const p=ramp(t,s.start-.05,s.start+.65);if(p>0&&p<1){ctx.save();ctx.translate(-400+p*1900,0);ctx.rotate(-.08);ctx.globalAlpha=Math.sin(p*Math.PI)*.48;ctx.fillStyle=C.teal;ctx.fillRect(-100,-100,130,2200);ctx.fillStyle=C.gold;ctx.fillRect(46,-100,10,2200);ctx.restore();}}
