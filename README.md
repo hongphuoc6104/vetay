@@ -13,7 +13,7 @@ node sys/engine/studio.mjs setup
 node sys/engine/studio.mjs doctor
 ```
 
-Setup tạo môi trường Python, cài phụ thuộc khóa phiên bản của Node và tải Adam vào `sys/models`. Voice sử dụng đúng kho này ở chế độ offline. Doctor thực sự mở mô hình/preset, kiểm tra font, Chrome và bộ mã hóa. Không commit mô hình, audio, video hoặc cache.
+Setup tạo môi trường Python, cài phụ thuộc khóa phiên bản của Node và tải Adam vào `sys/models`. Voice sử dụng đúng kho này ở chế độ offline. Doctor thực sự mở mô hình/preset, kiểm tra font, Chrome và bộ mã hóa. Không commit mô hình, cache hoặc audio/video từng tập; media nhận diện có phiên bản được đóng gói riêng.
 
 ## Giao việc cho AI
 
@@ -37,3 +37,5 @@ Xem [kết quả kiểm chứng](sys/skill/cinematic-tutorial-video/references/v
 ## Nhận diện Bản đồ học thuật
 
 Intro đường bản đồ 1,5 giây, chỉ đổi từ khóa; outro có avatar, tên kênh và lời Adam đã dựng sẵn. Studio tự ghép và dịch phụ đề. Mỗi project cần `keyword` 1–4 từ. Thân bài mặc định 158,5–173,5 giây để tổng video giữ 165–180 giây. Xem [hướng dẫn nhận diện](sys/skill/cinematic-tutorial-video/references/identity.md). Media nhận diện có phiên bản là ngoại lệ duy nhất được commit; audio/video từng tập vẫn chỉ lưu local.
+
+Xem bộ mẫu có sẵn tại [trang nhận diện](sys/templates/brand/media/map-v1/index.html), hoặc tải [video ghép mẫu](sys/templates/brand/media/map-v1/sample.mp4). Tái tạo mẫu bằng `node sys/engine/examples/identity-demo.mjs`.
