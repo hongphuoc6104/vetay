@@ -15,3 +15,6 @@ Các trụ cột: vật lý trong nhà, cơ chế sinh học cơ bản, cách đ
 Năm loại nội dung đều được duy trì: explain, tutorial, news, paper-review, scientific-writing. Độ dài theo mục tiêu từng tập và yêu cầu người dùng. Tutorial cần tái hiện bước; news phân biệt ngày sự kiện/ngày đăng; paper-review kiểm phương pháp và giới hạn; scientific-writing nêu độc giả, thể loại và dẫn nguồn truy xuất được.
 
 Dùng PREPARATION-TEMPLATES.md để chuẩn bị năm thể loại. Tập metal-wood chỉ là pilot explain; không đại diện toàn bộ kênh. Giọng theo phản hồi mới: Phạm Tuyên được thích về chất giọng nhưng cần tinh chỉnh cách truyền đạt, không dùng preset thời sự. Quyết định hiện hành ở channel.json và voice.md.
+
+## Quy trình thị giác mới
+Đọc VISUAL-DIRECTION.md tại thư mục kênh và lab/video-workflow/VISUAL-DIRECTION.md. Tập mới dùng init --channel science, visual_version 1, hồ sơ đạo diễn và kiểm tra hình bắt buộc. Pilot cũ là đối chiếu kỹ thuật, chưa tự đạt chuẩn mới. Giọng Phạm Tuyên giữ nguyên.
