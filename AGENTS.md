@@ -1,22 +1,7 @@
-# Video lab branches
+# Video workflow
 
-These branches prepare experiments, not the three-minute production workflow.
-Read lab/README.md and lab/sources.lock.json before working. Use lab/assets.py
-for locked downloads into VIDEO_LAB_CACHE (default: ../video-lab-cache).
-All new downloads, environments, package caches and rendered output belong there;
-30,000,000,000-byte ceiling and 20 GB free-disk reserve. Never commit models,
-node_modules, credentials or generated videos. Preserve source licenses.
+Read lab/video-workflow/NEXT-AGENT.md and README.md there before work. On channel branches also read CHANNEL.md. main owns shared tooling; merge shared changes into both channel branches.
 
-Small technical import/render examples are allowed at arbitrary duration and
-aspect ratio. The inherited cinematic-tutorial-video skill applies only when
-explicitly producing legacy Nét episodes, not to these lab experiments.
-Do not execute downloaded third-party setup scripts automatically. Install only
-reviewed dependencies in isolated environments. Run experiments sequentially.
-Do not publish social videos or incur cloud/API charges without user instruction.
+Preparation-only requests stop at readiness; full-video requests continue to production. Keep scientific claims sourced, distinguish fiction from factual stories. Report technical/frame/full-speed/auditory review separately.
 
-## Reusable storytelling and science workflow
-When asked to prepare or produce storytelling/science videos with the new workflow,
-read `lab/video-workflow/README.md` first. Follow the two-stage episode handoff;
-do not rely on conversation history. Preparation-only requests stop at readiness;
-full-video requests continue into production. Original visual proofs are examples,
-not mandatory layouts. Separate technical, frame, full-speed, and auditory review.
+Only one heavy render at a time. Use shared VIDEO_LAB_CACHE (default sibling video-lab-cache), ceiling 30,000,000,000 bytes, reserve 20 GB. Never commit models, environments, credentials or generated media. No paid APIs or social publishing without user authorization. Preserve local voice/model/Playwright dependencies in sibling vetay.

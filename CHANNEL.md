@@ -22,4 +22,4 @@ Dùng bộ chung tạo giọng local, lịch thời gian thực, phụ đề, pr
 
 Hoàn tất tập speaker còn dở để nghiệm thu công cụ. Bổ sung trường claims/source metadata/editorial review và kiểm tra theo content_type, giữ tương thích mẫu cũ. Tạo mẫu hồ sơ cho năm loại nội dung. Sau đó kiểm chứng một tập trình bày bài báo có nguồn gốc rõ và truy cập được, chọn bài sau khi tra cứu. Agent sản xuất nhận gói mà không cần lịch sử hội thoại.
 
-Công cụ chung phát triển trên lab/video-workflow rồi chuyển commit cần thiết sang nhánh này. Tài liệu biên tập ở CHANNEL.md không gộp sang kênh truyện. Không dịch vụ trả phí, không tự đăng, không cam kết độ đúng chỉ nhờ kiểm tra tệp.
+Công cụ chung phát triển trên main rồi chuyển commit cần thiết sang nhánh này. Tài liệu biên tập ở CHANNEL.md không gộp sang kênh truyện. Không dịch vụ trả phí, không tự đăng, không cam kết độ đúng chỉ nhờ kiểm tra tệp.

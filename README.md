@@ -1,21 +1,14 @@
-# Video Lab — thử nghiệm tạo video theo cốt truyện
+# Video: khoa học và kể chuyện
 
-Đọc [hướng dẫn của nhánh hiện tại](lab/README.md).
+Chỉ ba nhánh: `main` (công cụ chung), `channel/science`, `channel/storytelling`.
 
-Các nhánh `lab/*` dùng chung dữ liệu local, khóa nguồn tải và giữ các mẫu nhỏ
-trong Git. Nền tảng gốc `ve-tay-thuan` tại `4d8f08a` được giữ nguyên.
+Agent bắt đầu từ [hướng dẫn bàn giao](lab/video-workflow/NEXT-AGENT.md), sau đó đọc [quy trình hai bước](lab/video-workflow/README.md). Ở nhánh kênh đọc thêm CHANNEL.md.
 
-| Nhánh | Hướng thử |
-|---|---|
-| `lab/base` | Bộ tải, danh mục và báo cáo tổng hợp |
-| `lab/vector-story` | Open Peeps + Tabler + IconPark |
-| `lab/sketch-story` | Excalidraw + Rough.js + Open Doodles |
-| `lab/kenney-story` | Các bộ hình 2D Kenney |
-| `lab/quickdraw` | 20 bản vẽ cho mỗi nhóm Quick Draw |
-| `lab/motion-canvas` | Dựng hoạt hình Motion Canvas |
-| `lab/remotion` | Dựng video bằng Remotion |
-| `lab/animated-drawings` | Nhân vật có khung xương của Meta |
-| `lab/generative-ai` | Mã Qwen-Image và Wan2.2, chưa tải model |
+```sh
+python3 lab/video-workflow/workflow.py doctor
+python3 -m unittest discover -s lab/video-workflow -p 'test_*.py'
+```
 
-Không commit trọng số, môi trường cài đặt, cache hay video xuất thử.
-Đây là các nền tảng thử nghiệm; trạng thái chạy thực tế được ghi riêng.
+Giữ thư mục runtime local tại repo `vetay` cạnh worktree: sys/.venv, sys/models và sys/engine/node_modules. Không xóa chúng: giọng local và Playwright đang dùng. Ba manifest sys/engine được giữ để ghi phiên bản phụ thuộc; các lệnh studio cũ không còn thuộc quy trình.
+
+Không dịch vụ trả phí hoặc tự đăng video. Cache giới hạn 30 GB, dự trữ 20 GB trống. Video và model không đưa vào Git.
