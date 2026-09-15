@@ -1,0 +1,131 @@
+{
+  "id": "metal-wood",
+  "title": "Cùng nhiệt độ. Sao kim loại lạnh hơn?",
+  "domain": "science",
+  "audience": "Người xem phổ thông từ 15 tuổi",
+  "language": "vi",
+  "duration": 30,
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "status": "draft",
+  "channel": {
+    "kind": "science",
+    "content_type": "explain",
+    "claims": [
+      {
+        "id": "same-temp",
+        "text": "Để đủ lâu trong cùng phòng, kim loại và gỗ có thể cùng nhiệt độ.",
+        "source_ids": [
+          "exploratorium",
+          "acs"
+        ],
+        "status": "supported",
+        "assessment": "Giới hạn ở vật đã cân bằng với cùng môi trường trước chạm; 22 °C là số minh họa."
+      },
+      {
+        "id": "heat-direction",
+        "text": "Tay ấm hơn truyền nhiệt vào vật; kim loại dẫn nhiệt đi nhanh hơn gỗ.",
+        "source_ids": [
+          "exploratorium",
+          "acs"
+        ],
+        "status": "supported",
+        "assessment": "Hai nguồn nêu trực tiếp hướng truyền và so sánh; giả định ban đầu vật mát hơn da."
+      },
+      {
+        "id": "sensation",
+        "text": "Da mất nhiệt nhanh hơn nên kim loại có cảm giác lạnh hơn; cảm giác không chỉ do nhiệt độ vật.",
+        "source_ids": [
+          "exploratorium",
+          "acs"
+        ],
+        "status": "supported",
+        "assessment": "Kết luận so sánh từ hai nguồn, không đồng nhất cảm giác với phép đo nhiệt độ và không tuyên bố mọi vật kim loại đều lạnh."
+      }
+    ]
+  },
+  "scenes": [
+    {
+      "id": "question",
+      "seconds": 6,
+      "text": "Chạm vào kim loại, bạn thấy lạnh. Nhưng gỗ ngay bên cạnh thì không lạnh bằng. Vì sao?",
+      "action": "Hai khối bằng kích thước; ngón tay treo phía trên.",
+      "camera": "So sánh hai khối cố định ngang hàng, mặt cắt đầu ngón tay; không đổi trục.",
+      "pause_before": 0.15,
+      "pause_after": 0.35
+    },
+    {
+      "id": "equal",
+      "seconds": 6,
+      "text": "Bất ngờ là: để đủ lâu trong cùng phòng, cả hai có thể cùng nhiệt độ!",
+      "action": "Hai nhãn nhiệt độ ban đầu 22 °C hiện đồng thời; ghi số minh họa.",
+      "camera": "So sánh hai khối cố định ngang hàng, mặt cắt đầu ngón tay; không đổi trục.",
+      "pause_before": 0.15,
+      "pause_after": 0.35
+    },
+    {
+      "id": "mechanism",
+      "seconds": 8,
+      "text": "Tay bạn ấm hơn nên nhiệt truyền vào vật. Kim loại dẫn nhiệt đi nhanh hơn gỗ.",
+      "action": "Ngón chạm bề mặt; bỏ nhiệt kế ban đầu; dòng nhiệt cam vào vật nhanh và sâu hơn bên kim loại.",
+      "camera": "So sánh hai khối cố định ngang hàng, mặt cắt đầu ngón tay; không đổi trục.",
+      "pause_before": 0.15,
+      "pause_after": 0.35
+    },
+    {
+      "id": "feeling",
+      "seconds": 6,
+      "text": "Da mất nhiệt nhanh hơn. Đó là lý do bạn cảm thấy kim loại lạnh hơn.",
+      "action": "Da phía kim loại chuyển sắc mát; phía gỗ giữ sắc ấm hơn, vẫn có truyền nhiệt.",
+      "camera": "So sánh hai khối cố định ngang hàng, mặt cắt đầu ngón tay; không đổi trục.",
+      "pause_before": 0.15,
+      "pause_after": 0.35
+    },
+    {
+      "id": "conclusion",
+      "seconds": 4,
+      "text": "Vậy cảm giác lạnh không chỉ phụ thuộc vào nhiệt độ của vật.",
+      "action": "Giữ so sánh; hiện kết luận ngắn, mũi tên tiếp tục đúng hướng.",
+      "camera": "So sánh hai khối cố định ngang hàng, mặt cắt đầu ngón tay; không đổi trục.",
+      "pause_before": 0.15,
+      "pause_after": 0.35
+    }
+  ],
+  "assets": [
+    {
+      "path": "scene.tsx",
+      "source": "original",
+      "license": "original project artwork"
+    }
+  ],
+  "sources": [
+    {
+      "id": "exploratorium",
+      "url": "https://www.exploratorium.edu/snacks/cold-metal",
+      "title": "Cold Metal — Exploratorium Teacher Institute",
+      "claim": "Vật để đủ lâu có thể cùng nhiệt độ phòng; nhiệt từ tay ấm truyền vào kim loại nhanh và làm da nguội.",
+      "published": null,
+      "published_note": "Trang được đọc không nêu ngày xuất bản.",
+      "source_type": "official",
+      "peer_review": "no",
+      "checked": true,
+      "checked_date": "2026-09-16",
+      "check_note": "Đã đọc Assembly, To Do and Notice, What’s Going On: cân bằng nhiệt phòng trước thử, nóng lên sau chạm, kim loại dẫn nhiệt từ da vào khối vật. Không dùng mô tả thần kinh đơn giản hóa làm claim sinh học chi tiết."
+    },
+    {
+      "id": "acs",
+      "url": "https://www.acs.org/content/dam/acsorg/msc/downloads/chapter-2/lesson-1/ch2-l1-activity-sheet-answers.pdf",
+      "title": "Heat, Temperature, and Conduction — Activity Sheet Answers, Chapter 2 Lesson 1",
+      "claim": "Kim loại và gỗ cùng nhiệt độ có cảm giác khác vì kim loại dẫn nhiệt tốt hơn, khiến ngón tay nguội hơn.",
+      "published": null,
+      "published_note": "PDF ghi ©2023 American Chemical Society, không nêu ngày xuất bản đầy đủ.",
+      "source_type": "official",
+      "peer_review": "no",
+      "checked": true,
+      "checked_date": "2026-09-16",
+      "check_note": "Đã đọc PDF trang 3, câu 9: so sánh trực tiếp kim loại/gỗ và hướng năng lượng từ ngón tay vào kim loại; câu 11 mô tả cân bằng nhiệt."
+    }
+  ],
+  "effects": []
+}

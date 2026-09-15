@@ -1,0 +1,42 @@
+{
+  "id": "science",
+  "name": "Khoa học gần mình",
+  "language": "vi",
+  "audience": "Người xem phổ thông 15+",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "default_duration": 30
+  },
+  "voice_status": "identity_liked_by_user_delivery_needs_refinement",
+  "palette": {
+    "background": "#081B28",
+    "text": "#F2F7F5",
+    "heat": "#FFBB72",
+    "metal": "#90B4C9",
+    "wood": "#BC8152",
+    "accent": "#64DACB"
+  },
+  "content_types": [
+    "explain",
+    "tutorial",
+    "news",
+    "paper-review",
+    "scientific-writing"
+  ],
+  "episode_directory": "episodes",
+  "references": [
+    "editorial.md",
+    "design-system.md",
+    "voice.md",
+    "assets/README.md"
+  ],
+  "voice": {
+    "preset": "Phạm Tuyên",
+    "speed": 1.0,
+    "temperature": 0.7,
+    "version": 3,
+    "dictionary": {}
+  }
+}
