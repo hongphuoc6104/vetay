@@ -1,4 +1,0 @@
-import fs from 'node:fs/promises';
-/** Linux RSS sum counts shared pages per process; it is not unique physical RAM. */
-export function sampleProcessTree(){let stopped=false,peak=0,samples=[];const started=Date.now();async function tree(pid){try{const [status,children]=await Promise.all([fs.readFile(`/proc/${pid}/status`,'utf8'),fs.readFile(`/proc/${pid}/task/${pid}/children`,'utf8')]);const rss=Number(status.match(/VmRSS:\s+(\d+)/)?.[1]||0)*1024;return rss+(await Promise.all(children.trim().split(/\s+/).filter(Boolean).map(tree))).reduce((a,b)=>a+b,0);}catch{return 0;}}
- async function tick(){if(stopped)return;const rss=await tree(process.pid);peak=Math.max(peak,rss);samples.push({seconds:(Date.now()-started)/1000,rss});}const timer=setInterval(tick,1000);return async()=>{await tick();stopped=true;clearInterval(timer);return {peakTreeRss:peak,memoryScope:'Linux /proc sum of process-tree RSS; shared pages may be counted multiple times',memorySamples:samples};};}
