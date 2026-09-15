@@ -48,3 +48,10 @@ __pycache__/
 /lab/**/__pycache__/
 /lab/**/*.pyc
 /lab/**/.env*
+
+# Channel source packages; generated media stays in shared cache.
+!/channels/
+/channels/**/*.wav
+/channels/**/*.mp4
+/channels/**/node_modules/
+/channels/**/__pycache__/

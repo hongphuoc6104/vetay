@@ -1,11 +1,7 @@
 # Trạng thái quy trình
 
-Bộ công cụ hai bước nhận mã tập, cảnh và thời lượng từ gói, không còn giới hạn mirror/pump. Có WAV local/import, cache giọng, phụ đề, âm sự kiện, xuất thử/cuối, khóa runtime và kiểm tra tệp trước khi thay bản cuối.
+Nền dùng chung cho main và hai nhánh kênh. Đường dẫn tập theo kênh, giọng cấu hình riêng, spoken_text, khoảng nghỉ, cache theo giọng và worker, đầu ra tách kênh. 35 kiểm thử đã qua trong đợt nâng cấp 2026-09-16. Mẫu hồi quy speaker đã xuất rough lại; shadow-key vẫn validate.
 
-Hai gói shadow-key và speaker được agent chuẩn bị tạo. Agent sản xuất độc lập đọc tài liệu, xuất chuyển động thô, phát hiện lỗi hạt khí và sửa; agent chính tiếp quản lời đọc, preview và xuất cuối. Đây là kiểm chứng bàn giao đến bước chuẩn bị/sản xuất thô, không tuyên bố agent độc lập đã tự hoàn thành toàn bộ bước cuối.
+Giọng theo yêu cầu: cả hai nam; khoa học tự nhiên, cuốn hút, không thời sự; storytelling trầm dày, rõ chữ, nhấn nhá theo cảm xúc. Các preset trong pilot chỉ là lựa chọn thử, chưa có xác nhận nghe của người dùng. Không tuyên bố TTS local điều khiển cảm xúc chính xác.
 
-Các khung preview có giọng đã được xem. Chưa nghe toàn bộ hoặc xem toàn bộ ở tốc độ thường. Báo cáo kỹ thuật final-report.json tại cache ghi độ phân giải, thời lượng, mã kiểm tra và thời gian xuất. Không gọi full decode là đã xem/nghe.
-
-Hồ sơ riêng của hai kênh có validator và mẫu khai báo. Những gói kỹ thuật cũ giữ tương thích. Hai tập kỹ thuật chưa thay thế vòng nội dung đời sống/paper-review; công việc đó được ghi trong NEXT-AGENT.md.
-
-Nhánh nền main quản lý công cụ chung; hai nhánh channel/science và channel/storytelling kế thừa thay đổi công cụ, giữ CHANNEL.md riêng. Không commit dữ liệu lớn, giữ cache dưới 30 GB và dự trữ 20 GB trống.
+Tình trạng từng pilot ở channels/<kênh>/episodes/<tập>/handoff.md trên đúng nhánh. Main không lưu nội dung riêng hai kênh. Mẫu nghe local tạo bằng audition.py; không commit WAV.
