@@ -2,6 +2,7 @@
 import struct
 import argparse,contextlib,fcntl,hashlib,json,math,os,re,shutil,signal,subprocess,sys,tempfile,time,urllib.request,wave
 from pathlib import Path
+from visual_contract import validate_visual, review_times, require_review
 from channel_schema import validate_channel
 from voice_config import resolve_voice, spoken_text, speech_key
 HERE=Path(__file__).resolve().parent;REPO=HERE.parents[1]
@@ -73,6 +74,8 @@ def load(name):
  for effect in s.get('effects',[]):
   if effect.get('scene') not in ids or effect.get('duration',.15)<=0 or effect.get('offset',0)<0:raise ValueError('Invalid sound effect cue')
  validate_channel(s)
+ visual=validate_visual(folder,s)
+ if visual:s['_visual']=visual
  return folder,s
 
 def fingerprint(folder):
@@ -94,7 +97,11 @@ def schedule(s,durations=None):
  rows=[];start=0
  for i,(x,end) in enumerate(zip(s['scenes'],ends)):
   rows.append(dict(x,start=start,end=end,duration=end-start));start=end
- return {'duration':s['duration'],'scenes':rows}
+ timeline={'duration':s['duration'],'scenes':rows}
+ if s.get('_visual'):
+  lookup={x['id']:x for x in rows}
+  timeline['shots']=[dict(shot,start=lookup[shot['scene']]['start']+shot['start']*lookup[shot['scene']]['duration'],end=lookup[shot['scene']]['start']+shot['end']*lookup[shot['scene']]['duration']) for shot in s['_visual']['shots']]
+ return timeline
 
 def speech(folder,s):
  c=config();audio=OUT/'audio';audio.mkdir(parents=True,exist_ok=True);rows=[];profile=resolve_voice(s)
@@ -197,17 +204,55 @@ def render(folder,s,timeline,caps,scale,audio=None):
     except subprocess.TimeoutExpired:os.killpg(p.pid,signal.SIGKILL);p.wait()
   log.close()
 
+def visual_review(folder,s,dest):
+ import html
+ visual=validate_visual(folder,s)
+ if visual is None:raise ValueError('Legacy package: add visual_version=1, visual.json and direction.md first')
+ report=json.loads((dest/'rough-report.json').read_text())
+ if report['input_digest']!=fingerprint(folder):raise ValueError('Rough render stale; rerun rough')
+ target=dest/'rough.mp4';vd=digest(target)
+ if report['sha256']!=vd:raise ValueError('Rough video differs from its report')
+ output=dest/'visual-review';output.mkdir(exist_ok=True)
+ marks=review_times(visual,schedule(s),s['fps'])
+ old={}
+ if (output/'review.json').exists():
+  previous=json.loads((output/'review.json').read_text())
+  if previous.get('input_digest')==fingerprint(folder) and previous.get('video_digest')==vd:old=previous
+ checks=[];cards=[]
+ for mark in marks:
+  name=mark['id']+'.png'
+  subprocess.run(['ffmpeg','-v','error','-y','-ss',str(mark['time']),'-i',str(target),'-frames:v','1','-vf','scale=360:-2',str(output/name)],check=True)
+  prior=next((x for x in old.get('checks',[]) if x['id']==mark['id']),{})
+  checks.append(dict(mark,image=name,status=prior.get('status','pending'),note=prior.get('note','')))
+  cards.append('<figure><img src="'+name+'"><figcaption>'+html.escape(mark['id']+' — '+mark['check'])+'</figcaption></figure>')
+ dump(output/'review.json',dict(input_digest=fingerprint(folder),video_digest=vd,checks=checks,rough_watched=old.get('rough_watched',False),rough_watch_note=old.get('rough_watch_note',''),auditory_review=False))
+ (output/'index.html').write_text('<meta charset="utf-8"><title>Visual review</title><style>body{background:#14212b;color:white;font-family:sans-serif}main{display:flex;flex-wrap:wrap}figure{width:360px;margin:12px}img{width:100%}</style><h1>Inspect, then record observations in review.json</h1><video controls width="360" src="../rough.mp4"></video><main>'+''.join(cards)+'</main>')
+ print(output/'index.html')
+
 def main():
- ap=argparse.ArgumentParser();ap.add_argument('command',choices=['doctor','init','validate','rough','ready','produce','check','voice']);ap.add_argument('episode',nargs='?');ap.add_argument('--scale',type=float,default=1,choices=[.5,1]);args=ap.parse_args()
+ ap=argparse.ArgumentParser();ap.add_argument('command',choices=['doctor','init','validate','rough','ready','produce','check','voice','visual-review']);ap.add_argument('episode',nargs='?');ap.add_argument('--scale',type=float,default=1,choices=[.5,1]);ap.add_argument('--channel',choices=['science','storytelling']);args=ap.parse_args()
  if args.command=='doctor':print(json.dumps(doctor(),indent=2));return
  if args.command=='init':
   if not args.episode:raise ValueError('Episode required')
-  folder=episode_folder(args.episode);folder.mkdir(parents=True,exist_ok=False)
+  folder=episode_folder(args.episode)
+  if folder.is_relative_to(REPO/'channels') and args.channel!=folder.parent.parent.name:raise ValueError('New channel episode requires matching --channel')
+  folder.mkdir(parents=True,exist_ok=False)
   dump(folder/'episode.json',{'id':folder.name,'title':'','domain':'story','language':'vi','audience':'15+ phổ thông','duration':30,'width':1080,'height':1920,'fps':30,'status':'draft','scenes':[],'assets':[],'sources':[]})
   for f in ['script.md','design.md','checks.md','handoff.md']:(folder/f).write_text('Draft — agent must complete before validation.\n')
+  if args.channel:
+   spec=json.loads((folder/'episode.json').read_text());spec.update(visual_version=1,domain='science' if args.channel=='science' else 'story',channel={'kind':args.channel})
+   if args.channel=='science':spec['channel'].update(content_type='explain',claims=[])
+   else:spec['channel'].update(truth_status='fiction',truth_disclosure='Truyện hư cấu',character_bible=[],continuity_checks=[])
+   dump(folder/'episode.json',spec)
+   dump(folder/'visual.json',dict(intent='',alternatives=['',''],chosen_direction='',selection_reason='',art_direction='',shots=[],checkpoints=[]))
+   (folder/'direction.md').write_text((HERE/'VISUAL-DIRECTION.md').read_text())
   return
  folder,s=load(args.episode);dest=destination(s)
- if args.command=='validate':print('Package valid; readiness is checked separately');return
+ if args.command=='validate':print('Package valid; readiness is checked separately'+ ('; legacy package has no visual contract' if 'visual_version' not in s else ''));return
+ if args.command=='visual-review':
+  with lock():
+   budget(50_000_000);visual_review(folder,s,dest)
+  return
  if args.command=='check':print(json.dumps(probe(dest/'final.mp4',s),indent=2));return
  if args.command=='ready':
   channel=s.get('channel',{})
@@ -215,6 +260,8 @@ def main():
   if any(c.get('status')!='pass' for c in channel.get('continuity_checks',[])):raise ValueError('Continuity checks pending or failed')
   report=json.loads((dest/'rough-report.json').read_text())
   if report['input_digest']!=fingerprint(folder):raise ValueError('Rough render stale; render it again')
+  visual=validate_visual(folder,s)
+  if visual:require_review(dest,fingerprint(folder),digest(dest/'rough.mp4'),visual)
   dump(dest/'ready.json',{'input_digest':fingerprint(folder),'note':'Technical preparation complete; see episode handoff for visual review'});return
  with lock():
   if args.command=='voice':
