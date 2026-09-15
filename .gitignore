@@ -33,3 +33,5 @@ __pycache__/
 *.mermaid
 **/architecture/
 **/diagrams/
+!/CLAUDE.md
+!/GEMINI.md

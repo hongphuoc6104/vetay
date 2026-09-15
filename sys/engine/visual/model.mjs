@@ -35,7 +35,7 @@ export function validateProject(project,timeline,brand){
   if(!Array.isArray(s.title)||s.title.length>2)throw Error('Use at most two authored title lines');
   const descend=es=>es.flatMap(e=>[e,...descend(e.children||[])]);
   for(const e of descend(s.elements||[])){
-   if(!['text','panel','image','video','stroke','ellipse','list','projection','group'].includes(e.type))throw Error('Unknown component '+e.type);
+   if(!['text','panel','image','video','stroke','ellipse','list','projection','group','template'].includes(e.type))throw Error('Unknown component '+e.type);
    if(e.fontSize!==undefined&&e.fontSize<(e.secondary?28:40))throw Error('Text is too small: '+e.id);
    if(e.type==='projection'&&!e.id)throw Error('Projection needs a stable id');
    for(const track of Object.values(e.animate||{})){const keys=resolveTrack(track,timeline);if(keys.some((x,i)=>i&&x.at<=keys[i-1].at))throw Error('Keyframes must increase');}

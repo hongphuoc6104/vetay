@@ -3,6 +3,7 @@ import {makeScene2D,Node} from '@motion-canvas/2d';
 import {PlaybackManager,PlaybackStatus,PlaybackState,Logger,SharedWebGLContext,Vector2,Stage,waitFor} from '@motion-canvas/core';
 import {ReadOnlyTimeEvents} from '@motion-canvas/core/lib/scenes/timeEvents/ReadOnlyTimeEvents';
 import {createPrimitives,ramp,smooth,mix,clamp} from './primitives';import {PaperCamera} from './camera';
+import {drawTemplate} from './templates/draw';
 import {validateProject,resolveTrack,interpolate,cueTime} from './model.mjs';
 const {project,timeline,brand,assetBase}=await fetch('/__net/project').then(r=>r.json());
 const query=new URLSearchParams(location.search);if(query.has('theme')){project.theme=query.get('theme');project.scenes.forEach((s:any)=>s.theme=project.theme);}if(query.has('palette'))project.palette=query.get('palette');
@@ -12,7 +13,7 @@ const assets:Record<string,HTMLImageElement|HTMLVideoElement>={};const assetURL=
 const diagnostics:any={text:[],holds:[],assets:[]};
 const allElements=(es:any[]):any[]=>es.flatMap(e=>[e,...allElements(e.children||[])]);
 for(const e of scenes.flatMap((s:any)=>allElements(s.elements||[]))){
- if(e.src&&!assets[e.src]){const el=e.type==='video'?document.createElement('video'):new Image();el.src=assetURL(e.src);if(el instanceof HTMLVideoElement){el.muted=true;el.preload='auto';await new Promise((yes,no)=>{el.onloadeddata=yes;el.onerror=no;});}else await el.decode();assets[e.src]=el;diagnostics.assets.push(e.src);}
+ if(e.src&&!assets[e.src]){const el=(e.type==='video'||e.mediaType==='video')?document.createElement('video'):new Image();el.src=assetURL(e.src);if(el instanceof HTMLVideoElement){el.muted=true;el.preload='auto';await new Promise((yes,no)=>{el.onloadeddata=yes;el.onerror=no;});}else await el.decode();assets[e.src]=el;diagnostics.assets.push(e.src);}
  e._tracks=Object.fromEntries(Object.entries(e.animate||{}).map(([k,v])=>[k,resolveTrack(v,timeline)]));
 }
 const logos:Record<string,HTMLImageElement>={};for(const theme of ['light','dark']){const i=new Image();i.src='/sys/templates/brand/'+brand.templates[theme].logo;await i.decode();logos[theme]=i;}
@@ -34,6 +35,7 @@ function values(e:any,t:number){const x={...e};for(const [key,track] of Object.e
 function drawElements(ctx:CanvasRenderingContext2D,items:any[],t:number,theme:string){for(const source of items){const e=values(source,t);const enter=cueTime(e.enter,timeline,-1e6),exit=cueTime(e.exit,timeline,1e6);if(t<enter||t>=exit)continue;ctx.save();ctx.globalAlpha*=clamp(e.opacity??1);ctx.translate(e.x||0,e.y||0);ctx.rotate(e.rotate||0);ctx.scale(e.scale??1,e.scale??1);
  if(e.reveal!==undefined){ctx.beginPath();ctx.rect(0,0,(e.width??900)*clamp(e.reveal),e.height??1000);ctx.clip();}
  switch(e.type){
+  case 'template':drawTemplate(ctx,e,t,theme,{P,C,timeline,assets,diagnostics,palette:project.palette});break;
   case 'text':textBlock(ctx,e,theme);break;
   case 'panel':{ctx.shadowColor='#15372d24';ctx.shadowBlur=e.shadow===false?0:45;ctx.shadowOffsetY=e.shadow===false?0:25;P.rr(ctx,0,0,e.width??884,e.height??700,e.radius??28,color(e.fill??(theme==='light'?'panel':'navy'),theme),e.border?color(e.border,theme):undefined);ctx.shadowBlur=0;ctx.shadowOffsetY=0;const childTheme=['panel','paper','captionLight'].includes(e.fill)?'light':['navy','captionDark'].includes(e.fill)?'dark':theme;drawElements(ctx,e.children||[],t,childTheme);break;}
   case 'group':drawElements(ctx,e.children||[],t,theme);break;
@@ -63,7 +65,8 @@ class Film extends Node{protected draw(c:CanvasRenderingContext2D){c.save();c.tr
 const desc=makeScene2D(function*(view){view.add(new Film({}));yield* waitFor(timeline.targetSeconds);});const scene=new desc.klass({...desc,name:'net-cinematic',size:new Vector2(W,H),resolutionScale:1,logger,playback:status,timeEventsClass:ReadOnlyTimeEvents,sharedWebGLContext:shared} as any);manager.setup([scene]);await manager.recalculate();await manager.reset();
 const stage=new Stage();stage.configure({size:new Vector2(W,H),resolutionScale:1,colorSpace:'srgb',background:C.navy});const canvas=document.querySelector('#film') as HTMLCanvasElement,c=canvas.getContext('2d')!;
 async function renderFrame(t:number){const frame=Math.max(0,Math.min(Math.round(timeline.targetSeconds*30)-1,Math.round(t*30)));t=frame/30;
- for(const e of scenes.flatMap((s:any)=>allElements(s.elements||[])).filter((e:any)=>e.type==='video')){const v=assets[e.src] as HTMLVideoElement;const desired=Math.max(0,Math.min(v.duration-.001,t-cueTime(e.enter,timeline)+(e.sourceStart||0)));if(Math.abs(v.currentTime-desired)>.001)await new Promise<void>((yes,no)=>{v.onseeked=()=>yes();v.onerror=no;v.currentTime=desired;});}
+ const active=scenes.find((s:any)=>t>=s.start&&t<s.end)||scenes.at(-1);const activeIds=new Set(allElements(active.elements||[]).filter((e:any)=>e.type==='projection').map((e:any)=>e.id));for(const [id,p] of projections)if(!activeIds.has(id)){p.rig.dispose();projections.delete(id);}
+ for(const e of allElements(active.elements||[]).filter((e:any)=>e.type==='video'||e.mediaType==='video')){const v=assets[e.src] as HTMLVideoElement;const desired=Math.max(0,Math.min(v.duration-.001,t-cueTime(e.enter??e.sceneStart,timeline)+(e.sourceStart||e.spec?.sourceStart||0)));if(Math.abs(v.currentTime-desired)>.001)await new Promise<void>((yes,no)=>{v.onseeked=()=>yes();v.onerror=no;v.currentTime=desired;});}
  await manager.seek(frame);await stage.render(manager.currentScene,manager.previousScene);const fatal=logger.history.find(x=>x.level==='error');if(fatal)throw Error(fatal.message);c.clearRect(0,0,W,H);c.drawImage(stage.finalBuffer,0,0);return frame;}
 (window as any).renderFrame=renderFrame;(window as any).netDiagnostics=diagnostics;(window as any).netModel={project,scenes,timeline};
 await renderFrame(0);(window as any).filmReady=true;

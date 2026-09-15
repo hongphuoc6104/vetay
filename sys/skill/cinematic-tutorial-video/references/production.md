@@ -4,7 +4,7 @@
 - Center the content group horizontally and vertically, but left-align multiline prose and lists inside it. Give numbers, checkboxes and text distinct aligned columns. Continuation lines align with text, not numbers.
 - Set Vietnamese in Be Vietnam Pro. Wrap at phrase boundaries, preserve accents and punctuation. Never shrink paragraphs to unreadable text to make them fit.
 - Use real editable notes or captured application actions as evidence; do not present a static painted UI as a working application. A purpose-built local notes editor is acceptable and must be identified in provenance.
-- Use hand-drawn strokes for underlines, circles, connecting arrows and reveal masks. Avoid cartoon characters and decorative stock images.
+- Use hand-drawn strokes for underlines, circles, connecting arrows and reveal masks. Avoid decorative stock images. Free explanatory drawings, including conceptual objects such as a brain, are allowed when they clarify narration; label conceptual metaphors and keep real evidence distinct.
 - Animate continuous objects between states. Camera moves connect related information; do not keep text moving while it must be read. Use Three.js perspective only when depth explains the transition.
 - Keep primary content inside x=80..1000, y=220..1610 at 1080×1920. Bottom captions are secondary. No generic title-card slideshow.
 

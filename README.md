@@ -46,3 +46,9 @@ Ví dụ kiểm tra dài 3 giây, âm thanh im lặng có chủ đích để ki�
 Skill được khám phá qua `.agents/skills`; các ứng dụng có quyền đọc/ghi và chạy lệnh local cũng có thể đọc trực tiếp SKILL.md. Chưa hoàn thiện bộ cài riêng và kiểm chứng trên tất cả ứng dụng desktop.
 
 Không yêu cầu dịch vụ trả phí. Giữ ghi nhận nguồn tư liệu nội bộ; chỉ hiện nguồn khi cần cho số liệu, trích dẫn, phát biểu theo nguồn hoặc giấy phép. Logo do chủ dự án cung cấp; các thư viện và mô hình giữ giấy phép riêng của nhà phát hành.
+
+## Template-first production
+
+Run `node sys/engine/studio.mjs templates` and read [the template workflow](sys/skill/cinematic-tutorial-video/references/templates.md). New projects use content slots with measured narration cues. The expanded templates are candidates pending visual review, not automatically approved designs. `AGENTS.md`, `CLAUDE.md` and `GEMINI.md` route local agents to the same rules; this does not prove that every desktop application auto-loads them.
+
+The default binary renderer streams PNG data into FFmpeg and caches verified H.264 chunks instead of writing every frame as a PNG. `--transport legacy-png` remains an explicit diagnostic option. Use `studio.mjs cache` for a dry-run cache inventory. No automatic deletion of old renders is performed.

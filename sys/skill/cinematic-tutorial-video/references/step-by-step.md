@@ -1,3 +1,6 @@
+# Template-first entry
+For new projects, [templates.md](templates.md) supersedes raw component authoring below. Use content slots and measured phrase cues. Keep raw components for existing projects and approved engine work.
+
 # Produce a Nét video from a fresh checkout
 
 All commands run from the repository root. Replace `lesson` with the project's lowercase slug. This workflow supplies the missing production context; do not search for the private demo, its narrator scripts or previous chat history.
