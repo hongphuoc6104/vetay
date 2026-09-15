@@ -1,0 +1,16 @@
+[
+  {
+    "id": "mai",
+    "name": "Mai",
+    "appearance": "Tóc bob đen, áo vàng đất, quần xanh than, da nâu ấm.",
+    "voice": "Người kể nam ngôi thứ ba; tiết chế, nhịp theo cảm xúc.",
+    "invariants": "Tóc bob và áo vàng giữ nguyên. Mai luôn bên trái bàn; điện thoại của Mai."
+  },
+  {
+    "id": "an",
+    "name": "An",
+    "appearance": "Tóc đen ngắn lệch, áo xanh ngọc trầm, quần xanh than, da nâu ấm.",
+    "voice": "Không có lời thoại trực tiếp trong tập này.",
+    "invariants": "Áo xanh và tóc ngắn giữ nguyên. Vào từ cửa phải, mang tập bản in trắng có ô xanh."
+  }
+]

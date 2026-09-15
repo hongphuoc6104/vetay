@@ -1,0 +1,138 @@
+{
+  "id": "unread-message",
+  "title": "Tin nhắn chưa trả lời",
+  "domain": "story",
+  "audience": "Người xem phổ thông 15+",
+  "language": "vi",
+  "duration": 30,
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "status": "draft",
+  "scenes": [
+    {
+      "id": "wait",
+      "seconds": 5,
+      "text": "Mười hai phút trôi qua. Tin nhắn của Mai vẫn chưa có câu trả lời.",
+      "action": "Tin nhắn đổi từ đã gửi 18:10 sang 18:22 chưa trả lời; Mai cúi đầu nhìn.",
+      "camera": "Trung cảnh căn phòng, điện thoại phóng đại theo quy ước đồ họa.",
+      "pause_before": 0.15,
+      "pause_after": 0.35
+    },
+    {
+      "id": "assume",
+      "seconds": 6,
+      "text": "Mai úp điện thoại xuống. Chắc An lại quên rồi. Cô không muốn chờ thêm nữa.",
+      "action": "Mai úp điện thoại xuống bàn. Khăn sạch và cốc đã có trên bàn.",
+      "camera": "Giữ không gian liên tục và bàn tay gắn với điện thoại.",
+      "pause_before": 0.15,
+      "pause_after": 0.35
+    },
+    {
+      "id": "reveal",
+      "seconds": 8,
+      "text": "Đúng lúc ấy, cửa mở. An mang đến tập bản in Mai cần cho sáng mai.",
+      "action": "An bước vào từ cửa phải, đưa xấp bản in xuống bàn; Mai ngẩng đầu.",
+      "camera": "Toàn hai người; giấy trắng tương phản áo xanh và nền.",
+      "pause_before": 0.15,
+      "pause_after": 0.35
+    },
+    {
+      "id": "respond",
+      "seconds": 7,
+      "text": "Nhìn bạn vừa đi qua mưa, Mai không hỏi nữa. Cô lặng lẽ đưa chiếc khăn sạch.",
+      "action": "Mai đưa khăn từ bàn đến tay An; An nhận. Không có câu răn dạy.",
+      "camera": "Giữ cả bàn tay và khăn trong cùng khung.",
+      "pause_before": 0.15,
+      "pause_after": 0.35
+    },
+    {
+      "id": "together",
+      "seconds": 4,
+      "text": "",
+      "action": "Giữ hai người cùng bàn với bản in, khăn đã nhận; hơi nước nhẹ trên cốc.",
+      "camera": "Kết thúc lặng bốn giây, giữ các vật và hậu quả trong khung.",
+      "pause_before": 0.15,
+      "pause_after": 0.35
+    }
+  ],
+  "assets": [
+    {
+      "path": "scene.tsx",
+      "source": "original",
+      "license": "original project artwork"
+    },
+    {
+      "path": "visuals.tsx",
+      "source": "original",
+      "license": "original project artwork"
+    }
+  ],
+  "sources": [],
+  "channel": {
+    "kind": "storytelling",
+    "truth_status": "fiction",
+    "truth_disclosure": "Truyện hư cấu",
+    "character_bible": [
+      {
+        "id": "mai",
+        "name": "Mai",
+        "appearance": "Tóc bob đen, áo vàng đất, quần xanh than, da nâu ấm.",
+        "voice": "Không thoại trực tiếp. Người kể nam ngôi thứ ba, rõ và tiết chế.",
+        "invariants": "Tóc bob và áo vàng giữ nguyên. Mai luôn bên trái bàn; điện thoại của Mai."
+      },
+      {
+        "id": "an",
+        "name": "An",
+        "appearance": "Tóc đen ngắn lệch, áo xanh ngọc trầm, quần xanh than, da nâu ấm.",
+        "voice": "Không có lời thoại trực tiếp trong tập này.",
+        "invariants": "Áo xanh và tóc ngắn giữ nguyên. Vào từ cửa phải, mang tập bản in trắng có ô xanh."
+      }
+    ],
+    "continuity_checks": [
+      {
+        "scene_id": "wait",
+        "character_ids": [
+          "mai"
+        ],
+        "status": "pass",
+        "note": "Đã xem ảnh mở/giữa/cuối và contact sheet mỗi 3 giây của rough: trang phục, tóc, thứ tự điện thoại–bản in–khăn nhất quán. Đã sửa bản in theo tay và khoảng cách trao khăn. Đây là kiểm tra mốc hình, không phải xem toàn bộ tốc độ thường."
+      },
+      {
+        "scene_id": "assume",
+        "character_ids": [
+          "mai"
+        ],
+        "status": "pass",
+        "note": "Đã xem ảnh mở/giữa/cuối và contact sheet mỗi 3 giây của rough: trang phục, tóc, thứ tự điện thoại–bản in–khăn nhất quán. Đã sửa bản in theo tay và khoảng cách trao khăn. Đây là kiểm tra mốc hình, không phải xem toàn bộ tốc độ thường."
+      },
+      {
+        "scene_id": "reveal",
+        "character_ids": [
+          "mai",
+          "an"
+        ],
+        "status": "pass",
+        "note": "Đã xem ảnh mở/giữa/cuối và contact sheet mỗi 3 giây của rough: trang phục, tóc, thứ tự điện thoại–bản in–khăn nhất quán. Đã sửa bản in theo tay và khoảng cách trao khăn. Đây là kiểm tra mốc hình, không phải xem toàn bộ tốc độ thường."
+      },
+      {
+        "scene_id": "respond",
+        "character_ids": [
+          "mai",
+          "an"
+        ],
+        "status": "pass",
+        "note": "Đã xem ảnh mở/giữa/cuối và contact sheet mỗi 3 giây của rough: trang phục, tóc, thứ tự điện thoại–bản in–khăn nhất quán. Đã sửa bản in theo tay và khoảng cách trao khăn. Đây là kiểm tra mốc hình, không phải xem toàn bộ tốc độ thường."
+      },
+      {
+        "scene_id": "together",
+        "character_ids": [
+          "mai",
+          "an"
+        ],
+        "status": "pass",
+        "note": "Đã xem ảnh mở/giữa/cuối và contact sheet mỗi 3 giây của rough: trang phục, tóc, thứ tự điện thoại–bản in–khăn nhất quán. Đã sửa bản in theo tay và khoảng cách trao khăn. Đây là kiểm tra mốc hình, không phải xem toàn bộ tốc độ thường."
+      }
+    ]
+  }
+}

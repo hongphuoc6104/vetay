@@ -1,0 +1,29 @@
+{
+  "id": "storytelling",
+  "name": "Một chuyện nhỏ",
+  "language": "vi",
+  "audience": "15+",
+  "default_duration": 30,
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30
+  },
+  "truth_status_default": "fiction",
+  "voice": {
+    "preset": "Đức Trí",
+    "speed": 1.0,
+    "temperature": 0.7,
+    "version": 3,
+    "dictionary": {}
+  },
+  "voice_status": "provisional_replacement_pending_audition",
+  "pilot": "episodes/unread-message",
+  "editorial": "EDITORIAL.md",
+  "design": "DESIGN.md",
+  "voice_notes": "VOICE.md",
+  "assets": "assets/README.md",
+  "rejected_voice_presets": [
+    "Thanh Bình"
+  ]
+}
