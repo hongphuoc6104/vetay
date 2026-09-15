@@ -52,3 +52,14 @@ Không yêu cầu dịch vụ trả phí. Giữ ghi nhận nguồn tư liệu n�
 Run `node sys/engine/studio.mjs templates` and read [the template workflow](sys/skill/cinematic-tutorial-video/references/templates.md). New projects use content slots with measured narration cues. The expanded templates are candidates pending visual review, not automatically approved designs. `AGENTS.md`, `CLAUDE.md` and `GEMINI.md` route local agents to the same rules; this does not prove that every desktop application auto-loads them.
 
 The default binary renderer streams PNG data into FFmpeg and caches verified H.264 chunks instead of writing every frame as a PNG. `--transport legacy-png` remains an explicit diagnostic option. Use `studio.mjs cache` for a dry-run cache inventory. No automatic deletion of old renders is performed.
+
+## Series thuần vẽ
+
+Chế độ `drawing-first` mở rộng vùng vẽ, hỗ trợ vật thể dùng lại và chuyển trạng thái qua cảnh; `captionMode: "sidecar"` xuất phụ đề riêng. Xem [quy trình thuần vẽ](sys/skill/cinematic-tutorial-video/references/drawing-first.md). Dự án cũ giữ bố cục và lời như trước. Dùng `npm --prefix sys/engine test` và `npm --prefix sys/engine run test:drawing` để kiểm tra; mẫu bố cục mới vẫn cần người dùng xem trước khi sản xuất toàn tập.
+
+
+## Lời dẫn và hai bản bố cục
+
+Hai phong cách thuần vẽ / vẽ trong khung đã được chủ kênh duyệt. Chọn `--layout both` khi tạo hoặc xuất dự án. Tạo `narration.json`, chạy `node sys/engine/studio.mjs voice --slug ten-video`, rồi dùng `cue` và `endCue` để nét bút đi theo thời gian lời thật. Xuất bằng `node sys/engine/studio.mjs render --slug ten-video --layout both`. Audio được dùng chung; mỗi bản có MP4, SRT, ảnh bìa.
+
+Đóng gói mã nguồn bằng `python3 sys/engine/package-core.py --output video/ai-qua-net-ve/bo-cong-cu/net-studio.tar.gz`. Gói gồm cả chức năng mới trong thư mục làm việc; không kèm thư viện đã cài, mô hình giọng hoặc dữ liệu video riêng. Sau giải nén, AI đọc AGENTS.md; kiểm tra `doctor`, dùng `setup` nếu cần cài phụ thuộc. Yêu cầu Node.js ≥20.15, Python 3.12, uv, FFmpeg/ffprobe và Chrome. Cần tải mô hình giọng khi thiết lập máy mới. Bộ gói chưa chứng minh mọi ứng dụng AI tự phát hiện và chạy được.

@@ -57,3 +57,6 @@ The current templates use fixed coordinates and prohibit custom scene camera tra
 - Preserve the user's prior requirements in production.md, pause-policy.md and adam-delivery.json. Successful encoding or the right palette is not proof of good visual direction.
 
 To check a clean install without demo files, run `node sys/engine/examples/template.mjs cards`, then render `sys/work/example-cards/project.json` and its `timeline.json` with the shared renderer. This three-second silent fixture verifies the template pipeline only; production narration still follows the audio workflow.
+
+## Drawing-first extension
+For illustrated stories with concise narration, [drawing-first.md](drawing-first.md) defines the optional layout, shared objects, label timing, and sidecar captions. Default template behavior above remains unchanged.

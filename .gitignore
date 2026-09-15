@@ -35,3 +35,6 @@ __pycache__/
 **/diagrams/
 !/CLAUDE.md
 !/GEMINI.md
+
+!/sys/engine/voice.py
+!/sys/engine/package-core.py

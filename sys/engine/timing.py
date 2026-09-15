@@ -2,7 +2,7 @@
 import argparse,array,json,math,sys,wave
 from pathlib import Path
 
-RULES={'phrase':(.20,.15,.30),'sentence':(.35,.30,.50),'scene':(.50,.40,.70),'practice':(1.5,.8,3.)}
+RULES={'phrase':(.20,.15,.30),'sentence':(.35,.30,.50),'scene':(.50,.40,.70),'practice':(1.5,.8,3.),'visual':(3.,2.,4.)}
 def measure(path):
     with wave.open(str(path)) as w:
         if w.getsampwidth()!=2:raise ValueError('Use PCM 16-bit WAV: '+str(path))
@@ -40,6 +40,7 @@ def build(spec,base):
             default,low,high=RULES[kind];desired=float(after.get('seconds',default))
             if not low<=desired<=high:raise ValueError('Pause outside policy range: '+p['id'])
             if kind=='practice' and (not after.get('reason') or not after.get('onScreenPrompt')):raise ValueError('Practice pause requires reason and onScreenPrompt')
+            if kind=='visual' and (not after.get('reason') or not isinstance(after.get('actionIds'),list) or not after['actionIds'] or any(not isinstance(x,str) or not x for x in after['actionIds'])):raise ValueError('Visual pause requires reason and actionIds')
             embedded=back+measurements[i+1][1];padding=max(0,desired-embedded);actual=embedded+padding
             row['pauseAfter']={**after,'paddingSeconds':padding,'actualSeconds':actual}
             if actual>high+1e-6:errors.append(f"{p['id']}: actual boundary silence {actual:.3f}s exceeds {high}s")

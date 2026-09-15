@@ -35,7 +35,7 @@ function values(e:any,t:number){const x={...e};for(const [key,track] of Object.e
 function drawElements(ctx:CanvasRenderingContext2D,items:any[],t:number,theme:string){for(const source of items){const e=values(source,t);const enter=cueTime(e.enter,timeline,-1e6),exit=cueTime(e.exit,timeline,1e6);if(t<enter||t>=exit)continue;ctx.save();ctx.globalAlpha*=clamp(e.opacity??1);ctx.translate(e.x||0,e.y||0);ctx.rotate(e.rotate||0);ctx.scale(e.scale??1,e.scale??1);
  if(e.reveal!==undefined){ctx.beginPath();ctx.rect(0,0,(e.width??900)*clamp(e.reveal),e.height??1000);ctx.clip();}
  switch(e.type){
-  case 'template':drawTemplate(ctx,e,t,theme,{P,C,timeline,assets,diagnostics,palette:project.palette});break;
+  case 'template':drawTemplate(ctx,e,t,theme,{P,C,timeline,assets,diagnostics,palette:project.palette,layout:project.layout});break;
   case 'text':textBlock(ctx,e,theme);break;
   case 'panel':{ctx.shadowColor='#15372d24';ctx.shadowBlur=e.shadow===false?0:45;ctx.shadowOffsetY=e.shadow===false?0:25;P.rr(ctx,0,0,e.width??884,e.height??700,e.radius??28,color(e.fill??(theme==='light'?'panel':'navy'),theme),e.border?color(e.border,theme):undefined);ctx.shadowBlur=0;ctx.shadowOffsetY=0;const childTheme=['panel','paper','captionLight'].includes(e.fill)?'light':['navy','captionDark'].includes(e.fill)?'dark':theme;drawElements(ctx,e.children||[],t,childTheme);break;}
   case 'group':drawElements(ctx,e.children||[],t,theme);break;
@@ -49,16 +49,19 @@ function drawElements(ctx:CanvasRenderingContext2D,items:any[],t:number,theme:st
 function paint(ctx:CanvasRenderingContext2D,t:number){
  const s=scenes.find((s:any)=>t>=s.start&&t<s.end)||scenes.at(-1),index=scenes.indexOf(s),previous=scenes[Math.max(0,index-1)];let light=s.theme==='light'?1:0;
  if(previous.theme!==s.theme)light=mix(previous.theme==='light'?1:0,light,smooth(t,s.start,s.start+.65));
- const {fg}=P.background(ctx,light,project.brandLine||'AI / RESEARCH / LEARNING',project.edition||'NÉT  —  01');
+ const drawingFirst=project.layout==='drawing-first';
+ const {fg}=P.background(ctx,light,project.brandLine||'AI / RESEARCH / LEARNING',project.edition||'NÉT  —  01',!drawingFirst);
+ if(!drawingFirst){
  P.txt(ctx,s.label||'',80,267,28,fg,600);
  for(let i=0;i<3;i++)P.rr(ctx,824+i*61,244,43,5,2,i<=Math.min(2,index)?C.teal:'#8ea49e55');
  const a=smooth(t,s.start,s.start+.5);ctx.font='600 68px "Be Vietnam Pro"';for(const line of s.title)if(ctx.measureText(line).width>920)throw Error('Title overflow; split or shorten: '+s.id);P.alpha(ctx,a,()=>s.title.forEach((line:string,i:number)=>P.txt(ctx,line,80,375+i*89+(1-a)*38,68,i===1&&s.theme==='dark'?C.gold:fg,600)));
+ }
  ctx.save();const cam=s.camera||{};const v=(k:string,d:number)=>cam[k]?interpolate(resolveTrack(cam[k],timeline),t,d):d;ctx.translate(540,1050);ctx.scale(v('zoom',1),v('zoom',1));ctx.translate(-540+v('x',0),-1050+v('y',0));drawElements(ctx,s.elements||[],t,s.theme);ctx.restore();
  if(s.logo){P.alpha(ctx,smooth(t,s.end-1.7,s.end-1.2),()=>{ctx.save();ctx.beginPath();ctx.arc(540,1450,90,0,7);ctx.clip();ctx.drawImage(logos[s.theme],450,1360,180,180);ctx.restore();});}
- if(index>0){const p=ramp(t,s.start-.05,s.start+.65);if(p>0&&p<1){ctx.save();ctx.translate(-400+p*1900,0);ctx.rotate(-.08);ctx.globalAlpha=Math.sin(p*Math.PI)*.48;ctx.fillStyle=C.teal;ctx.fillRect(-100,-100,130,2200);ctx.fillStyle=C.gold;ctx.fillRect(46,-100,10,2200);ctx.restore();}}
+ if(index>0&&!drawingFirst){const p=ramp(t,s.start-.05,s.start+.65);if(p>0&&p<1){ctx.save();ctx.translate(-400+p*1900,0);ctx.rotate(-.08);ctx.globalAlpha=Math.sin(p*Math.PI)*.48;ctx.fillStyle=C.teal;ctx.fillRect(-100,-100,130,2200);ctx.fillStyle=C.gold;ctx.fillRect(46,-100,10,2200);ctx.restore();}}
  const phrase=timeline.phrases.find((p:any)=>t>=p.speechStart&&t<p.speechEnd);
- if(phrase){const text=phrase.caption||phrase.text;const lines=wrapped(ctx,text,820,28,500);if(lines.length>2)throw Error('Caption exceeds two lines: '+phrase.id);const height=lines.length===1?104:130;P.rr(ctx,96,1700,888,height,23,light>.5?C.captionLight:C.captionDark);lines.forEach((line:string,i:number)=>P.txt(ctx,line,540,1749+i*40,28,fg,500,'center'));}
- ctx.fillStyle=light>.5?C.ruleLight:C.ruleDark;ctx.fillRect(80,1870,920,3);ctx.fillStyle=C.gold;ctx.fillRect(80,1870,920*t/timeline.targetSeconds,3);
+ if(phrase&&project.captionMode!=='sidecar'){const text=phrase.caption||phrase.text;const lines=wrapped(ctx,text,820,28,500);if(lines.length>2)throw Error('Caption exceeds two lines: '+phrase.id);const height=lines.length===1?104:130;P.rr(ctx,96,1700,888,height,23,light>.5?C.captionLight:C.captionDark);lines.forEach((line:string,i:number)=>P.txt(ctx,line,540,1749+i*40,28,fg,500,'center'));}
+ if(!drawingFirst){ctx.fillStyle=light>.5?C.ruleLight:C.ruleDark;ctx.fillRect(80,1870,920,3);ctx.fillStyle=C.gold;ctx.fillRect(80,1870,920*t/timeline.targetSeconds,3);}
 }
 const manager=new PlaybackManager();manager.fps=30;manager.state=PlaybackState.Rendering;const status=new PlaybackStatus(manager),logger=new Logger(),shared=new SharedWebGLContext(logger);
 class Film extends Node{protected draw(c:CanvasRenderingContext2D){c.save();c.translate(-540,-960);paint(c,status.time);c.restore();}}

@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';import path from 'node:path';import crypto from 'node:crypto';import {spawn,spawnSync} from 'node:child_process';import {chromium} from 'playwright';
 import {chunks,encodeSegment,ENCODER,validSegment} from './transport.mjs';
 import {contentHolds} from './stillness.mjs';
+import {workspaceCrop} from './workspace.mjs';
 import {sampleProcessTree} from './metrics.mjs';
 import {performance} from 'node:perf_hooks';
 import {startServer} from './server.mjs';import {validateProject,resolveTrack,cueTime} from './model.mjs';
@@ -17,9 +18,9 @@ try{
  // Cache per scene; keep absolute start in the key because global progress and media seek use it.
  const coreHash=crypto.createHash('sha256');for(const [name,bytes] of await hashFiles(import.meta.dirname))coreHash.update(path.basename(name)).update(bytes);for(const [name,bytes] of await hashFiles(path.join(root,'sys/engine/node_modules/@fontsource/be-vietnam-pro/files')))coreHash.update(path.basename(name)).update(bytes);coreHash.update(JSON.stringify(brand));for(const [name,bytes] of await hashFiles(path.join(root,'sys/templates/brand')))coreHash.update(path.basename(name)).update(bytes);const core=coreHash.digest('hex');
  const caches=[];
- for(const s of scenes){const normalized=JSON.parse(JSON.stringify(s));const shift=(obj)=>{if(!obj||typeof obj!=='object')return;if(Array.isArray(obj)){obj.forEach(shift);return;}for(const key of Object.keys(obj)){if(['at','enter','exit','cue'].includes(key)){obj[key]=cueTime(obj[key],timeline)-s.start;}else shift(obj[key]);}};shift(normalized);normalized.start=0;normalized.end=s.end-s.start;
+ for(const s of scenes){const normalized=JSON.parse(JSON.stringify(s));const shift=(obj)=>{if(!obj||typeof obj!=='object')return;if(Array.isArray(obj)){obj.forEach(shift);return;}for(const key of Object.keys(obj)){if(['at','enter','exit','cue','endCue'].includes(key)){obj[key]=cueTime(obj[key],timeline)-s.start;}else shift(obj[key]);}};shift(normalized);normalized.start=0;normalized.end=s.end-s.start;
   const phrases=timeline.phrases.filter(p=>p.speechEnd>s.start&&p.speechStart<s.end).map(p=>({...p,start:p.start-s.start,end:p.end-s.start,speechStart:p.speechStart-s.start,speechEnd:p.speechEnd-s.start,audio:undefined}));
-  const h=crypto.createHash('sha256').update(core).update(JSON.stringify(normalized)).update(JSON.stringify(phrases)).update(JSON.stringify({start:s.start,total:timeline.targetSeconds,palette:project.palette,brandLine:project.brandLine,edition:project.edition,previousTheme:scenes[Math.max(0,scenes.indexOf(s)-1)].theme}));
+  const h=crypto.createHash('sha256').update(core).update(JSON.stringify(normalized)).update(JSON.stringify(phrases)).update(JSON.stringify(timeline.phrases.map(p=>[p.id,p.start,p.end,p.speechStart,p.speechEnd]))).update(JSON.stringify({start:s.start,total:timeline.targetSeconds,palette:project.palette,layout:project.layout,captionMode:project.captionMode,brandLine:project.brandLine,edition:project.edition,previousTheme:scenes[Math.max(0,scenes.indexOf(s)-1)].theme}));
   for(const e of all(s.elements))if(e.src){const asset=e.src.startsWith('/sys/templates/')?path.join(root,e.src.slice(1)):path.resolve(base,e.src);h.update(await fs.readFile(asset));}
   const dir=path.join(root,'sys/cache/visual',h.update(get('--cache-salt','')).update(transport).update(JSON.stringify(ENCODER)).digest('hex').slice(0,20));await fs.mkdir(dir,{recursive:true});caches.push(dir);
  }
@@ -48,8 +49,8 @@ try{
  const stamp=t=>{let ms=Math.round(t*1000);return `${String(Math.floor(ms/3600000)).padStart(2,'0')}:${String(Math.floor(ms/60000)%60).padStart(2,'0')}:${String(Math.floor(ms/1000)%60).padStart(2,'0')},${String(ms%1000).padStart(3,'0')}`;};
  await fs.writeFile(path.join(output,name+'.srt'),timeline.phrases.filter(p=>p.speechEnd>start&&p.speechStart<end).map((p,i)=>`${i+1}\n${stamp(Math.max(0,p.speechStart-start))} --> ${stamp(Math.min(end,p.speechEnd)-start)}\n${p.caption||p.text}`).join('\n\n')+'\n');
  // Independent visual-region stillness check. Caption, header and progress bar are excluded.
- const stats=spawnSync('ffmpeg',['-hide_banner','-i',mp4,'-vf','crop=920:1110:80:550,freezedetect=n=-45dB:d=4','-an','-f','null','-'],{encoding:'utf8',maxBuffer:4e6});const freeze=stats.stderr||'';await fs.writeFile(path.join(base,'freeze-check.log'),freeze);
- const holds=await contentHolds(mp4);
+ const stats=spawnSync('ffmpeg',['-hide_banner','-i',mp4,'-vf',`${workspaceCrop(project.layout)},freezedetect=n=-45dB:d=4`,'-an','-f','null','-'],{encoding:'utf8',maxBuffer:4e6});const freeze=stats.stderr||'';await fs.writeFile(path.join(base,'freeze-check.log'),freeze);
+ const holds=await contentHolds(mp4,project.layout);
  const violations=holds.filter(h=>h.end-h.start>8&&!scenes.some(s=>s.holdReason&&h.start+start>=s.start&&h.end+start<=s.end));
  performanceReport.wallMs=performance.now()-began;performanceReport.peakNodeRss=peakNodeRss;Object.assign(performanceReport,await stopMemory());performanceReport.cacheBytes=0;performanceReport.cacheFiles=0;for(const dir of new Set(caches)){for(const entry of await fs.readdir(dir)){const st=await fs.stat(path.join(dir,entry));performanceReport.cacheBytes+=st.size;performanceReport.cacheFiles++;}}await fs.writeFile(path.join(output,name+'-performance.json'),JSON.stringify(performanceReport,null,2));
  const report={stylePreset:project.stylePreset,rendererVersion:project.rendererVersion,rendered,reused,frames:last-first,seconds:(last-first)/fps,scenes:scenes.map(s=>({id:s.id,theme:s.theme,cache:caches[scenes.indexOf(s)]})),holds,violations,errors,mp4};await fs.writeFile(path.join(base,'visual-report.json'),JSON.stringify(report,null,2));console.log('OUTPUT',mp4);console.log('CACHE',rendered,reused);

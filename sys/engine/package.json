@@ -5,12 +5,13 @@
   "scripts": {
     "setup": "node studio.mjs setup",
     "doctor": "node studio.mjs doctor",
-    "test": "python3 -m unittest discover -s tests && node --test tests/visual.test.mjs tests/transport.test.mjs",
+    "test": "python3 -m unittest discover -s tests && node --test tests/visual.test.mjs tests/drawing.test.mjs tests/transport.test.mjs",
     "test:browser": "node tests/visual-browser.mjs",
     "example": "node examples/create-neutral.mjs",
     "test:transport": "node tests/transport-browser.mjs",
     "test:templates": "node tests/template-browser.mjs",
-    "test:stillness": "node --test tests/stillness.test.mjs"
+    "test:stillness": "node --test tests/stillness.test.mjs",
+    "test:drawing": "node tests/drawing-browser.mjs"
   },
   "dependencies": {
     "@motion-canvas/core": "3.17.2",

@@ -21,6 +21,9 @@ These are agent intents, not guaranteed native slash commands. The shared local 
 - `/render`: render the approved manifest with `render`.
 - `/resume`: inspect manifests, logs and cached takes, then continue the missing stage with `resume`.
 
+## Drawing-first series
+When the user requests primarily drawings with concise or guided narration, read [drawing-first production](references/drawing-first.md). Use its opt-in layout, short labels, shared drawing objects and measured visual pauses. Storyboard the visual changes before writing narration. Both drawing-first and framed freehand were approved by the channel owner on 2026-09-16. Preserve those approvals; other new styles remain candidates.
+
 ## Read the relevant reference at each stage
 - [Step by step](references/step-by-step.md): setup, scene approval, audio, authoring, preview, correction and delivery.
 - [Clean pen direction](references/clean-pen-direction.md): choose a meaningful drawing action, compose a clean frame and diagnose a result that looks like slides.

@@ -9,6 +9,15 @@ export function cueTime(value, timeline, fallback=0){
  if(!['start','end','speechStart','speechEnd'].includes(edge))throw Error('Invalid cue edge');
  return phrase[edge]+(value.offset||0);
 }
+export function drawingDuration(d,timeline,start=0){
+ if(d.endCue!==undefined){
+  if(d.seconds!==undefined)throw Error('Use endCue or seconds, not both');
+  const seconds=cueTime(d.endCue,timeline)-cueTime(d.cue,timeline,start);
+  if(!Number.isFinite(seconds)||seconds<=0)throw Error('endCue must follow drawing cue');
+  return seconds;
+ }
+ return d.seconds??1.8;
+}
 export function resolveScene(scene,project,timeline){
  const start=cueTime(scene.start,timeline),end=cueTime(scene.end,timeline,timeline.targetSeconds);
  const theme=scene.theme&&scene.theme!=='auto'?scene.theme:project.theme&&project.theme!=='auto'?project.theme:['hook','chapter','recap'].includes(scene.role)?'dark':'light';
@@ -22,6 +31,8 @@ export function interpolate(track,t,base){
  return track.at(-1).value;
 }
 export function validateProject(project,timeline,brand){
+ if(project.layout!==undefined&&!['classic','drawing-first'].includes(project.layout))throw Error('Unknown layout');
+ if(project.captionMode!==undefined&&!['burned-in','sidecar'].includes(project.captionMode))throw Error('Unknown captionMode');
  if(project.stylePreset!==PRESET||project.rendererVersion!==VERSION)throw Error('Project must use '+PRESET+' / '+VERSION);
  if(!brand.palettes[project.palette])throw Error('Unknown palette');
  if(project.format?.width!==1080||project.format?.height!==1920||project.format?.fps!==30)throw Error('Preset requires 1080×1920 at 30fps');
@@ -35,6 +46,30 @@ export function validateProject(project,timeline,brand){
   if(!Array.isArray(s.title)||s.title.length>2)throw Error('Use at most two authored title lines');
   const descend=es=>es.flatMap(e=>[e,...descend(e.children||[])]);
   for(const e of descend(s.elements||[])){
+   if(e.type==='template'){
+    const drawingIds=new Set();
+    for(const d of e.spec.drawings||[]){
+     if(d.id&&drawingIds.has(d.id))throw Error('Duplicate drawing id: '+d.id);drawingIds.add(d.id);
+     if(d.cue===undefined&&project.layout==='drawing-first')throw Error('Drawing-first paths need an explicit cue');
+     cueTime(d.cue,timeline,s.start);drawingDuration(d,timeline,s.start);
+     if(!d.box.every(Number.isFinite)||d.box[2]<=0||d.box[3]<=0)throw Error('Invalid drawing box');
+     if(d.seconds!==undefined&&(!Number.isFinite(d.seconds)||d.seconds<=0))throw Error('Invalid drawing duration');
+     for(const key of ['x','y','scale','rotate','opacity'])if(d[key]!==undefined&&(!Number.isFinite(d[key])||(key==='scale'&&d[key]<=0)||(key==='opacity'&&(d[key]<0||d[key]>1))))throw Error('Invalid drawing transform: '+key);
+     if(cueTime(d.exit,timeline,Infinity)<=cueTime(d.enter,timeline,-Infinity))throw Error('Invalid drawing visibility');
+     for(const [key,track] of Object.entries(d.animate||{})){
+      if(!['x','y','scale','rotate','opacity'].includes(key))throw Error('Unknown drawing track: '+key);
+      const keys=resolveTrack(track,timeline);
+      if(keys.some((k,i)=>!Number.isFinite(k.value)||(i&&k.at<=keys[i-1].at)))throw Error('Invalid drawing keyframes');
+      if(keys.some(k=>(key==='scale'&&k.value<=0)||(key==='opacity'&&(k.value<0||k.value>1))))throw Error('Invalid drawing scale/opacity');
+     }
+    }
+    if(project.layout==='drawing-first'){
+     if(e.spec.id!=='freehand')throw Error('Drawing-first layout requires freehand');
+     const items=e.spec.items||[];
+     for(const item of items){if(item.text.trim().split(/\s+/).length>4||!item.text.trim())throw Error('Use drawing labels of 1–4 words');if(cueTime(item.exit,timeline,s.end)<=cueTime(item.cue,timeline,s.start))throw Error('Invalid label interval');}
+     for(const t of items.map(i=>cueTime(i.cue,timeline,s.start)))if(items.filter(i=>t>=cueTime(i.cue,timeline,s.start)&&t<cueTime(i.exit,timeline,s.end)).length>2)throw Error('At most two drawing labels may be visible');
+    }
+   }
    if(!['text','panel','image','video','stroke','ellipse','list','projection','group','template'].includes(e.type))throw Error('Unknown component '+e.type);
    if(e.fontSize!==undefined&&e.fontSize<(e.secondary?28:40))throw Error('Text is too small: '+e.id);
    if(e.type==='projection'&&!e.id)throw Error('Projection needs a stable id');
@@ -43,5 +78,23 @@ export function validateProject(project,timeline,brand){
   }
  }
  if(Math.abs(end-timeline.targetSeconds)>1/30)throw Error('Scene coverage does not match target duration');
+ // A visual pause must be covered by real drawing/transform tracks, even across a cut.
+ for(let i=0;i<timeline.phrases.length-1;i++){
+  const phrase=timeline.phrases[i],pause=phrase.pauseAfter;
+  if(pause?.kind!=='visual')continue;
+  if(!pause.reason||!Array.isArray(pause.actionIds)||!pause.actionIds.length)throw Error('Visual pause requires reason and actionIds');
+  const from=phrase.speechEnd,to=timeline.phrases[i+1].speechStart,intervals=[],found=new Set();
+  if(to-from<2-1/30||to-from>4+1/30)throw Error('Visual pause outside 2–4 seconds');
+  for(const scene of scenes)for(const e of scene.elements||[])for(const d of e.spec?.drawings||[]){
+   if(!pause.actionIds.includes(d.id))continue;found.add(d.id);
+   const enter=Math.max(scene.start,cueTime(d.enter,timeline,-Infinity)),exit=Math.min(scene.end,cueTime(d.exit,timeline,Infinity));
+   const add=(a,b)=>{a=Math.max(a,enter,from);b=Math.min(b,exit,to);const opacity=interpolate(resolveTrack(d.animate?.opacity||[],timeline),(a+b)/2,d.opacity??1);if(b>a&&opacity>0)intervals.push([a,b]);};
+   const at=cueTime(d.cue,timeline,scene.start);add(at,at+drawingDuration(d,timeline,scene.start));
+   for(const track of Object.values(d.animate||{})){const keys=resolveTrack(track,timeline);for(let k=1;k<keys.length;k++)if(keys[k].value!==keys[k-1].value)add(keys[k-1].at,keys[k].at);}
+  }
+  if(pause.actionIds.some(id=>!found.has(id)))throw Error('Unknown visual action id');
+  let covered=from;for(const [a,b] of intervals.sort((a,b)=>a[0]-b[0])){if(a>covered+1/30)break;covered=Math.max(covered,b);}
+  if(covered<to-1/30)throw Error('Visual pause has no continuous drawing action: '+phrase.id);
+ }
  return scenes;
 }

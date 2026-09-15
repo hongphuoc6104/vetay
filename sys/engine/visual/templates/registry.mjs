@@ -22,5 +22,17 @@ export function validateTemplate(spec){
 }
 export function compileTemplates(project){
  if(!project.scenes?.some(s=>s.template))return project;
- return {...project,scenes:project.scenes.map(s=>{if(!s.template)return s;validateTemplate(s.template);if(s.camera)throw Error('Template camera is managed by the preset');if(s.elements?.length)throw Error('Template scenes cannot override raw layout elements');return {...s,elements:[{id:s.id+'-template',type:'template',spec:s.template,src:s.template.src,mediaType:s.template.mediaType,sceneStart:s.start,sceneEnd:s.end}]};})};
+ return {...project,scenes:project.scenes.map(s=>{
+  if(!s.template)return s;
+  const drawings=(s.template.drawings||[]).map(d=>{
+   if(!d.ref)return d;
+   if(Object.keys(d).some(k=>k!=='ref'))throw Error('Drawing refs cannot override shared state');
+   if(!Object.hasOwn(project.drawingLibrary||{},d.ref))throw Error('Unknown drawing ref: '+d.ref);
+   return {...project.drawingLibrary[d.ref],id:d.ref};
+  });
+  const spec={...s.template,drawings};validateTemplate(spec);
+  if(s.camera)throw Error('Template camera is managed by the preset');
+  if(s.elements?.length)throw Error('Template scenes cannot override raw layout elements');
+  return {...s,template:spec,elements:[{id:s.id+'-template',type:'template',spec,src:spec.src,mediaType:spec.mediaType,sceneStart:s.start,sceneEnd:s.end}]};
+ })};
 }

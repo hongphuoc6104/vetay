@@ -6,6 +6,7 @@ import {catalog,compileTemplates} from './visual/templates/registry.mjs';
 import {cacheCommand} from './visual/cache.mjs';
 import {validateProject} from './visual/model.mjs';
 import {neutralProject} from './examples/neutral.mjs';
+import {layoutVariants} from './visual/layouts.mjs';
 const root=path.resolve(import.meta.dirname,'../..');
 const args=process.argv.slice(2),cmd=(args.shift()||'help').replace(/^\//,'');
 const get=(k,d)=>args.includes(k)?args[args.indexOf(k)+1]:d;
@@ -24,6 +25,7 @@ async function doctor(){
 }
 async function render(preview=false){
  const p=await read();if(!p.approved)throw Error('Scene content must be approved before production.');
+ if(!preview&&p.layout==='drawing-first'&&p.styleReviewStatus!=='approved')throw Error('Review the drawing-first candidate preview before full production; then record styleReviewStatus: approved.');
  const script=path.join(root,'sys/engine/visual/render.mjs');
  if(p.stylePreset!=='net-cinematic-v1')throw Error('Migrate the project to net-cinematic-v1 before rendering.');
  const speech=path.join(work,'speech.json'),timeline=path.join(work,'timeline.json');
@@ -33,9 +35,17 @@ async function render(preview=false){
  const output=path.join(root,'video',p.category||'huong-dan',slug);
  if(!/^[a-z0-9-]+$/.test(p.category||'huong-dan'))throw Error('Invalid category');
  await fs.mkdir(output,{recursive:true});
- run(process.execPath,[script,'--project',manifest,'--timeline',timeline,'--output',output,'--transport',get('--transport','binary-pipe'),...(preview?['--start',get('--start','0'),'--end',get('--end','5')]:[])]);
+ const selection=get('--layout',p.outputLayouts||p.layout||'classic');
+ if(!args.includes('--layout')&&!p.outputLayouts){
+  run(process.execPath,[script,'--project',manifest,'--timeline',timeline,'--output',output,'--transport',get('--transport','binary-pipe'),...(preview?['--start',get('--start','0'),'--end',get('--end','5')]:[])]);
+ }else for(const variant of layoutVariants(p,selection)){
+  const variantFile=path.join(work,'project-'+variant.layout+'.json');await fs.writeFile(variantFile,JSON.stringify(variant,null,2));
+  run(process.execPath,[script,'--project',variantFile,'--timeline',timeline,'--output',output,'--name',(preview?'preview-':'')+variant.layout,'--transport',get('--transport','binary-pipe'),...(preview?['--start',get('--start','0'),'--end',get('--end','5')]:[])]);
+ }
+
 }
 switch(cmd){
+ case 'voice':run(path.join(root,'sys/.venv/bin/python'),['sys/engine/voice.py',path.join(work,'narration.json')]);break;
  case 'templates':console.log(JSON.stringify(catalog,null,2));break;
  case 'cache':await cacheCommand(root,args);break;
  case 'validate':{const p=compileTemplates(await read());const timeline=JSON.parse(await fs.readFile(path.join(work,'timeline.json'),'utf8'));const brand=JSON.parse(await fs.readFile(path.join(root,'sys/templates/brand/themes.json'),'utf8'));validateProject(p,timeline,brand);console.log('Project valid; preview still required for visual review.');break;}
@@ -59,7 +69,12 @@ switch(cmd){
   p.scenes[0].id='scene-1';p.scenes[0].label='BẢN NHÁP / CẦN VIẾT NỘI DUNG';p.scenes[0].title=['Nội dung cảnh đầu tiên.'];
   await fs.writeFile(manifest,JSON.stringify(p,null,2));
   await fs.writeFile(path.join(work,'speech.json'),JSON.stringify({targetSeconds:duration,fps:30,phrases:[]},null,2));
-  p.scenes=[{id:'scene-1',start:0,end:duration,role:'body',theme:'auto',title:['Nội dung cảnh đầu tiên.'],template:{id:'focus',version:'1.0.0',items:[{id:'idea',text:'Thay bằng một ý cần giải thích.',cue:0}]}}];await fs.writeFile(manifest,JSON.stringify(p,null,2));
+  p.scenes=[{id:'scene-1',start:0,end:duration,role:'body',theme:'auto',title:['Nội dung cảnh đầu tiên.'],template:{id:'focus',version:'1.0.0',items:[{id:'idea',text:'Thay bằng một ý cần giải thích.',cue:0}]}}];if(get('--layout',null)){
+   const choice=get('--layout');if(!['drawing-first','classic','both'].includes(choice))throw Error('Invalid layout');
+   p.layout=choice==='both'?'drawing-first':choice;p.outputLayouts=choice;p.drawingCoordinateLayout=p.layout;p.captionMode=p.layout==='drawing-first'?'sidecar':'burned-in';
+   p.styleReviewStatus='approved';p.scenes[0].template={id:'freehand',version:'1.0.0',drawings:[],items:[]};p.scenes[0].title=[];
+  }
+  await fs.writeFile(manifest,JSON.stringify(p,null,2));
   console.log('Created '+manifest+'\nAgent: research the input, fill template slots using references/templates.md, then obtain content approval. Do not write a custom renderer.');break;
  }
  case 'revise-scene':{
@@ -68,5 +83,5 @@ switch(cmd){
  }
  case 'preview':await render(true);break;
  case 'render':case 'resume':await render();break;
- default:console.log('Commands: setup, doctor, templates, cache [--key KEY --delete], validate --slug NAME, preview-template --slug NAME,  new-video-from-topic --slug NAME --topic TEXT, new-video-from-research --slug NAME --input PATH, revise-scene --scene ID --note TEXT, preview [--start 0 --end 5], render, resume. Provide --slug NAME for project commands.');
+ default:console.log('Commands: setup, doctor, templates, cache [--key KEY --delete], validate --slug NAME, preview-template --slug NAME,  new-video-from-topic --slug NAME --topic TEXT, new-video-from-research --slug NAME --input PATH, revise-scene --scene ID --note TEXT, preview [--start 0 --end 5], voice, render, resume [--layout drawing-first|classic|both]. Provide --slug NAME for project commands.');
 }

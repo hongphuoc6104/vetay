@@ -18,17 +18,19 @@ function ellipseStroke(ctx:CanvasRenderingContext2D,x:number,y:number,rx:number,
 function arrow(ctx:CanvasRenderingContext2D,x:number,y:number,length:number,p:number,color:string){stroke(ctx,[[x,y],[x+8,y+length*.2],[x-5,y+length*.55],[x,y+length]],p,color,6,true);if(p>.85)stroke(ctx,[[x-14,y+length-18],[x,y+length],[x+14,y+length-18]],(p-.85)/.15,color,6);}
 function alpha(ctx:CanvasRenderingContext2D,a:number,fn:()=>void){ctx.save();ctx.globalAlpha*=clamp(a);fn();ctx.restore();}
 
-function background(ctx:CanvasRenderingContext2D,light:number,header="AI / RESEARCH / LEARNING",edition="NÉT  —  01"){
+function background(ctx:CanvasRenderingContext2D,light:number,header="AI / RESEARCH / LEARNING",edition="NÉT  —  01",chrome=true){
  ctx.fillStyle=C.navy;ctx.fillRect(0,0,W,H);
  // Soft pools of light and an understated drafting grid.
  const glow=ctx.createRadialGradient(870,690,0,760,900,1150);glow.addColorStop(0,C.glow);glow.addColorStop(1,C.navy);ctx.fillStyle=glow;ctx.fillRect(0,0,W,H);
  alpha(ctx,light,()=>{ctx.fillStyle=C.paper;ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(700,800,20,650,850,900);g.addColorStop(0,'#ffffff');g.addColorStop(1,C.paperEdge);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);});
  alpha(ctx,.10,()=>{ctx.fillStyle=light>.5?C.muted:C.teal;for(let x=42;x<W;x+=42)for(let y=36;y<H;y+=42){ctx.beginPath();ctx.arc(x,y,.95,0,7);ctx.fill();}});
+ const fg=light>.5?C.ink:C.paper;
+ if(chrome){
  // Very restrained ink rules anchor the frame instead of letterboxing it.
  ctx.strokeStyle=light>.5?C.ruleLight:C.ruleDark;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(78,194);ctx.lineTo(1002,194);ctx.stroke();
- const fg=light>.5?C.ink:C.paper;
  txt(ctx,header,80,155,21,fg,500);
  txt(ctx,edition,1000,155,21,fg,600,'right');
+ }
  return {light,fg};
 }
 

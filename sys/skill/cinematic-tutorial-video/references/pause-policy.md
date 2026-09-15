@@ -36,3 +36,6 @@ Mục tiêu tổng là 30 giây, sai số trước xuất tối đa 1 frame. Ren
 4. Kiểm tra toàn video và khoảng nghỉ, xuất bản mới riêng để đối chiếu. Giữ mọi bản thử và renderer demo ngoài Git.
 
 Bản kế hoạch này không đồng nghĩa demo đã được dựng lại.
+
+## Khoảng hành động hình
+Video thuần vẽ có lời ngắn được dùng `after.kind: "visual"`, mặc định 3 giây, giới hạn 2–4 giây. Bắt buộc `reason` và danh sách `actionIds` không rỗng. Không yêu cầu chữ chỉ dẫn: hành động hình đã được khai báo phải bao phủ khoảng từ `speechEnd` đến `speechStart` kế tiếp và phải có ý nghĩa khi xem. Tổng im lặng vẫn tính cả đầu/đuôi take. Các quy tắc phrase/sentence/scene/practice giữ nguyên. Xem [drawing-first.md](drawing-first.md).
