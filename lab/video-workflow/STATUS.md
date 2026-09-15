@@ -1,5 +1,11 @@
-# Tiến độ trước khi tách kênh
+# Trạng thái quy trình
 
-Bộ công cụ hai bước đã có, 16 kiểm thử đạt. Hai gói shadow-key và speaker đã có bản chuyển động thô; agent sản xuất độc lập đã phát hiện và sửa lỗi hiển thị hạt khí, nâng khóa trong cảnh bóng. Chưa hoàn tất lời đọc, preview và final của hai tập này. Không coi đợt nghiệm thu đã hoàn thành. Agent sản xuất chạm giới hạn sử dụng; không còn lượt dựng đang chạy lúc bàn giao.
+Bộ công cụ hai bước nhận mã tập, cảnh và thời lượng từ gói, không còn giới hạn mirror/pump. Có WAV local/import, cache giọng, phụ đề, âm sự kiện, xuất thử/cuối, khóa runtime và kiểm tra tệp trước khi thay bản cuối.
 
-Nhánh nền lab/video-workflow chứa công cụ chung. Hai nhánh channel/science và channel/storytelling kế thừa cùng nền; CHANNEL.md ở gốc định nghĩa nội dung và kế hoạch riêng. Giữ cập nhật công cụ chung trên lab/video-workflow rồi chuyển commit cần thiết sang hai nhánh; không gộp tài liệu CHANNEL.md của kênh này sang kênh kia.
+Hai gói shadow-key và speaker được agent chuẩn bị tạo. Agent sản xuất độc lập đọc tài liệu, xuất chuyển động thô, phát hiện lỗi hạt khí và sửa; agent chính tiếp quản lời đọc, preview và xuất cuối. Đây là kiểm chứng bàn giao đến bước chuẩn bị/sản xuất thô, không tuyên bố agent độc lập đã tự hoàn thành toàn bộ bước cuối.
+
+Các khung preview có giọng đã được xem. Chưa nghe toàn bộ hoặc xem toàn bộ ở tốc độ thường. Báo cáo kỹ thuật final-report.json tại cache ghi độ phân giải, thời lượng, mã kiểm tra và thời gian xuất. Không gọi full decode là đã xem/nghe.
+
+Hồ sơ riêng của hai kênh có validator và mẫu khai báo. Những gói kỹ thuật cũ giữ tương thích. Hai tập kỹ thuật chưa thay thế vòng nội dung đời sống/paper-review; công việc đó được ghi trong NEXT-AGENT.md.
+
+Nhánh nền lab/video-workflow quản lý công cụ chung; hai nhánh channel/science và channel/storytelling kế thừa thay đổi công cụ, giữ CHANNEL.md riêng. Không commit dữ liệu lớn, giữ cache dưới 30 GB và dự trữ 20 GB trống.

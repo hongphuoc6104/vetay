@@ -2,6 +2,7 @@
 import struct
 import argparse,contextlib,fcntl,hashlib,json,math,os,re,shutil,signal,subprocess,sys,tempfile,time,urllib.request,wave
 from pathlib import Path
+from channel_schema import validate_channel
 HERE=Path(__file__).resolve().parent;REPO=HERE.parents[1]
 CACHE=Path(os.environ.get('VIDEO_LAB_CACHE',REPO.parent/'video-lab-cache')).resolve()
 RUNTIME=Path(os.environ.get('VIDEO_LAB_MC_RUNTIME',CACHE/'runtimes/motion-canvas')).resolve()
@@ -48,12 +49,13 @@ def load(name):
  if s['domain']=='science' and (not s['sources'] or any(not x.get('url') or not x.get('claim') for x in s['sources'])):raise ValueError('Science claim sources required')
  for effect in s.get('effects',[]):
   if effect.get('scene') not in ids or effect.get('duration',.15)<=0 or effect.get('offset',0)<0:raise ValueError('Invalid sound effect cue')
+ validate_channel(s)
  return folder,s
 
 def fingerprint(folder):
  return hashlib.sha256(b''.join(p.relative_to(folder).as_posix().encode()+p.read_bytes() for p in sorted(folder.rglob('*')) if p.is_file() and '__pycache__' not in str(p))).hexdigest()
 def schedule(s,durations=None):
- minimum=[(durations[i]+.25 if durations else 0) for i in range(len(s['scenes']))]
+ minimum=[(math.ceil((durations[i]+.25)*s['fps'])/s['fps'] if durations else 0) for i in range(len(s['scenes']))]
  if sum(minimum)>s['duration']:raise ValueError('Narration exceeds duration: revise script; audio will not be clipped or sped up')
  lengths=[max(x['seconds'],minimum[i]) for i,x in enumerate(s['scenes'])]
  excess=sum(lengths)-s['duration']
@@ -171,6 +173,7 @@ def main():
  ap=argparse.ArgumentParser();ap.add_argument('command',choices=['doctor','init','validate','rough','ready','produce','check']);ap.add_argument('episode',nargs='?');ap.add_argument('--scale',type=float,default=1,choices=[.5,1]);args=ap.parse_args()
  if args.command=='doctor':print(json.dumps(doctor(),indent=2));return
  if args.command=='init':
+  if not args.episode or not re.fullmatch(r'[a-z0-9][a-z0-9-]*',args.episode):raise ValueError('Invalid episode ID')
   folder=EPISODES/args.episode;folder.mkdir(parents=True,exist_ok=False)
   dump(folder/'episode.json',{'id':args.episode,'title':'','domain':'story','language':'vi','audience':'15+ phổ thông','duration':30,'width':1080,'height':1920,'fps':30,'status':'draft','scenes':[],'assets':[],'sources':[]})
   for f in ['script.md','design.md','checks.md','handoff.md']:(folder/f).write_text('Draft — agent must complete before validation.\n')
@@ -179,6 +182,9 @@ def main():
  if args.command=='validate':print('Package valid; readiness is checked separately');return
  if args.command=='check':print(json.dumps(probe(dest/'final.mp4',s),indent=2));return
  if args.command=='ready':
+  channel=s.get('channel',{})
+  if any(c.get('status')!='supported' for c in channel.get('claims',[])):raise ValueError('Editorial claims unresolved; return to preparation')
+  if any(c.get('status')!='pass' for c in channel.get('continuity_checks',[])):raise ValueError('Continuity checks pending or failed')
   report=json.loads((dest/'rough-report.json').read_text())
   if report['input_digest']!=fingerprint(folder):raise ValueError('Rough render stale; render it again')
   dump(dest/'ready.json',{'input_digest':fingerprint(folder),'note':'Technical preparation complete; see episode handoff for visual review'});return
