@@ -98,3 +98,15 @@ Hồ sơ có thể thêm `effects`: mỗi mục gồm scene (mã cảnh), offset
 ## Cấu trúc kênh và giọng đọc mới
 
 Đọc [CHANNELS.md](CHANNELS.md) cho đường dẫn gói theo kênh, hồ sơ giọng riêng, chữ đọc khác phụ đề, khoảng nghỉ và lệnh tạo mẫu nghe. Nội dung riêng nằm trong channels/<kênh> trên đúng nhánh; main chỉ giữ bộ sản xuất chung. Hướng dẫn lệnh ID ở trên vẫn dùng cho ví dụ hồi quy.
+
+## Quy trình thị giác v1
+
+Đọc VISUAL-DIRECTION.md và templates/<kênh>-visual.md trước khi chuẩn bị đề tài mới. Khởi tạo bằng `init channels/science/episodes/<id> --channel science` hoặc tương ứng storytelling. Đây là gói nháp, phải bổ sung mã cảnh và hợp đồng biên tập.
+
+Gói mới có `visual_version: 1`, `direction.md`, `visual.json`. Visual gồm intent, alternatives (hai chuỗi), chosen_direction, selection_reason, art_direction; shots và checkpoints. Shot gồm id, scene, start/end (0..1 tương đối trong cảnh), subject, action, camera, new_information, transition, layers, lighting, assets (đường dẫn đã khai báo). Shot khoa học thêm representation (illustration/simplified-model/data), limitations. Các shot phủ kín mỗi scene, không trùng khoảng. Checkpoint gồm id, shot, at (0..1 trong shot), check; tối thiểu ba và mỗi shot ít nhất một.
+
+Sau `rough`, chạy `visual-review <gói>`. Mở index.html trong thư mục visual-review của đầu ra, xem các ảnh và toàn bộ bản thô. Ghi status pass/fail và note quan sát cho từng mốc trong review.json; chỉ đặt rough_watched=true và rough_watch_note khi thực sự đã xem. `ready` chặn mốc pending/fail, bản thô hoặc gói đã thay đổi. Không đặt pass để vượt cổng. Không thể xem toàn bộ thì ghi bị chặn, không giả xác nhận.
+
+Chạy lại visual-review giữ nhận xét khi đầu vào/video không đổi; thay đổi sẽ tạo kiểm tra pending mới. Các ảnh thu nhỏ rộng 360 px. Gói cũ không có visual_version vẫn chạy nhưng chưa đạt hợp đồng mới. Mã cảnh vẫn phải dùng timeline thực tế; shot metadata không tự sinh diễn xuất. Kiểm tra preview/final theo thời lượng thật vẫn là bước bắt buộc của agent.
+
+Khi có hợp đồng thị giác, timeline truyền vào scene.tsx có thêm shots: id, scene, start/end tính bằng giây thực tế sau đồng bộ giọng. Dùng các mốc này trong mã biên đạo; công cụ không tự tạo động tác từ mô tả.

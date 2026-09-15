@@ -17,3 +17,6 @@ Không gọi kiểm tra giải mã là đã xem/nghe toàn video. Báo riêng ki
 ## Sau nâng cấp hai kênh
 
 Đọc CHANNELS.md và channels/<kênh>/CHANNEL.md. Dùng đường dẫn gói đầy đủ trong repo để sản xuất nội dung kênh; ID ngắn dành cho ví dụ hồi quy. channel.json quyết định giọng mặc định, tập có thể ghi đè. Tập mới cần kiểm tra nội dung và khung hình riêng. Hai giọng đã được người dùng chốt sau hai video pilot: Phạm Tuyên cho khoa học, Đức Trí cho kể chuyện. Giữ mặc định này; không mở lại vòng chọn giọng trừ khi người dùng yêu cầu. Mỗi tập vẫn cần kiểm tra phát âm và nhịp riêng. Tình trạng từng pilot nằm ở handoff.md của nó, ưu tiên hơn danh sách công việc cũ ở trên.
+
+## Nâng cấp thị giác
+Đề tài mới bắt buộc đọc VISUAL-DIRECTION.md và templates/<kênh>-visual.md; init --channel, hoàn thiện visual.json/direction.md, rough → visual-review → kiểm tra thực tế → ready. Không lấy việc mẫu cũ chạy được làm chứng minh chất hình mới.
