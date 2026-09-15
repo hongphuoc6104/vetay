@@ -1,8 +1,8 @@
 {
   "targetSeconds": 5,
   "fps": 30,
-  "durationSeconds": 2.05,
-  "deltaSeconds": -0.016666666666666607,
+  "durationSeconds": 5,
+  "deltaSeconds": 0,
   "phrases": [
     {
       "id": "cta",

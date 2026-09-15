@@ -22,7 +22,7 @@ export async function buildOutro(){
  const dir=path.join(root,'sys/work/brand-voice');run('python3',['sys/engine/timing.py',dir+'/speech.json','--output',dir+'/timeline.json']);const t=await json(dir+'/timeline.json');if(!t.valid)throw Error('Fix CTA narration');
  run(path.join(root,'sys/.venv/bin/python'),['sys/engine/assemble.py',dir+'/speech.json',dir+'/timeline.json','--output',dir+'/voice-master.wav']);
  const seconds=Math.ceil(Math.max(config.outroMinSeconds,t.targetSeconds+.65+.7)*30)/30;
- const shifted={...t,targetSeconds:seconds,phrases:t.phrases.map(p=>({...p,...Object.fromEntries(['start','end','speechStart','speechEnd'].map(k=>[k,p[k]+.65]))}))};
+ const shifted={...t,targetSeconds:seconds,durationSeconds:seconds,deltaSeconds:0,phrases:t.phrases.map(p=>({...p,...Object.fromEntries(['start','end','speechStart','speechEnd'].map(k=>[k,p[k]+.65]))}))};
  run('ffmpeg',['-y','-v','error','-i',dir+'/voice-master.wav','-af','adelay=650,apad','-t',String(seconds),'-ar','48000','-c:a','pcm_s16le',dir+'/master.wav']);
  await renderIdentity('outro',seconds,dir,shifted);
  await fs.mkdir(media,{recursive:true});
