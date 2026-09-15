@@ -1,4 +1,4 @@
-import fs from 'node:fs/promises';import path from 'node:path';
+import fs from 'node:fs/promises';import path from 'node:path';import crypto from 'node:crypto';
 import {intro,readyOutro,media,compose,run} from '../identity.mjs';
 const root=path.resolve(import.meta.dirname,'../../..'),work=path.join(root,'sys/work/identity-demo'),out=path.join(root,'video/nhan-dien/ban-do-hoc-thuat');await fs.mkdir(work,{recursive:true});await fs.mkdir(out,{recursive:true});
 const m=await readyOutro(),words=['AI bịa','Cửa sổ ngữ cảnh','Học từ phản hồi'],intros=[];
@@ -13,4 +13,7 @@ run(process.execPath,['sys/engine/visual/render.mjs','--project',work+'/project.
 await compose([{file:intros[0]+'/intro.mp4',seconds:1.5,timeline:{targetSeconds:1.5,phrases:[]}},{file:work+'/body.mp4',seconds,timeline},{file:media+'/outro.mp4',seconds:m.seconds,timeline:JSON.parse(await fs.readFile(media+'/timeline.json'))}],out,'sample',intros[0]+'/intro-cover.png');
 await fs.copyFile(media+'/outro.mp4',out+'/outro.mp4');await fs.copyFile(media+'/outro.srt',out+'/outro.srt');
 await fs.writeFile(out+'/index.html',`<!doctype html><html lang="vi"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bản đồ học thuật</title><style>body{background:#f7f4eb;color:#12363b;font:18px system-ui;max-width:1100px;margin:40px auto;padding:24px}h1{font-size:40px}section{display:flex;gap:24px;flex-wrap:wrap}article{flex:1;min-width:220px}video{width:100%;max-height:650px;background:#edece2;border-radius:14px}a{color:#176c68}small{display:block;margin:10px 0}</style><h1>Bản đồ học thuật</h1><p>Một nét mở đường. Một điểm khám phá.</p><section><article><h2>Mẫu ghép</h2><video controls playsinline preload="metadata" src="sample.mp4"></video><small>Intro → nét vẽ minh họa → outro. Phần giữa không có lời; outro dùng Adam.</small><a href="sample.srt">Phụ đề</a></article><article><h2>Outro dùng chung</h2><video controls playsinline preload="metadata" src="outro.mp4"></video></article></section><h2>Đổi từ khóa, giữ nhận diện</h2><section>${words.map((w,i)=>`<article><h3>${w}</h3><video controls playsinline preload="metadata" poster="cover-${i+1}.png" src="intro-${i+1}.mp4"></video><a href="cover-${i+1}.png">Ảnh bìa</a></article>`).join('')}</section></html>`);
+const manifest=JSON.parse(await fs.readFile(media+'/manifest.json'));
+for(const file of ['sample.mp4','sample.srt','sample-cover.png','index.html',...words.flatMap((_,i)=>[`intro-${i+1}.mp4`,`cover-${i+1}.png`])]){await fs.copyFile(out+'/'+file,media+'/'+file);manifest.files[file]=crypto.createHash('sha256').update(await fs.readFile(media+'/'+file)).digest('hex');}
+await fs.writeFile(media+'/manifest.json',JSON.stringify(manifest,null,2));
 console.log(out);

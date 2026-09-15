@@ -59,6 +59,14 @@ export function publicationWarnings(project,timeline){
  return warnings;
 }
 export function validateProject(project,timeline,brand){
+ if(project.identity){
+  const i=project.identity;
+  if(project.layout!=='drawing-first'||project.captionMode!=='sidecar'||!['intro','outro'].includes(i.kind))throw Error('Invalid identity segment');
+  if(typeof i.name!=='string'||!i.name.trim()||i.name.length>50)throw Error('Invalid identity name');
+  if(!/^\/sys\/templates\/brand\/[a-z0-9-]+\.png$/.test(i.avatar||''))throw Error('Identity avatar must be a bundled brand PNG');
+  if(!Number.isFinite(i.seconds)||i.seconds<=0||i.seconds>10||Math.abs(i.seconds-timeline.targetSeconds)>1/30)throw Error('Identity duration mismatch');
+  if(i.kind==='intro'&&(!String(i.keyword||'').trim()||String(i.keyword).trim().split(/\s+/).length>4))throw Error('Identity keyword requires 1–4 words');
+ }
  if(project.layout!==undefined&&!['classic','drawing-first'].includes(project.layout))throw Error('Unknown layout');
  if(project.captionMode!==undefined&&!['burned-in','sidecar'].includes(project.captionMode))throw Error('Unknown captionMode');
  if(project.stylePreset!==PRESET||project.rendererVersion!==VERSION)throw Error('Project must use '+PRESET+' / '+VERSION);

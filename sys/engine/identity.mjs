@@ -13,7 +13,7 @@ export function bodyRange(outroSeconds){return [165-config.introSeconds-outroSec
 export function captions(parts){return parts.flatMap(({timeline,offset=0,start=0,end=timeline.targetSeconds})=>timeline.phrases.filter(p=>p.speechEnd>start&&p.speechStart<end).map(p=>({text:p.caption||p.text,start:offset+Math.max(0,p.speechStart-start),end:offset+Math.min(end,p.speechEnd)-start})));}
 const stamp=t=>{const m=Math.round(t*1000);return `${String(Math.floor(m/3600000)).padStart(2,'0')}:${String(Math.floor(m/60000)%60).padStart(2,'0')}:${String(Math.floor(m/1000)%60).padStart(2,'0')},${String(m%1000).padStart(3,'0')}`;};
 export const srt=rows=>rows.map((p,i)=>`${i+1}\n${stamp(p.start)} --> ${stamp(p.end)}\n${p.text}\n`).join('\n');
-function project(kind,seconds,word=''){return {id:'identity-'+kind,title:config.name,stylePreset:'net-cinematic-v1',rendererVersion:'1.0.0',layout:'drawing-first',captionMode:'sidecar',palette:config.palette,format:{width:1080,height:1920,fps:30},audioMaster:'master.wav',coverFrame:27,identity:{...config,kind,seconds,keyword:word},scenes:[{id:kind,start:0,end:seconds,title:[],theme:'light',elements:[]}]};}
+function project(kind,seconds,word=''){return {id:'identity-'+kind,title:config.name,stylePreset:'net-cinematic-v1',rendererVersion:'1.0.0',layout:'drawing-first',captionMode:'sidecar',palette:config.palette,format:{width:1080,height:1920,fps:30},audioMaster:'master.wav',coverFrame:kind==='intro'?27:Math.round((seconds-.4)*30),identity:{...config,kind,seconds,keyword:word},scenes:[{id:kind,start:0,end:seconds,title:[],theme:'light',elements:[]}]};}
 async function renderIdentity(kind,seconds,dir,timeline,word=''){
  await fs.writeFile(dir+'/project.json',JSON.stringify(project(kind,seconds,word),null,2));await fs.writeFile(dir+'/timeline.json',JSON.stringify(timeline,null,2));
  run(process.execPath,['sys/engine/visual/render.mjs','--project',dir+'/project.json','--timeline',dir+'/timeline.json','--output',dir,'--name',kind]);
@@ -35,7 +35,7 @@ export async function buildOutro(){
  await fs.writeFile(media+'/manifest.json',JSON.stringify(manifest,null,2));return manifest;
 }
 export async function readyOutro(){const m=await json(media+'/manifest.json');if(JSON.stringify(m.config)!==JSON.stringify(config))throw Error('Rebuild identity media after changing brand configuration');for(const [f,h] of Object.entries(m.files))if(await digest(media+'/'+f)!==h)throw Error('Invalid identity media checksum: '+f);return m;}
-export async function intro(word){word=keyword(word);const key=crypto.createHash('sha256').update(JSON.stringify([config,word])).update(await fs.readFile(path.join(root,'sys/engine/visual/identity.ts'))).update(await fs.readFile(path.join(root,'sys/engine/visual/primitives.ts'))).update(await fs.readFile(path.join(root,'sys/templates/brand/themes.json'))).digest('hex').slice(0,20);const dir=path.join(root,'sys/cache/identity',key);await fs.mkdir(dir,{recursive:true});
+export async function intro(word){word=keyword(word);const key=crypto.createHash('sha256').update(JSON.stringify([config,word])).update(await fs.readFile(path.join(root,'sys/engine/visual/identity.ts'))).update(await fs.readFile(path.join(root,'sys/engine/visual/primitives.ts'))).update(await fs.readFile(path.join(root,'sys/templates/brand/themes.json'))).update(await fs.readFile(path.join(root,'sys/engine/visual/player.ts'))).update(await fs.readFile(path.join(root,'sys/engine/visual/render.mjs'))).update(await fs.readFile(path.join(root,'sys/engine/package-lock.json'))).digest('hex').slice(0,20);const dir=path.join(root,'sys/cache/identity',key);await fs.mkdir(dir,{recursive:true});
  try{const m=await json(dir+'/verified.json');if(m.sha256===await digest(dir+'/intro.mp4')&&m.cover===await digest(dir+'/intro-cover.png'))return dir;}catch{}
  run('ffmpeg',['-y','-v','error','-f','lavfi','-i','anullsrc=r=48000:cl=mono','-t',String(config.introSeconds),'-c:a','pcm_s16le',dir+'/master.wav']);
  await renderIdentity('intro',config.introSeconds,dir,{valid:true,targetSeconds:config.introSeconds,fps:30,phrases:[]},word);
@@ -52,6 +52,8 @@ export async function compose(parts,output,name,cover){
  const norm=`loudnorm=I=-15.5:TP=-2.5:LRA=7:measured_I=${stats.input_i}:measured_TP=${stats.input_tp}:measured_LRA=${stats.input_lra}:measured_thresh=${stats.input_thresh}:offset=${stats.target_offset}:linear=true`;
  const tmp=temp+'/final.mp4';run('ffmpeg',['-y','-v','error','-i',temp+'/picture.mp4','-i',temp+'/joined.wav','-map','0:v','-map','1:a','-c:v','copy','-af',norm,'-c:a','aac','-b:a','192k','-ar','48000','-t',String(seconds),'-movflags','+faststart',tmp]);
  run('ffmpeg',['-v','error','-i',tmp,'-f','null','-']);
+ const probe=JSON.parse(run('ffprobe',['-v','error','-show_entries','format=duration:stream=codec_type,width,height,r_frame_rate,nb_frames','-of','json',tmp],true));const picture=probe.streams.find(s=>s.codec_type==='video');
+ if(picture.width!==1080||picture.height!==1920||picture.r_frame_rate!=='30/1'||Number(picture.nb_frames)!==Math.round(seconds*30)||Math.abs(Number(probe.format.duration)-seconds)>1/30)throw Error('Final encode dimensions, frames or duration do not match assembly');
  await fs.copyFile(tmp,path.join(output,name+'.mp4'));await fs.copyFile(cover,path.join(output,name==='final'?'cover.png':name+'-cover.png'));
  let offset=0;const rows=[];for(const part of parts){rows.push(...captions([{timeline:part.timeline,offset,start:part.start||0,end:part.end??part.timeline.targetSeconds}]));offset+=part.seconds;}
  await fs.writeFile(path.join(output,name+'.srt'),srt(rows));
@@ -59,6 +61,7 @@ export async function compose(parts,output,name,cover){
  return {seconds};
 }
 export async function brandedRender({p,manifest,timeline,output,work,preview=false,start=0,end=28,transport='binary-pipe'}){
+ if(!Number.isFinite(start)||!Number.isFinite(end)||start<0||end<=start)throw Error('Invalid preview range');
  const m=await readyOutro(),t=await json(timeline),word=keyword(p.keyword),range=bodyRange(m.seconds);
  if(!preview&&(t.targetSeconds<range[0]||t.targetSeconds>range[1]))throw Error(`Body must be ${range[0]}–${range[1]} seconds including its closing thought; identity adds ${config.introSeconds+m.seconds}s.`);
  const opening=await intro(word),bodyDir=path.join(work,'rendered-body');await fs.mkdir(bodyDir,{recursive:true});
