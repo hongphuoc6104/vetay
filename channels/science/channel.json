@@ -9,7 +9,7 @@
     "fps": 30,
     "default_duration": 30
   },
-  "voice_status": "identity_liked_by_user_delivery_needs_refinement",
+  "voice_status": "approved_by_user",
   "palette": {
     "background": "#081B28",
     "text": "#F2F7F5",
@@ -38,5 +38,10 @@
     "temperature": 0.7,
     "version": 3,
     "dictionary": {}
+  },
+  "voice_approval": {
+    "basis": "User approved both final pilot videos and explicitly confirmed the two narrators",
+    "pilot": "metal-wood",
+    "preset": "Phạm Tuyên"
   }
 }

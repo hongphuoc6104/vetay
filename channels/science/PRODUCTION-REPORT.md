@@ -1,3 +1,7 @@
+## Quyết định hiện hành — người dùng đã chốt
+
+Giọng mặc định: **Phạm Tuyên**, speed 1.0, temperature 0.7, version 3. Người dùng đã xác nhận cả hai video ổn và chốt hai giọng. Không thử/chọn lại giọng hoặc đổi người kể nếu không được yêu cầu. Điều chỉnh lời và khoảng nghỉ theo nội dung; kiểm tra phát âm mỗi tập. Ghi chú chờ duyệt ở phần lịch sử phía dưới đã hết hiệu lực về lựa chọn giọng.
+
 # Pilot metal-wood — 2026-09-16
 
 Đã xuất rough, preview và final. Final: 30 giây, 1080×1920, 30 fps, 900 khung; kiểm giải mã đạt. Lượt xuất cuối 48.9 giây, không tính tạo giọng/chuẩn bị/sửa hình. SHA256: `8374c370c80b7d2de9db7fd1d17665a9250e1786b17e6fdadd325103eebf8b4d`.

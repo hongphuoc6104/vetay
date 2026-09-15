@@ -1,3 +1,7 @@
+## Quyết định hiện hành — người dùng đã chốt
+
+Giọng mặc định: **Phạm Tuyên**, speed 1.0, temperature 0.7, version 3. Người dùng đã xác nhận cả hai video ổn và chốt hai giọng. Không thử/chọn lại giọng hoặc đổi người kể nếu không được yêu cầu. Điều chỉnh lời và khoảng nghỉ theo nội dung; kiểm tra phát âm mỗi tập. Ghi chú chờ duyệt ở phần lịch sử phía dưới đã hết hiệu lực về lựa chọn giọng.
+
 # Kênh khoa học
 
 Đọc AGENTS.md → lab/video-workflow/NEXT-AGENT.md → lab/video-workflow/CHANNELS.md → channels/science/CHANNEL.md.

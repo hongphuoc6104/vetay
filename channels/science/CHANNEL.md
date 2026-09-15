@@ -1,3 +1,7 @@
+## Quyết định hiện hành — người dùng đã chốt
+
+Giọng mặc định: **Phạm Tuyên**, speed 1.0, temperature 0.7, version 3. Người dùng đã xác nhận cả hai video ổn và chốt hai giọng. Không thử/chọn lại giọng hoặc đổi người kể nếu không được yêu cầu. Điều chỉnh lời và khoảng nghỉ theo nội dung; kiểm tra phát âm mỗi tập. Ghi chú chờ duyệt ở phần lịch sử phía dưới đã hết hiệu lực về lựa chọn giọng.
+
 # KHOA HỌC GẦN MÌNH
 
 Một câu hỏi đời thường; một cơ chế nhìn thấy được; một kết luận có giới hạn. Kênh tiếng Việt cho người xem phổ thông 15+, video dọc, mặc định 30 giây nhưng không giới hạn cứng thời lượng. Không dùng giật gân hoặc biến sơ đồ thành bằng chứng thí nghiệm.
