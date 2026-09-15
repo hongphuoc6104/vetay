@@ -47,3 +47,7 @@ Cache/video-workflow/<kênh>/<tập>/ chứa video, WAV ghép, SRT, ảnh và b�
 Nếu lời đọc/nguồn/hình thay đổi: sửa gói, rough, xem lại, ready, produce. Nếu lỗi môi trường: sửa môi trường rồi tiếp tục, không sửa dấu ready bằng tay. Giữ các giới hạn dung lượng trong AGENTS.md.
 
 Kiểm tra kỹ thuật, khung hình, xem toàn bộ và nghe toàn bộ là bốn trạng thái riêng. Chưa nghe thì không chốt chất lượng phát âm/giọng. Chưa có số liệu người xem thì không kết luận hiệu quả kênh.
+
+## Phản hồi giọng và lưu quyết định
+
+Ghi voice_status trong channel.json và nhận xét ở tài liệu voice của kênh. Phân biệt thích chất giọng với đã duyệt cách đọc cả tập. Không dùng lại preset bị người dùng loại như lựa chọn cuối. refine_voices.py tạo mẫu theo phản hồi (khoa học Phạm Tuyên, kể chuyện thử Đức Trí/Thái Sơn) ở cache/video-workflow/voice-refinement/. Cấu hình hiện tại không cung cấp nút điều khiển cảm xúc chính xác; style của v3turbo chỉ là metadata bị bỏ qua.
