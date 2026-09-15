@@ -17,7 +17,7 @@
     "version": 3,
     "dictionary": {}
   },
-  "voice_status": "provisional_replacement_pending_audition",
+  "voice_status": "approved_by_user",
   "pilot": "episodes/unread-message",
   "editorial": "EDITORIAL.md",
   "design": "DESIGN.md",
@@ -25,5 +25,10 @@
   "assets": "assets/README.md",
   "rejected_voice_presets": [
     "Thanh Bình"
-  ]
+  ],
+  "voice_approval": {
+    "basis": "User approved both final pilot videos and explicitly confirmed the two narrators",
+    "pilot": "unread-message",
+    "preset": "Đức Trí"
+  }
 }
