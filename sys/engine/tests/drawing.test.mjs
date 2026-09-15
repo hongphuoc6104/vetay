@@ -60,3 +60,15 @@ test('classic drawing fit leaves space for separate label panels',()=>{
  assert(d.box[1]+d.box[3]<1210);
  assert.equal(q.scenes[0].template.items[0].text,'Một nhãn');
 });
+
+test('longer measured take shifts drawing completion, scene boundary and caption interval together',async()=>{
+ const {resolveScene}=await import('../visual/model.mjs');
+ const first={phrase:'a'},boundary={phrase:'b'},d={cue:first,endCue:{phrase:'a',edge:'speechEnd'}};
+ const original={targetSeconds:6,phrases:[{id:'a',start:0,end:2,speechStart:0,speechEnd:1.7},{id:'b',start:2,end:6,speechStart:2,speechEnd:5.7}]};
+ const changed=structuredClone(original);changed.targetSeconds=7;changed.phrases[0].end+=1;changed.phrases[0].speechEnd+=1;for(const k of ['start','end','speechStart','speechEnd'])changed.phrases[1][k]+=1;
+ const scene={id:'s1',start:0,end:boundary,theme:'light'},p={};
+ assert(Math.abs(drawingDuration(d,changed,0)-drawingDuration(d,original,0)-1)<1e-9);
+ assert.equal(resolveScene(scene,p,changed).end-resolveScene(scene,p,original).end,1);
+ assert.equal(changed.phrases[1].speechStart-original.phrases[1].speechStart,1);
+ assert.equal(resolveScene({id:'last',start:boundary,theme:'light'},p,changed).end,7);
+});
