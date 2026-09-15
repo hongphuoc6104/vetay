@@ -37,7 +37,7 @@ From the repository root:
 2. Write `storyboard.md` or JSON with 18–24 beats: initial object → action → result → narration → labels → carried objects. Record claim/source/date in `sources.md`. Mark invented examples “Minh họa”.
 3. Fill `narration.json`: `{"durationRange":[158.5,173.5],"phrases":[{"id":"p1","sceneId":"s01","text":"Lời dẫn tiếng Việt.","role":"body","after":{"kind":"sentence"}}]}`. Use stable IDs and semantic phrases. Roles: hook, body, close. Do not set a fixed targetSeconds before measuring. Run `voice --slug NAME`: two Adam takes per phrase, measured selected audio, takes.json, speech.json, timeline.json. Automatic take selection checks silence only; review pronunciation if audio playback is available. Set `take: 1` or `2` to preserve a reviewed selection. Revise narration if measured length falls outside the range; never stretch silence or slow voice to fill time.
 4. Author project.json using the measured timeline. Use `cue` and `endCue` objects such as `{"phrase":"p1","edge":"speechStart"}` and `{"phrase":"p1","edge":"speechEnd"}`. endCue replaces seconds; both together are invalid. Scene boundaries also use phrase cues; omit final scene end to follow targetSeconds. Regenerate any calculated offsets when a take changes. Keep `layout: "drawing-first"`, `captionMode: "sidecar"`, `styleReviewStatus: "approved"`, `approved: true`, `audioMaster: "master.wav"`. No outputLayouts, framedTitle, publication wrapper, logo, or scene camera overrides. Shared drawingLibrary references preserve geometry and timing across scenes.
-5. Run `validate --slug NAME`, then `preview --slug NAME --start 0 --end 38`. Inspect moving strokes, phone-size key frames, muted comprehension, labels and speech synchronization. Repair problems, then `render --slug NAME`. Use `resume --slug NAME` after interruption; validated chunks and unchanged voice takes are reused. Run one render at a time on memory-constrained machines.
+5. Run `validate --slug NAME`, then `preview --slug NAME`. Inspect moving strokes, phone-size key frames, muted comprehension, labels and speech synchronization. Repair problems, then `render --slug NAME`. Use `resume --slug NAME` after interruption; validated chunks and unchanged voice takes are reused. Run one render at a time on memory-constrained machines.
 6. Follow [identity assembly](identity.md): provide a short `keyword`, budget the body separately, and let studio attach the intro/outro and shift captions. Check the full MP4 decodes and plays, duration 165–180 seconds, picture 1080×1920 at 30fps, SRT timing, audio loudness and no visual violations. Deliver final.mp4, final.srt, cover.png, storyboard, sources and qa.md. Record listening/playback limits and any manual intervention. The final cover uses the intro at 0.9 seconds. Never claim audience retention without actual platform data.
 
 All commands above use `node sys/engine/studio.mjs COMMAND`. A topic is sufficient for an execution-capable AI to author a new video; the CLI supplies tools, not automatic topic-to-story intelligence.
@@ -51,7 +51,7 @@ python3 sys/engine/examples/bridge/build.py init
 node sys/engine/studio.mjs voice --slug example-bridge
 python3 sys/engine/examples/bridge/build.py visuals
 node sys/engine/studio.mjs validate --slug example-bridge
-node sys/engine/studio.mjs preview --slug example-bridge --end 38
+node sys/engine/studio.mjs preview --slug example-bridge
 node sys/engine/studio.mjs render --slug example-bridge
 node sys/engine/studio.mjs resume --slug example-bridge
 ```

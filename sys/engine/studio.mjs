@@ -80,5 +80,5 @@ switch(cmd){
  }
  case 'preview':await render(true);break;
  case 'render':case 'resume':await render();break;
- default:console.log('Commands: setup, doctor, templates, cache [--key KEY --delete], validate --slug NAME, preview-template --slug NAME,  new-video-from-topic --slug NAME --topic TEXT, new-video-from-research --slug NAME --input PATH, revise-scene --scene ID --note TEXT, preview [--start 0 --end 38], voice, render, resume. Provide --slug NAME for project commands.');
+ default:console.log('Commands: setup, doctor, templates, cache [--key KEY --delete], validate --slug NAME, preview-template --slug NAME,  new-video-from-topic --slug NAME --topic TEXT, new-video-from-research --slug NAME --input PATH, revise-scene --scene ID --note TEXT, preview [--start 0 --end 28], voice, render, resume. Provide --slug NAME for project commands.');
 }
