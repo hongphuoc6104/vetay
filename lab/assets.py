@@ -6,16 +6,23 @@ ROOT = Path(__file__).resolve().parents[1]
 CACHE = Path(os.environ.get('VIDEO_LAB_CACHE', str(ROOT.parent / 'video-lab-cache'))).resolve()
 LIMIT = 30_000_000_000
 RESERVE = 20_000_000_000
+_accounted = 0
+_checked = 0.0
 
 def size(path):
     return sum(p.stat().st_size for p in path.rglob('*') if p.is_file() and not p.is_symlink()) if path.exists() else 0
 
 def budget(extra=0):
+    # Sequential writers only. Reserve conservatively between periodic scans.
+    global _accounted, _checked
     CACHE.mkdir(parents=True, exist_ok=True)
-    used = size(CACHE)
-    if used + extra > LIMIT or shutil.disk_usage(CACHE).free - extra < RESERVE:
-        raise RuntimeError(f'Disk budget exceeded: used={used}, extra={extra}, limit={LIMIT}')
-    return used
+    now=time.monotonic()
+    if now-_checked>5:
+        _accounted=size(CACHE); _checked=now
+    if _accounted+extra>LIMIT or shutil.disk_usage(CACHE).free-extra<RESERVE:
+        raise RuntimeError(f'Disk budget exceeded: used={_accounted}, extra={extra}, limit={LIMIT}')
+    _accounted+=extra
+    return _accounted
 
 def sha(path):
     h = hashlib.sha256()
