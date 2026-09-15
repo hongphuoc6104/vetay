@@ -9,7 +9,7 @@ for name in ['AGENTS.md','CLAUDE.md','GEMINI.md','README.md','.gitignore']:
  if p.exists():files.append(p)
 for directory in ['sys/skill','sys/templates','sys/engine']:
  for p in (root/directory).rglob('*'):
-  if p.is_file() and not any(x in ['node_modules','__pycache__','.venv','cache','work','logs','models','video'] for x in p.relative_to(root).parts) and (p.suffix.lower() not in ['.pyc','.wav','.mp3','.mp4','.webm','.log'] or p.parent==root/'sys/templates/brand/media/map-v1'):files.append(p)
+  if p.is_file() and not any(x in ['node_modules','__pycache__','.venv','cache','work','logs','models','video'] for x in p.relative_to(root).parts) and (p.suffix.lower() not in ['.pyc','.wav','.mp3','.mp4','.webm','.log'] or root/'sys/templates/brand/media' in p.parents):files.append(p)
 manifest={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
 with tarfile.open(args.output,'w:gz') as tf:
  for p in files:tf.add(p,arcname='net-studio/'+str(p.relative_to(root)))
