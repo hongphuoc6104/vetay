@@ -16,3 +16,6 @@ Truyện ngắn đời thường bằng tiếng Việt, cho người xem 15+. M�
 Mỗi tập thay đổi tình huống và hậu quả, không thay tên nhân vật để tái dùng cùng truyện. Bộ nhân vật hiện tại có hai người; chỉ một căn phòng được kiểm chứng. assets/settings.tsx có mã chuẩn bị cho phòng, đường phố và nơi làm việc. Chỉ cảnh phòng của pilot đã render kiểm chứng; hai bố cục mới cần xem thử trước khi dùng.
 
 Giọng truyện: Thanh Bình bị người dùng loại. Đức Trí/Thái Sơn đang thử; không chốt trước phản hồi. Yêu cầu nam ấm, trầm, dày, rõ chữ và truyền cảm; xem VOICE.md.
+
+## Quy trình thị giác mới
+Đọc VISUAL-DIRECTION.md tại thư mục kênh và lab/video-workflow/VISUAL-DIRECTION.md. Tập mới dùng init --channel storytelling, visual_version 1, hồ sơ đạo diễn và kiểm tra hình bắt buộc. Pilot cũ là đối chiếu kỹ thuật, chưa tự đạt chuẩn mới. Giọng Đức Trí giữ nguyên.
