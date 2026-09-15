@@ -4,8 +4,11 @@ Input: {durationRange:[min,max], phrases:[{id,sceneId,text,role?,after?,take?}]}
 Existing raw/processed takes are preserved by content/profile hashes. Automatic selection
 checks silence only; audition remains necessary for pronunciation and delivery.
 """
+import os
 import argparse,hashlib,json,subprocess,sys,shutil
 from pathlib import Path
+os.environ['HF_HOME']=str(Path(__file__).resolve().parents[2]/'sys/models')
+os.environ['HF_HUB_OFFLINE']='1'
 import numpy as np,soundfile as sf
 from timing import measure,build
 

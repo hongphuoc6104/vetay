@@ -1,6 +1,6 @@
-# Drawing-first video production
+# Drawing-first production
 
-Use when the user chooses illustrated storytelling with guided Adam narration. This is an opt-in extension of net-cinematic-v1, not a replacement renderer. Existing projects keep their original defaults. The channel owner approved both drawing-first and framed freehand styles on 2026-09-16. Preserve this approval for new videos in these styles; use styleReviewStatus: approved. Other new layouts still require their own review.
+This is the canonical workflow for the ve-tay-thuan branch.
 
 ## Story before narration
 
@@ -13,7 +13,7 @@ Produce two Adam candidates for each changed semantic phrase. Measure the select
 ## Project interface
 
 - `layout: "drawing-first"` selects a clean paper canvas with workspace x=80..1000, y=220..1610. Headers, chapter ribbons, permanent titles and the progress bar are absent. The template must be `freehand`; no scene camera override.
-- `captionMode: "sidecar"` removes burned-in captions and still exports SRT. Omitted options preserve legacy presentation and burned-in captions.
+- `captionMode: "sidecar"` removes burned-in captions and still exports SRT. Set both explicitly in production manifests.
 - `drawingLibrary` maps stable object IDs to full drawing definitions. `template.drawings` accepts `{ "ref": "bridge" }` or existing inline drawings. A ref cannot override its definition. Use the same ref in consecutive scenes to preserve geometry, draw progress and absolute-time movement when seeking or resuming.
 - Drawing definitions retain `path`, `box`, `cue`, `seconds`, `color`, `lineWidth`, `fill`. They also accept `enter`, `exit`, and `animate` tracks for `x`, `y`, `scale`, `rotate`, `opacity`, using existing phrase cues and interpolation. Translation is in output pixels, rotation in radians, and transforms pivot on the box center. Scale also scales stroke width.
 - Inline drawings used by visual pauses need stable `id` values. Every drawing-first path needs an explicit cue. Library cues and tracks use the project timeline, not scene-local time.
@@ -29,25 +29,31 @@ Put it in a phrase's `after`. The timing pass counts embedded silence as well as
 
 The shared workspace controls transformed stroke bounds and the content-only stillness crop. Layout/caption options and expanded geometry participate in render caching. Do not disable collision or stillness checks to pass an unsuitable composition.
 
-## Review and delivery
+## Production workflow
 
-1. Write the visual storyboard, then guiding narration: direct attention, explain the relationship, carry the object into the result. Self-review a real 35–40-second passage in both layouts with identical audio.
-2. Inspect the encoded passage, intermediate stroke frames, transitions, phone-size readability and sound. Report any listening/playback limits honestly. Both existing styles are approved; do not repeat their approval request. Review new layouts only when introduced.
-3. After approval record `styleReviewStatus: "approved"` in each authorized production project. Produce episode one, correct it, then episodes two and three. Candidate preview production uses `studio.mjs preview`; full `render`/`resume` requires the style approval flag for drawing-first projects.
-4. Run timing, drawing/browser, compatibility and transport/cache checks; deliver MP4, SRT, cover, storyboard and QA record. Keep source and takes under sys/work; only deliverables go under video.
-5. Social publication and audience feedback are separate later stages. If access/data is absent, leave metrics unavailable; do not invent retention results or label a topic trending without evidence.
+From the repository root:
 
-## Guided narration and dual export
+1. Run `node sys/engine/studio.mjs doctor`; use `setup` for missing dependencies. Create a project with `new-video-from-topic --slug NAME --topic "TOPIC"` (or `new-video-from-research --input PATH`). The scaffold is deliberately unfinished; author the content.
+2. Write `storyboard.md` or JSON with 18–24 beats: initial object → action → result → narration → labels → carried objects. Record claim/source/date in `sources.md`. Mark invented examples “Minh họa”.
+3. Fill `narration.json`: `{"durationRange":[165,180],"phrases":[{"id":"p1","sceneId":"s01","text":"Lời dẫn tiếng Việt.","role":"body","after":{"kind":"sentence"}}]}`. Use stable IDs and semantic phrases. Roles: hook, body, close. Do not set a fixed targetSeconds before measuring. Run `voice --slug NAME`: two Adam takes per phrase, measured selected audio, takes.json, speech.json, timeline.json. Automatic take selection checks silence only; review pronunciation if audio playback is available. Set `take: 1` or `2` to preserve a reviewed selection. Revise narration if measured length falls outside the range; never stretch silence or slow voice to fill time.
+4. Author project.json using the measured timeline. Use `cue` and `endCue` objects such as `{"phrase":"p1","edge":"speechStart"}` and `{"phrase":"p1","edge":"speechEnd"}`. endCue replaces seconds; both together are invalid. Scene boundaries also use phrase cues; omit final scene end to follow targetSeconds. Regenerate any calculated offsets when a take changes. Keep `layout: "drawing-first"`, `captionMode: "sidecar"`, `styleReviewStatus: "approved"`, `approved: true`, `audioMaster: "master.wav"`. No outputLayouts, framedTitle, publication wrapper, logo, or scene camera overrides. Shared drawingLibrary references preserve geometry and timing across scenes.
+5. Run `validate --slug NAME`, then `preview --slug NAME --start 0 --end 38`. Inspect moving strokes, phone-size key frames, muted comprehension, labels and speech synchronization. Repair problems, then `render --slug NAME`. Use `resume --slug NAME` after interruption; validated chunks and unchanged voice takes are reused. Run one render at a time on memory-constrained machines.
+6. Check the full MP4 decodes and plays, duration 165–180 seconds, picture 1080×1920 at 30fps, SRT timing, audio loudness and no visual violations. Deliver final.mp4, final.srt, cover.png, storyboard, sources and qa.md. Record listening/playback limits and any manual intervention. Choose a cover frame with developed drawing; `coverFrame` on the project selects it. Never claim audience retention without actual platform data.
 
-Use the same shared engine and one canonical drawing project; do not copy a private demo generator.
+All commands above use `node sys/engine/studio.mjs COMMAND`. A topic is sufficient for an execution-capable AI to author a new video; the CLI supplies tools, not automatic topic-to-story intelligence.
 
-1. Author `narration.json` in the project work directory: `{ "durationRange": [35,40], "phrases": [{"id":"p1","sceneId":"s1","text":"Your Vietnamese narration.","role":"body","after":{"kind":"sentence"}}] }`. Use short semantic phrases suitable for two-line captions. Roles are `hook`, `body`, `close`. Keep stable IDs. A fixed `targetSeconds` is optional; otherwise the helper uses measured duration rounded to 30fps. Do not put an artificial exact duration on exploratory narration.
-2. Run `node sys/engine/studio.mjs voice --slug NAME`. This loads Adam once, produces two cached takes, keeps originals and processed takes, measures silence, and writes `takes.json`, `speech.json`, `timeline.json`. Automatic selection checks silence only; audition pronunciation and delivery. To select a reviewed take, put `take: 1` or `take: 2` on that narration phrase and rerun. If outside durationRange, revise meaningful content and rerun; do not pad silence.
-3. Draw during those phrases: use `cue` and optional `endCue` referring to measured phrase start/end. `endCue` replaces `seconds`; specifying both is invalid. It propagates changed audio duration to drawing progress, validation and cache. For a visual pause its action must genuinely span the pause.
-4. Use `layout: "drawing-first"`, `drawingCoordinateLayout: "drawing-first"`, `outputLayouts: "both"`, `styleReviewStatus: "approved"`, and approved scene content on your authored project. Give each scene `framedTitle` with up to two short lines fitting the old header. Keep only useful short labels; they take extra space in classic mode. For both layouts use drawings predominantly in y=300..1250 and reserve a lower zone for labels.
-5. `studio.mjs render --slug NAME --layout both` measures/assembles audio once and exports drawing-first.mp4 and classic.mp4 with corresponding SRT/covers. Layout values are `drawing-first`, `classic`, `both`; omitted flags preserve existing behavior. `new-video-from-topic ... --layout both` scaffolds a freehand workspace. The reusable fit helper applies a uniform scale and translates geometry and movement tracks into the target workspace. It does not scale font sizes; inspect labels separately.
-6. Keep final deliverables only under video. Logs, takes, snapshots, scripts and intermediate manifests stay in sys/work or sys/cache.
+## Runnable narrated example
 
-The self-contained neutral example is `node sys/engine/examples/drawing-first.mjs`. It creates a silent 3-second geometry fixture to test development, not a production video. Render via the documented low-level renderer; narrated videos use voice + studio. Generalization still requires an agent to author meaningful paths for the topic. Test transfer with an independent agent using only this package and a fresh brief; state exactly which runtime was tested.
+See `sys/engine/examples/bridge/`. From the repo root run:
 
-Plain short labels may set `plain: true`, keeping their font size while mapping their anchor into the other layout. Retire props and marks when their explanation ends; do not accumulate unrelated objects into later scenes. On memory-constrained machines synthesize voices first, then render one project at a time; verified chunks allow resume.
+```sh
+python3 sys/engine/examples/bridge/build.py init
+node sys/engine/studio.mjs voice --slug example-bridge
+python3 sys/engine/examples/bridge/build.py visuals
+node sys/engine/studio.mjs validate --slug example-bridge
+node sys/engine/studio.mjs preview --slug example-bridge --end 38
+node sys/engine/studio.mjs render --slug example-bridge
+node sys/engine/studio.mjs resume --slug example-bridge
+```
+
+The narration is intended for about three minutes. TTS varies: if the measured duration fails, edit the example project's narration, regenerate changed takes, then rebuild visuals. Review the preview before full render. Audio/video/models are generated locally and are not in Git. The separate drawing-first.mjs fixture is a silent three-second geometry test only.

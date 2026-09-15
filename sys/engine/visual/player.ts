@@ -77,12 +77,15 @@ function paint(ctx:CanvasRenderingContext2D,t:number){
  const drawingFirst=project.layout==='drawing-first';
  const {fg}=P.background(ctx,light,project.brandLine||'AI / RESEARCH / LEARNING',project.edition||'NÉT  —  01',!drawingFirst);
  if(!drawingFirst){
- P.txt(ctx,s.label||'',80,267,28,fg,600);
+ const introEnabled=index===0&&publication.intro?.enabled===true;
+ P.txt(ctx,introEnabled?(publication.seriesLabel||s.label||''):s.label||'',80,267,28,fg,600);
  for(let i=0;i<3;i++)P.rr(ctx,824+i*61,244,43,5,2,i<=Math.min(2,index)?C.teal:'#8ea49e55');
- const a=smooth(t,s.start,s.start+.5);ctx.font='600 68px "Be Vietnam Pro"';for(const line of s.title)if(ctx.measureText(line).width>920)throw Error('Title overflow; split or shorten: '+s.id);P.alpha(ctx,a,()=>s.title.forEach((line:string,i:number)=>P.txt(ctx,line,80,375+i*89+(1-a)*38,68,i===1&&s.theme==='dark'?C.gold:fg,600)));
+ drawIntro(ctx,s,s.theme,index);const a=introEnabled?1:smooth(t,s.start,s.start+.5);const titleY=introEnabled?425:375;ctx.font='600 68px "Be Vietnam Pro"';const titleLines=introEnabled&&publication.title?wrapped(ctx,publication.title,920,68,600):s.title;if(titleLines.length>2)throw Error('Title overflow; split or shorten: '+s.id);for(const line of titleLines)if(ctx.measureText(line).width>920)throw Error('Title overflow; split or shorten: '+s.id);P.alpha(ctx,a,()=>titleLines.forEach((line:string,i:number)=>P.txt(ctx,line,80,titleY+i*89+(introEnabled?0:(1-a)*38),68,i===1&&s.theme==='dark'?C.gold:fg,600)));
+
  }
  ctx.save();const cam=s.camera||{};const v=(k:string,d:number)=>cam[k]?interpolate(resolveTrack(cam[k],timeline),t,d):d;ctx.translate(540,1050);ctx.scale(v('zoom',1),v('zoom',1));ctx.translate(-540+v('x',0),-1050+v('y',0));drawElements(ctx,s.elements||[],t,s.theme);ctx.restore();
- if(s.logo){P.alpha(ctx,smooth(t,s.end-1.7,s.end-1.2),()=>{ctx.save();ctx.beginPath();ctx.arc(540,1450,90,0,7);ctx.clip();ctx.drawImage(logos[s.theme],450,1360,180,180);ctx.restore();});}
+ if(!drawingFirst&&s.logo){P.alpha(ctx,smooth(t,s.end-1.7,s.end-1.2),()=>{ctx.save();ctx.beginPath();ctx.arc(540,1450,90,0,7);ctx.clip();ctx.drawImage(logos[s.theme],450,1360,180,180);ctx.restore();});}
+ if(!drawingFirst)drawOutro(ctx,s,s.theme,index,t);
  if(index>0&&!drawingFirst){const p=ramp(t,s.start-.05,s.start+.65);if(p>0&&p<1){ctx.save();ctx.translate(-400+p*1900,0);ctx.rotate(-.08);ctx.globalAlpha=Math.sin(p*Math.PI)*.48;ctx.fillStyle=C.teal;ctx.fillRect(-100,-100,130,2200);ctx.fillStyle=C.gold;ctx.fillRect(46,-100,10,2200);ctx.restore();}}
 
  const phrase=timeline.phrases.find((p:any)=>t>=p.speechStart&&t<p.speechEnd);

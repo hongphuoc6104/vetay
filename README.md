@@ -1,69 +1,35 @@
-# Vẽ tay — cinematic tutorial skill
+# Nét — vẽ tay thuần
 
-Skill tạo video hướng dẫn tiếng Việt: tư liệu thật, nét vẽ dẫn mắt, giọng Adam và hai bộ màu với template sáng/tối. AI đọc `sys/skill/cinematic-tutorial-video/SKILL.md`, lập nội dung cảnh để người dùng duyệt, sau đó sản xuất trên máy local.
+Nhánh `ve-tay-thuan`: AI nhận đề tài, sáng tác câu chuyện bằng hình và dựng video tiếng Việt 165–180 giây, 1080×1920, 30fps. Hình thuần nét vẽ, lời Adam, phụ đề SRT riêng. Quy trình chính nằm trong [skill](sys/skill/cinematic-tutorial-video/SKILL.md); AGENTS, CLAUDE và GEMINI cùng dẫn về đó.
 
-Để giao việc cho AI khác, mở repo và yêu cầu: “Đọc AGENTS.md, dùng skill cinematic-tutorial-video tạo video về [chủ đề] cho [người xem], dài [thời lượng]. Làm theo step-by-step.md và clean-pen-direction.md; dùng bộ dựng có sẵn, trình nội dung từng cảnh để tôi duyệt.” Không cần đưa kèm cuộc trò chuyện hoặc các bản demo riêng.
+## Cài và kiểm tra
 
-## Bắt đầu
-
-Yêu cầu: Node.js 20.15 trở lên, npm, Python 3.12, uv, FFmpeg/ffprobe và Chrome. Bộ công cụ hiện được kiểm tra trên Linux; cấu hình trình duyệt bằng `CHROME_PATH` khi cần.
+Môi trường cần: Linux, Node.js 20.15+ (khuyến nghị bản LTS hỗ trợ import.meta.dirname), npm, uv, Python 3.12, FFmpeg/ffprobe có libx264 và Google Chrome. Nếu Chrome ở nơi khác, đặt CHROME_PATH. Cần mạng để cài thư viện và tải mô hình lần đầu; chưa xác nhận macOS/Windows. Máy thử có RAM 16 GB; tạo giọng xong rồi dựng từng video.
 
 ```sh
+git clone --branch ve-tay-thuan https://github.com/hongphuoc6104/vetay.git
+cd vetay
 node sys/engine/studio.mjs setup
 node sys/engine/studio.mjs doctor
-node sys/engine/studio.mjs new-video-from-topic --slug bai-hoc --topic "Chủ đề cần hướng dẫn" --duration 30
 ```
 
-`setup` có thể tải mô hình giọng đọc miễn phí; những lần tạo giọng sau dùng local. Agent viết nội dung cảnh bằng các thành phần **net-cinematic-v1** dưới `sys/work/<slug>/`; renderer dùng chung giữ nền, chữ, nét bút, camera và chuyển cảnh. Không cần tự viết renderer. Các lệnh không tự sinh kịch bản bằng một mô hình AI tích hợp.
+Setup tạo môi trường Python, cài phụ thuộc khóa phiên bản của Node và tải Adam vào `sys/models`. Voice sử dụng đúng kho này ở chế độ offline. Doctor thực sự mở mô hình/preset, kiểm tra font, Chrome và bộ mã hóa. Không commit mô hình, audio, video hoặc cache.
+
+## Giao việc cho AI
+
+> Đọc AGENTS.md và skill trong repo. Tạo video thuần vẽ tiếng Việt khoảng 3 phút về [đề tài], dùng Adam và quy trình kiểm tra có sẵn. Tự hoàn thiện kịch bản, đồng bộ lời–hình và xuất video.
+
+AI cần quyền đọc/ghi file và chạy công cụ local. Skill đóng gói quy tắc và công cụ; AI vẫn sáng tác hình theo đề tài. Chưa khẳng định mọi AI đều tạo chất lượng như nhau.
+
+Các lệnh `new-video-from-topic`, `voice`, `validate`, `preview`, `render`, `resume` được hướng dẫn trong [quy trình](sys/skill/cinematic-tutorial-video/references/drawing-first.md), kèm ví dụ cây cầu có lời khoảng 3 phút và lệnh tái tạo. Đầu ra chính: `video/<category>/<slug>/final.mp4`, `final.srt`, `cover.png`, kịch bản, nguồn và báo cáo. Bản khung cũ chỉ còn trong mã tương thích để kiểm thử.
+
+## Kiểm thử và đóng gói
 
 ```sh
-python3 sys/engine/timing.py sys/work/bai-hoc/speech.json --output sys/work/bai-hoc/timeline.json
-node sys/engine/studio.mjs preview --slug bai-hoc --start 0 --end 5
-node sys/engine/studio.mjs render --slug bai-hoc
+npm --prefix sys/engine test
+npm --prefix sys/engine run test:drawing
+npm --prefix sys/engine run test:transport
+python3 sys/engine/package-core.py --help
 ```
 
-Đọc `sys/skill/cinematic-tutorial-video/references/visual-authoring.md` để viết cảnh và `references/pause-policy.md` trong cùng thư mục để xếp lời đọc. Renderer nhận manifest, timeline đã kiểm tra, thư mục đầu ra và khoảng preview; dùng cùng timeline cho lời, phụ đề và điểm nhấn hình. Mỗi cảnh dùng theme cụ thể; auto chọn sáng cho hướng dẫn và tối cho mở/kết.
-
-Kiểm tra bộ dựng bằng ví dụ trung tính không cần audio hoặc video demo cũ:
-
-```sh
-node sys/engine/examples/create-neutral.mjs
-node sys/engine/visual/render.mjs --project sys/work/neutral/project.json --timeline sys/work/neutral/timeline.json --output sys/work/neutral/output
-python3 -m unittest discover -s sys/engine/tests
-node --test sys/engine/tests/visual.test.mjs
-node sys/engine/tests/visual-browser.mjs
-```
-
-Ví dụ kiểm tra dài 3 giây, âm thanh im lặng có chủ đích để kiểm thử renderer. Không phải sản phẩm hướng dẫn. Video thực tế phải có giọng và qua bộ kiểm tra ngắt nghỉ. Report `visual-report.json` ghi cache, theme và khoảng đứng hình; vùng phụ đề không được dùng để che giấu nội dung đứng yên.
-
-## Dữ liệu và giới hạn hiện tại
-
-- `sys/skill`, `sys/engine`, `sys/templates`: lõi dùng lại được đưa vào Git.
-- `sys/work`, `sys/models`, `sys/cache`, `sys/logs`, môi trường và thư viện đã cài: chỉ ở local.
-- `video/<nhóm>/<video>/`: sản phẩm xuất ra, không đưa vào Git.
-- Mã riêng và kết quả demo, các phiên bản giọng thử, sơ đồ kiến trúc không có trong repo. Thành phần phong cách được trích từ demo đã duyệt là lõi dùng chung và được phát hành.
-
-Skill được khám phá qua `.agents/skills`; các ứng dụng có quyền đọc/ghi và chạy lệnh local cũng có thể đọc trực tiếp SKILL.md. Chưa hoàn thiện bộ cài riêng và kiểm chứng trên tất cả ứng dụng desktop.
-
-Không yêu cầu dịch vụ trả phí. Giữ ghi nhận nguồn tư liệu nội bộ; chỉ hiện nguồn khi cần cho số liệu, trích dẫn, phát biểu theo nguồn hoặc giấy phép. Logo do chủ dự án cung cấp; các thư viện và mô hình giữ giấy phép riêng của nhà phát hành.
-
-## Intro, cover and outro
-
-New projects include `publication` metadata. The shared renderer keeps the main keyword and title visible from frame 0, extracts the configured `coverFrame` (default frame 15 at 30fps), and shows the supplied light or dark avatar in a separate final region. It writes `*-publishing.json` and `*-publishing.md` beside the MP4 with the exact cover frame and posting notes. Read [publication.md](sys/skill/cinematic-tutorial-video/references/publication.md) before authoring.
-
-## Template-first production
-
-Run `node sys/engine/studio.mjs templates` and read [the template workflow](sys/skill/cinematic-tutorial-video/references/templates.md). New projects use content slots with measured narration cues. The expanded templates are candidates pending visual review, not automatically approved designs. `AGENTS.md`, `CLAUDE.md` and `GEMINI.md` route local agents to the same rules; this does not prove that every desktop application auto-loads them.
-
-The default binary renderer streams PNG data into FFmpeg and caches verified H.264 chunks instead of writing every frame as a PNG. `--transport legacy-png` remains an explicit diagnostic option. Use `studio.mjs cache` for a dry-run cache inventory. No automatic deletion of old renders is performed.
-
-## Series thuần vẽ
-
-Chế độ `drawing-first` mở rộng vùng vẽ, hỗ trợ vật thể dùng lại và chuyển trạng thái qua cảnh; `captionMode: "sidecar"` xuất phụ đề riêng. Xem [quy trình thuần vẽ](sys/skill/cinematic-tutorial-video/references/drawing-first.md). Dự án cũ giữ bố cục và lời như trước. Dùng `npm --prefix sys/engine test` và `npm --prefix sys/engine run test:drawing` để kiểm tra; mẫu bố cục mới vẫn cần người dùng xem trước khi sản xuất toàn tập.
-
-
-## Lời dẫn và hai bản bố cục
-
-Hai phong cách thuần vẽ / vẽ trong khung đã được chủ kênh duyệt. Chọn `--layout both` khi tạo hoặc xuất dự án. Tạo `narration.json`, chạy `node sys/engine/studio.mjs voice --slug ten-video`, rồi dùng `cue` và `endCue` để nét bút đi theo thời gian lời thật. Xuất bằng `node sys/engine/studio.mjs render --slug ten-video --layout both`. Audio được dùng chung; mỗi bản có MP4, SRT, ảnh bìa.
-
-Đóng gói mã nguồn bằng `python3 sys/engine/package-core.py --output video/ai-qua-net-ve/bo-cong-cu/net-studio.tar.gz`. Gói gồm cả chức năng mới trong thư mục làm việc; không kèm thư viện đã cài, mô hình giọng hoặc dữ liệu video riêng. Sau giải nén, AI đọc AGENTS.md; kiểm tra `doctor`, dùng `setup` nếu cần cài phụ thuộc. Yêu cầu Node.js ≥20.15, Python 3.12, uv, FFmpeg/ffprobe và Chrome. Cần tải mô hình giọng khi thiết lập máy mới. Bộ gói chưa chứng minh mọi ứng dụng AI tự phát hiện và chạy được.
+Xem [kết quả kiểm chứng](sys/skill/cinematic-tutorial-video/references/verification.md) để biết phạm vi đã thử và giới hạn thực tế.

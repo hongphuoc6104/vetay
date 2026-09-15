@@ -1,4 +1,3 @@
-# Video studio
-For video production, read `sys/skill/cinematic-tutorial-video/SKILL.md` and follow its production workflow. User instructions take precedence. This repository keeps implementation and intermediate files in `sys/` and final video deliverables in `video/`.
+# Nét — vẽ tay thuần
 
-New videos use the bundled templates and the template-first rules in `sys/skill/cinematic-tutorial-video/references/templates.md`. Agents may create explanatory drawings inside the supplied drawing region. New layout templates require a user-reviewed local passage. Keep candidate templates distinct from approved ones; do not modify renderer validation to bypass a production error.
+Read `sys/skill/cinematic-tutorial-video/SKILL.md` and its drawing-first workflow before video work. That is the single production authority for this branch. Follow the supplied renderer and preserve user files. A request to create a video authorizes local completion; self-review the passage without another approval unless requested. Keep intermediates under `sys/` and final deliverables under `video/`.

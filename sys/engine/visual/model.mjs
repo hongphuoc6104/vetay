@@ -34,7 +34,7 @@ export function interpolate(track,t,base){
 export function publicationMeta(project,timeline){
  const raw=project.publication||{};
  const totalFrames=Math.max(1,Math.ceil((timeline.targetSeconds||0)*30));
- const requested=Number.isInteger(raw.coverFrame)?raw.coverFrame:DEFAULT_COVER_FRAME;
+ const requested=Number.isInteger(project.coverFrame)?project.coverFrame:Number.isInteger(raw.coverFrame)?raw.coverFrame:DEFAULT_COVER_FRAME;
  return {
   present:Object.keys(raw).length>0,
   title:raw.title||project.title||'',

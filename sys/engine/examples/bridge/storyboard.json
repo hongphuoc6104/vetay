@@ -1,0 +1,271 @@
+{
+  "title": "AI bịa mà rất tự tin",
+  "targetSeconds": 180,
+  "status": "reference",
+  "beats": [
+    {
+      "id": "e01-b01",
+      "budgetStart": 0,
+      "budgetEnd": 8,
+      "initial": "Khoảng trống giữa hai bờ",
+      "action": "Vẽ hai bờ rồi kéo nét mặt cầu qua khoảng trống",
+      "result": "Một cây cầu trông hoàn chỉnh",
+      "narration": "Nhìn cây cầu này rất chắc. Nhưng bạn có dám bước lên? Hãy khoan trả lời; chúng ta còn chưa nhìn thấy phần bên dưới.",
+      "labels": [
+        "Minh họa"
+      ],
+      "carry": "Cầu, hai bờ",
+      "guidedNarration": "Nhìn cây cầu này rất chắc. Nhưng bạn có dám bước lên? Hãy khoan trả lời; chúng ta còn chưa nhìn thấy phần bên dưới. Vẻ ngoài ấy dễ khiến chúng ta bỏ qua bước kiểm tra."
+    },
+    {
+      "id": "e01-b02",
+      "budgetStart": 8,
+      "budgetEnd": 19,
+      "initial": "Cầu vừa vẽ",
+      "action": "Vẽ nhân vật bên bờ, bước tới mép rồi dừng",
+      "result": "Một quyết định đang chờ",
+      "narration": "Một câu trả lời của AI cũng có thể tạo cảm giác như thế: gọn gàng, trôi chảy, khiến bạn muốn dùng ngay.",
+      "labels": [
+        "AI"
+      ],
+      "carry": "Cầu, nhân vật",
+      "guidedNarration": "Một câu trả lời của AI cũng có thể tạo cảm giác như thế: gọn gàng, trôi chảy, khiến bạn muốn dùng ngay. Cảm giác yên tâm đến trước khi ta thấy được bằng chứng."
+    },
+    {
+      "id": "e01-b03",
+      "budgetStart": 19,
+      "budgetEnd": 30,
+      "initial": "Mặt cầu",
+      "action": "Vẽ ba nhịp, nối mỗi nhịp với một biểu tượng thông tin",
+      "result": "Nhìn rõ ba chi tiết tạo nên câu trả lời",
+      "narration": "Nhưng một câu trả lời gồm nhiều chi tiết. Chỉ một chi tiết không có căn cứ cũng đủ làm việc bạn sắp làm bị lệch.",
+      "labels": [],
+      "carry": "Ba nhịp cầu",
+      "guidedNarration": "Nhưng một câu trả lời gồm nhiều chi tiết. Chỉ một chi tiết không có căn cứ cũng đủ làm việc bạn sắp làm bị lệch. Hãy theo từng chi tiết, thay vì đánh giá cả đoạn một lần."
+    },
+    {
+      "id": "e01-b04",
+      "budgetStart": 30,
+      "budgetEnd": 40,
+      "initial": "Cầu và ba biểu tượng",
+      "action": "Vẽ một dấu tích lớn rồi thu nhỏ, đặt ra ngoài cầu",
+      "result": "Dấu tích đẹp không trở thành trụ đỡ",
+      "narration": "Câu văn nghe hợp lý không tự biến thành bằng chứng. Dấu tích này chỉ cho thấy cảm giác tin tưởng của người đọc.",
+      "labels": [],
+      "carry": "Cầu",
+      "guidedNarration": "Câu văn nghe hợp lý không tự biến thành bằng chứng. Dấu tích này chỉ cho thấy cảm giác tin tưởng của người đọc. Nét trang trí không giúp kiểm chứng điều đang được nói ra."
+    },
+    {
+      "id": "e01-b05",
+      "budgetStart": 40,
+      "budgetEnd": 50,
+      "initial": "Mặt cầu đang nổi bật",
+      "action": "Làm nhạt lan can, lần nét xuống phía dưới",
+      "result": "Người xem chuyển chú ý từ vẻ ngoài sang căn cứ",
+      "narration": "Ta dùng cây cầu làm phép ví von. Mặt cầu là điều được nói ra; các trụ bên dưới là căn cứ cho điều đó.",
+      "labels": [
+        "Căn cứ"
+      ],
+      "carry": "Nhịp cầu",
+      "guidedNarration": "Ta dùng cây cầu làm phép ví von. Mặt cầu là điều được nói ra; các trụ bên dưới là căn cứ cho điều đó. Mỗi trụ cần gắn với đúng phần thông tin nó hỗ trợ."
+    },
+    {
+      "id": "e01-b06",
+      "budgetStart": 50,
+      "budgetEnd": 60,
+      "initial": "Khoảng dưới cầu",
+      "action": "Vẽ hai trụ, để nhịp thứ ba không có trụ",
+      "result": "Lộ khoảng thiếu hỗ trợ",
+      "narration": "Câu trả lời có thể chứa cả thông tin đúng lẫn phần được thêm vào mà chưa được kiểm tra. Không nên đánh đồng tất cả.",
+      "labels": [],
+      "carry": "Hai trụ và khoảng trống",
+      "guidedNarration": "Câu trả lời có thể chứa cả thông tin đúng lẫn phần được thêm vào mà chưa được kiểm tra. Không nên đánh đồng tất cả. Phần có căn cứ vẫn giữ, phần chưa rõ cần đánh dấu."
+    },
+    {
+      "id": "e01-b07",
+      "budgetStart": 60,
+      "budgetEnd": 70,
+      "initial": "Cầu thu gọn ở nửa trên",
+      "action": "Vẽ tờ thông báo cuộc họp với đồng hồ và nhóm người",
+      "result": "Có một tài liệu gốc để kiểm tra",
+      "narration": "Thử một tình huống minh họa. Thông báo ghi cuộc họp lúc chín giờ, dành cho nhóm thiết kế. Tài liệu chưa nói địa điểm.",
+      "labels": [
+        "Minh họa"
+      ],
+      "carry": "Tài liệu gốc",
+      "guidedNarration": "Thử một tình huống minh họa. Thông báo ghi cuộc họp lúc chín giờ, dành cho nhóm thiết kế. Tài liệu chưa nói địa điểm. Chúng ta giữ nguyên thông báo để có chỗ đối chiếu."
+    },
+    {
+      "id": "e01-b08",
+      "budgetStart": 70,
+      "budgetEnd": 80,
+      "initial": "Tờ thông báo",
+      "action": "Vẽ bản tóm tắt bên cạnh; mang hai biểu tượng sang",
+      "result": "Hai thông tin có đối chiếu",
+      "narration": "Bản tóm tắt giữ đúng giờ họp và đúng nhóm tham gia. Ta tìm được cả hai chi tiết trong thông báo ban đầu.",
+      "labels": [
+        "9 giờ"
+      ],
+      "carry": "Hai bản tài liệu",
+      "guidedNarration": "Bản tóm tắt giữ đúng giờ họp và đúng nhóm tham gia. Ta tìm được cả hai chi tiết trong thông báo ban đầu. Hai đường nối này cho thấy đúng nơi thông tin xuất phát."
+    },
+    {
+      "id": "e01-b09",
+      "budgetStart": 80,
+      "budgetEnd": 90,
+      "initial": "Bản tóm tắt có hai biểu tượng",
+      "action": "Vẽ thêm cánh cửa với số 302 trên bản tóm tắt",
+      "result": "Xuất hiện chi tiết được tự thêm",
+      "narration": "Nhưng bản tóm tắt còn thêm phòng ba trăm linh hai. Chi tiết nghe rất cụ thể, nhưng cụ thể không có nghĩa là đúng.",
+      "labels": [
+        "Phòng 302"
+      ],
+      "carry": "Cánh cửa 302",
+      "guidedNarration": "Nhưng bản tóm tắt còn thêm phòng ba trăm linh hai. Chi tiết nghe rất cụ thể, nhưng cụ thể không có nghĩa là đúng. Ta khoan mang chi tiết mới này vào kế hoạch thực tế."
+    },
+    {
+      "id": "e01-b10",
+      "budgetStart": 90,
+      "budgetEnd": 98,
+      "initial": "Hai bản tài liệu",
+      "action": "Dùng kính lúp đi từ cửa 302 trở lại tài liệu gốc",
+      "result": "Không tìm được chi tiết tương ứng",
+      "narration": "Tìm lại trong thông báo: không có số phòng này. Đây là phần chưa có căn cứ trong tài liệu, dù cả câu vẫn đọc rất tự nhiên.",
+      "labels": [],
+      "carry": "Kính lúp, nguồn",
+      "guidedNarration": "Tìm lại trong thông báo: không có số phòng này. Đây là phần chưa có căn cứ trong tài liệu, dù cả câu vẫn đọc rất tự nhiên. Đọc lại đoạn gốc quan trọng hơn vẻ chắc chắn của câu văn."
+    },
+    {
+      "id": "e01-b11",
+      "budgetStart": 98,
+      "budgetEnd": 105,
+      "initial": "Cánh cửa 302",
+      "action": "Nối cửa với nhịp cầu thiếu trụ",
+      "result": "Người xem nối ví dụ với phép ví von",
+      "narration": "Nhịp cầu này đang thiếu trụ đỡ. Lỗi ta vừa thấy là tự thêm một dữ kiện không được nguồn đang dùng hỗ trợ.",
+      "labels": [],
+      "carry": "Nhịp cầu thiếu trụ",
+      "guidedNarration": "Nhịp cầu này đang thiếu trụ đỡ. Lỗi ta vừa thấy là tự thêm một dữ kiện không được nguồn đang dùng hỗ trợ. Chỗ trống nhắc ta kiểm tra, chưa đủ để tự kết luận."
+    },
+    {
+      "id": "e01-b12",
+      "budgetStart": 105,
+      "budgetEnd": 115,
+      "initial": "Nhân vật chuẩn bị bước",
+      "action": "Đưa tay dừng lại; đặt tóm tắt cạnh thông báo",
+      "result": "Chuyển từ tin ngay sang kiểm tra",
+      "narration": "Không cần đoán AI có tự tin đến đâu. Việc hữu ích hơn là kiểm tra chi tiết nào bạn sắp dựa vào để hành động.",
+      "labels": [
+        "Kiểm tra"
+      ],
+      "carry": "Nhân vật, hai bản",
+      "guidedNarration": "Không cần đoán AI có tự tin đến đâu. Việc hữu ích hơn là kiểm tra chi tiết nào bạn sắp dựa vào để hành động. Bắt đầu từ thời gian, địa điểm hoặc người sẽ nhận việc."
+    },
+    {
+      "id": "e01-b13",
+      "budgetStart": 115,
+      "budgetEnd": 125,
+      "initial": "Hai biểu tượng giờ và nhóm",
+      "action": "Vẽ đường nối từng biểu tượng về đúng chỗ trong nguồn",
+      "result": "Hai trụ có căn cứ được tô teal",
+      "narration": "Đối chiếu từng ý quan trọng với nguồn gốc. Nếu có dẫn nguồn, hãy mở và đọc đúng đoạn liên quan, không chỉ nhìn thấy một đường dẫn.",
+      "labels": [
+        "Nguồn"
+      ],
+      "carry": "Hai trụ đã kiểm tra",
+      "guidedNarration": "Đối chiếu từng ý quan trọng với nguồn gốc. Nếu có dẫn nguồn, hãy mở và đọc đúng đoạn liên quan, không chỉ nhìn thấy một đường dẫn. Nguồn phải thực sự nói điều mà câu trả lời đang khẳng định."
+    },
+    {
+      "id": "e01-b14",
+      "budgetStart": 125,
+      "budgetEnd": 135,
+      "initial": "Cửa 302 không có đường nối",
+      "action": "Xóa nét số phòng, giữ ô địa điểm với dấu hỏi",
+      "result": "Bỏ sự chắc chắn không được hỗ trợ",
+      "narration": "Với địa điểm chưa có thông tin, bỏ số phòng được thêm vào. Ghi rõ chưa xác định, rồi hỏi người tổ chức để có câu trả lời.",
+      "labels": [
+        "Chưa rõ"
+      ],
+      "carry": "Ô địa điểm trống",
+      "guidedNarration": "Với địa điểm chưa có thông tin, bỏ số phòng được thêm vào. Ghi rõ chưa xác định, rồi hỏi người tổ chức để có câu trả lời. Giữ dấu hỏi giúp người đọc nhận biết phần cần bổ sung."
+    },
+    {
+      "id": "e01-b15",
+      "budgetStart": 135,
+      "budgetEnd": 145,
+      "initial": "Bản tóm tắt đã sửa",
+      "action": "Giữ hai thông tin đã đối chiếu, đưa dấu hỏi sang vùng chờ",
+      "result": "Kết quả ngắn và trung thực hơn",
+      "narration": "Yêu cầu AI chỉ dùng tài liệu được cung cấp và chỉ ra phần còn thiếu có thể giúp ích. Tuy vậy, bạn vẫn cần kiểm tra kết quả.",
+      "labels": [],
+      "carry": "Bản tóm tắt đã sửa",
+      "guidedNarration": "Yêu cầu AI chỉ dùng tài liệu được cung cấp và chỉ ra phần còn thiếu có thể giúp ích. Tuy vậy, bạn vẫn cần kiểm tra kết quả. Một câu lệnh tốt vẫn cần đi cùng thao tác kiểm tra."
+    },
+    {
+      "id": "e01-b16",
+      "budgetStart": 145,
+      "budgetEnd": 153,
+      "initial": "Cầu với hai trụ rõ và nhịp chưa dùng",
+      "action": "Nhân vật chỉ vào phần chưa hoàn thành; không bước qua",
+      "result": "Giữ ranh giới điều biết và chưa biết",
+      "narration": "Chưa có bằng chứng thì chưa dùng chi tiết đó làm căn cứ. Ta để khoảng trống rõ ràng, thay vì trang trí cho nó giống một phần đã chắc chắn.",
+      "labels": [],
+      "carry": "Cầu",
+      "guidedNarration": "Chưa có bằng chứng thì chưa dùng chi tiết đó làm căn cứ. Ta để khoảng trống rõ ràng, thay vì trang trí cho nó giống một phần đã chắc chắn. Cây cầu chỉ là ví von để nhớ mối quan hệ này."
+    },
+    {
+      "id": "e01-b17",
+      "budgetStart": 153,
+      "budgetEnd": 161,
+      "initial": "Tờ nguồn mới",
+      "action": "Vẽ đồng hồ 9 giờ, rồi thêm thời lượng 30 phút chỉ ở bản tóm tắt",
+      "result": "Câu hỏi kiểm tra chuyển giao",
+      "narration": "Đến lượt bạn: nguồn chỉ ghi bắt đầu lúc chín giờ. Bản tóm tắt nói cuộc họp kéo dài ba mươi phút. Chi tiết nào cần kiểm tra thêm?",
+      "labels": [
+        "30 phút?"
+      ],
+      "carry": "Hai chiếc đồng hồ",
+      "guidedNarration": "Đến lượt bạn: nguồn chỉ ghi bắt đầu lúc chín giờ. Bản tóm tắt nói cuộc họp kéo dài ba mươi phút. Chi tiết nào cần kiểm tra thêm? Hãy đối chiếu từng biểu tượng trước khi xem đáp án xuất hiện."
+    },
+    {
+      "id": "e01-b18",
+      "budgetStart": 161,
+      "budgetEnd": 170,
+      "initial": "Hai chiếc đồng hồ",
+      "action": "Cho người xem quan sát, sau đó khoanh thời lượng thêm vào",
+      "result": "Người xem nhận ra dữ kiện chưa được hỗ trợ",
+      "narration": "Giờ bắt đầu có trong nguồn. Thời lượng chưa có. Chưa thể kết luận cuộc họp dài bao lâu chỉ từ giờ bắt đầu của nó.",
+      "labels": [
+        "Chưa rõ"
+      ],
+      "carry": "Kết quả đối chiếu",
+      "guidedNarration": "Giờ bắt đầu có trong nguồn. Thời lượng chưa có. Chưa thể kết luận cuộc họp dài bao lâu chỉ từ giờ bắt đầu của nó. Giờ bắt đầu không tự cho biết lúc cuộc họp kết thúc."
+    },
+    {
+      "id": "e01-b19",
+      "budgetStart": 170,
+      "budgetEnd": 175,
+      "initial": "Ví dụ nhỏ và cây cầu",
+      "action": "Thu ví dụ thành một thẻ căn cứ đặt cạnh cầu",
+      "result": "Ghi nhớ thao tác kiểm tra cụ thể",
+      "narration": "Trước khi gửi, chọn một chi tiết quan trọng. Tìm đúng căn cứ của nó.",
+      "labels": [],
+      "carry": "Cầu và căn cứ",
+      "guidedNarration": "Trước khi gửi, chọn một chi tiết quan trọng. Tìm đúng căn cứ của nó. Thói quen kiểm tra nhỏ giúp tránh dùng một chi tiết chưa chắc."
+    },
+    {
+      "id": "e01-b20",
+      "budgetStart": 175,
+      "budgetEnd": 180,
+      "initial": "Toàn cảnh cầu",
+      "action": "Nhấn hai trụ có căn cứ và khoảng chưa xác định",
+      "result": "Kết thúc bằng hình có thể nhớ lại",
+      "narration": "Hợp lý chưa chắc có căn cứ. Đừng chỉ nhìn mặt cầu. Hãy nhìn những gì đang đỡ nó.",
+      "labels": [
+        "Có căn cứ?"
+      ],
+      "carry": "Hình kết",
+      "guidedNarration": "Hợp lý chưa chắc có căn cứ. Đừng chỉ nhìn mặt cầu. Hãy nhìn những gì đang đỡ nó. Những căn cứ rõ ràng mới giúp chúng ta quyết định bước tiếp."
+    }
+  ]
+}
