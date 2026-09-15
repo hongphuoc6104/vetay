@@ -31,11 +31,28 @@ def target(relative):
     if not p.is_relative_to(CACHE): raise ValueError('Path outside cache')
     return p
 
+def quickdraw(entry, dest):
+    # Read only a bounded prefix; preserve all stroke points and their ordering.
+    part = dest.with_name(dest.name+'.part')
+    rows=[]; consumed=0
+    with request(entry['url']) as r:
+        while len(rows)<entry.get('count',20):
+            line=r.readline(1_000_001); consumed+=len(line)
+            if not line or len(line)>1_000_000 or consumed>4_000_000:
+                raise RuntimeError('Quick Draw prefix insufficient or oversized')
+            row=json.loads(line)
+            if row.get('recognized') and row.get('drawing'): rows.append(row)
+    data=''.join(json.dumps(x,separators=(',',':'),ensure_ascii=False)+'\n' for x in rows).encode()
+    budget(len(data)); part.write_bytes(data)
+    if entry.get('sha256') and sha(part)!=entry['sha256']: raise RuntimeError('Quick Draw sample changed')
+    part.rename(dest); return dest
+
 def download(entry):
     dest = target(entry['file']); dest.parent.mkdir(parents=True,exist_ok=True)
     if dest.exists():
         if entry.get('sha256') and sha(dest) != entry['sha256']: raise RuntimeError(f'Checksum mismatch: {dest}')
         return dest
+    if entry.get('kind') == 'quickdraw-prefix': return quickdraw(entry, dest)
     part=dest.with_name(dest.name+'.part')
     maximum=entry.get('max_download_bytes',1_000_000_000)
     for attempt in range(4):
