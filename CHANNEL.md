@@ -24,4 +24,4 @@ Hoàn thành shadow-key còn dở để nghiệm thu quy trình, nhưng không c
 
 Thêm channel, content_type, truth_status, character bible và continuity checks vào gói. Hỗ trợ tái sử dụng nhân vật mà không ép mọi tập vào cùng cảnh. Validator yêu cầu nguồn khi chọn chuyện thật/sự thật và yêu cầu nhãn hư cấu khi phù hợp. Kiểm chứng agent khác nhận gói đời sống và hoàn thành video mà không đọc lịch sử trò chuyện.
 
-Chỉ chia sẻ commit công cụ từ lab/video-workflow; quy tắc kể chuyện và tài nguyên riêng thuộc nhánh này.
+Chỉ chia sẻ commit công cụ từ main; quy tắc kể chuyện và tài nguyên riêng thuộc nhánh này.

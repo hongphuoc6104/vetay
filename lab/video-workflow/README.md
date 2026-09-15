@@ -1,6 +1,6 @@
 # Quy trình video hai bước
 
-Agent mới bắt đầu ở đây. Quy trình này nhận một đề tài mới, không yêu cầu đọc lịch sử trò chuyện. Hai mẫu trong `../visual-proof` chỉ là tham khảo thẩm mỹ, không phải khuôn cảnh.
+Agent mới bắt đầu ở đây. Quy trình này nhận một đề tài mới, không yêu cầu đọc lịch sử trò chuyện. Hai tập shadow-key và speaker là ví dụ tái tạo, không phải khuôn cảnh bắt buộc.
 
 ## 1. Chuẩn bị
 

@@ -8,4 +8,4 @@ Các khung preview có giọng đã được xem. Chưa nghe toàn bộ hoặc x
 
 Hồ sơ riêng của hai kênh có validator và mẫu khai báo. Những gói kỹ thuật cũ giữ tương thích. Hai tập kỹ thuật chưa thay thế vòng nội dung đời sống/paper-review; công việc đó được ghi trong NEXT-AGENT.md.
 
-Nhánh nền lab/video-workflow quản lý công cụ chung; hai nhánh channel/science và channel/storytelling kế thừa thay đổi công cụ, giữ CHANNEL.md riêng. Không commit dữ liệu lớn, giữ cache dưới 30 GB và dự trữ 20 GB trống.
+Nhánh nền main quản lý công cụ chung; hai nhánh channel/science và channel/storytelling kế thừa thay đổi công cụ, giữ CHANNEL.md riêng. Không commit dữ liệu lớn, giữ cache dưới 30 GB và dự trữ 20 GB trống.
