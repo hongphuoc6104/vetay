@@ -1,29 +1,14 @@
-# Phòng thử nghiệm video
+# Video Lab — nhánh nền
 
-Nền tảng: `ve-tay-thuan` tại `4d8f08a`. Nhánh gốc không bị chỉnh sửa.
-
-## Dữ liệu dùng chung
-
-Mặc định `../video-lab-cache`; có thể đổi bằng `VIDEO_LAB_CACHE`.
-Giới hạn 30 GB cho tải, giải nén, môi trường, cache và đầu ra mới.
-Chỉ chạy một tác vụ cài đặt/tải/render mỗi lần. Không tải trọng số AI lớn.
+Đọc [báo cáo bàn giao](REPORT.md) để chọn nhánh và xem kết quả thực tế.
 
 ```sh
-python3 lab/assets.py fetch
-python3 lab/assets.py verify
 python3 lab/assets.py inventory
+python3 lab/assets.py verify
+python3 lab/assets.py fetch --manifest lab/catalog/vector-story.json
+python3 -m unittest discover -s lab -p 'test_*.py'
 ```
 
-Mỗi nhánh thử có `sources.lock.json`, mẫu và hướng dẫn riêng. Bộ tải khóa
-SHA-256, tiếp tục tải dở khi máy chủ hỗ trợ Range, kiểm tra dung lượng,
-chặn đường dẫn giải nén ra ngoài kho và giữ giấy phép nguồn.
-Repo GitHub chỉ chứa mã, khóa nguồn, mẫu nhỏ và giấy phép.
-
-## Nhánh dự kiến
-
-`lab/vector-story`, `lab/sketch-story`, `lab/kenney-story`, `lab/quickdraw`,
-`lab/motion-canvas`, `lab/remotion`, `lab/animated-drawings`, `lab/generative-ai`.
-
-unDraw và iconfont chỉ tham khảo; không tải hàng loạt/đóng gói lại vì phạm vi
-quyền tích hợp và phân phối chưa được xác minh. Không coi logo trong một bộ
-icon là quyền dùng nhãn hiệu tự do.
+`sources.lock.json` tổng hợp các nguồn đã tải. `catalog/` tách từng hướng.
+Mọi lượt tải dùng kho chung `../video-lab-cache`, giới hạn 30 GB và giữ lại 20 GB trống.
+Tải tuần tự; không đặt cache vào kho Git. Các nhánh thử có mẫu và hướng dẫn riêng.

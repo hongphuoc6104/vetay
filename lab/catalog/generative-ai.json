@@ -1,0 +1,36 @@
+{
+  "assets": [
+    {
+      "id": "qwen-image",
+      "url": "https://codeload.github.com/QwenLM/Qwen-Image/zip/6b5e1f5cec987d404be5ac6657db3b9aacb56a89",
+      "file": "archives/qwen-image-6b5e1f5cec987d404be5ac6657db3b9aacb56a89.zip",
+      "extract_to": "sources/qwen-image",
+      "source": "https://github.com/QwenLM/Qwen-Image",
+      "revision": "6b5e1f5cec987d404be5ac6657db3b9aacb56a89",
+      "license": "Apache-2.0",
+      "license_url": "https://github.com/QwenLM/Qwen-Image/blob/6b5e1f5cec987d404be5ac6657db3b9aacb56a89/LICENSE",
+      "max_download_bytes": 1000000000,
+      "upstream_git_size_kib": 17913,
+      "sha256": "c6574f8e53d0f7ce9afff1400d3f1c22f20aeb6e3314e9dca5c1725a2be2d0f0",
+      "download_bytes": 9849879,
+      "expanded_bytes": 9951200,
+      "status": "downloaded"
+    },
+    {
+      "id": "wan2.2",
+      "url": "https://codeload.github.com/Wan-Video/Wan2.2/zip/42bf4cfaa384bc21833865abc2f9e6c0e67233dc",
+      "file": "archives/wan2.2-42bf4cfaa384bc21833865abc2f9e6c0e67233dc.zip",
+      "extract_to": "sources/wan2.2",
+      "source": "https://github.com/Wan-Video/Wan2.2",
+      "revision": "42bf4cfaa384bc21833865abc2f9e6c0e67233dc",
+      "license": "Apache-2.0",
+      "license_url": "https://github.com/Wan-Video/Wan2.2/blob/42bf4cfaa384bc21833865abc2f9e6c0e67233dc/LICENSE.txt",
+      "max_download_bytes": 1000000000,
+      "upstream_git_size_kib": 8209,
+      "sha256": "f5ed39d28a2b7c54971e6be023ad435bd541da5c24df02f76d4cec820b58e669",
+      "download_bytes": 8522342,
+      "expanded_bytes": 9594953,
+      "status": "downloaded"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "assets": [
+    {
+      "id": "remotion",
+      "url": "https://codeload.github.com/remotion-dev/remotion/zip/74ca07218695f3ba73cf44cbc207ccb1f6168c18",
+      "file": "archives/remotion-74ca07218695f3ba73cf44cbc207ccb1f6168c18.zip",
+      "extract_to": "sources/remotion",
+      "source": "https://github.com/remotion-dev/remotion",
+      "revision": "74ca07218695f3ba73cf44cbc207ccb1f6168c18",
+      "license": "Remotion custom license",
+      "license_url": "https://github.com/remotion-dev/remotion/blob/74ca07218695f3ba73cf44cbc207ccb1f6168c18/LICENSE.md",
+      "max_download_bytes": 1000000000,
+      "upstream_git_size_kib": 4224656,
+      "sha256": "218fff6472778b92622bc45c418e74a08bd124965324b7cbc618655fe9ac9962",
+      "download_bytes": 554561690,
+      "expanded_bytes": 755613881,
+      "status": "downloaded",
+      "skip_symlinks": true,
+      "excluded": "25 convenience skill symlinks; regular source files retained"
+    }
+  ]
+}

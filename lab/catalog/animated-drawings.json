@@ -1,0 +1,20 @@
+{
+  "assets": [
+    {
+      "id": "animateddrawings",
+      "url": "https://codeload.github.com/facebookresearch/AnimatedDrawings/zip/b859684857519c7424da51a0b0862fbd1fd258f4",
+      "file": "archives/animateddrawings-b859684857519c7424da51a0b0862fbd1fd258f4.zip",
+      "extract_to": "sources/animateddrawings",
+      "source": "https://github.com/facebookresearch/AnimatedDrawings",
+      "revision": "b859684857519c7424da51a0b0862fbd1fd258f4",
+      "license": "MIT",
+      "license_url": "https://github.com/facebookresearch/AnimatedDrawings/blob/b859684857519c7424da51a0b0862fbd1fd258f4/LICENSE",
+      "max_download_bytes": 1000000000,
+      "upstream_git_size_kib": 112956,
+      "sha256": "de87d9d7aadc8b580569af02560cb156fe5b3a24973b1bbedabfce014ccc9c3e",
+      "download_bytes": 71463194,
+      "expanded_bytes": 76313671,
+      "status": "downloaded"
+    }
+  ]
+}
