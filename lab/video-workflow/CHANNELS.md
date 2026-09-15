@@ -51,3 +51,7 @@ Kiểm tra kỹ thuật, khung hình, xem toàn bộ và nghe toàn bộ là b�
 ## Phản hồi giọng và lưu quyết định
 
 Ghi voice_status trong channel.json và nhận xét ở tài liệu voice của kênh. Phân biệt thích chất giọng với đã duyệt cách đọc cả tập. Không dùng lại preset bị người dùng loại như lựa chọn cuối. refine_voices.py tạo mẫu theo phản hồi (khoa học Phạm Tuyên, kể chuyện thử Đức Trí/Thái Sơn) ở cache/video-workflow/voice-refinement/. Cấu hình hiện tại không cung cấp nút điều khiển cảm xúc chính xác; style của v3turbo chỉ là metadata bị bỏ qua.
+
+## Quyết định đã chốt sau pilot
+
+Người dùng xác nhận cả hai video ổn và chốt hai giọng: science = Phạm Tuyên, storytelling = Đức Trí. Giữ speed 1.0, temperature 0.7, version 3. Các mẫu audition chỉ còn để tham khảo lịch sử, không phải công việc cần người dùng duyệt lại. Các ghi chú pending trước quyết định này đã hết hiệu lực về lựa chọn giọng. Điều chỉnh câu chữ và khoảng nghỉ theo tập; không tự đổi người kể. Duyệt của người dùng không đổi trạng thái kiểm tra nghe/xem do agent thực hiện.
