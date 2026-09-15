@@ -1,0 +1,66 @@
+{
+  "id": "shadow-key",
+  "title": "Chiếc bóng nhanh hơn tôi",
+  "domain": "story",
+  "audience": "Người xem phổ thông từ khoảng 15 tuổi",
+  "language": "vi",
+  "duration": 24,
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "status": "draft",
+  "scenes": [
+    {
+      "id": "drop",
+      "text": "Tối đó, tôi đánh rơi chiếc chìa khóa.",
+      "seconds": 4,
+      "action": "Chìa khóa rơi vào vùng sáng; nhân vật nhìn xuống.",
+      "camera": "Toàn cảnh hẻm, chìa khóa màu vàng là điểm nhìn."
+    },
+    {
+      "id": "reach",
+      "text": "Tôi chưa cúi xuống… bóng tôi đã đưa tay.",
+      "seconds": 6,
+      "action": "Bóng kéo dài cánh tay về phía khóa trong khi chủ nhân đứng yên.",
+      "camera": "Tiến gần bàn tay bóng và chiếc khóa."
+    },
+    {
+      "id": "lift",
+      "text": "Nó nhặt chiếc khóa lên trước tôi.",
+      "seconds": 5,
+      "action": "Bàn tay bóng nắm khóa thật và nâng lên; bóng khóa trên nền đồng bộ.",
+      "camera": "Giữ tay, khóa và người cùng khung."
+    },
+    {
+      "id": "wait",
+      "text": "Rồi nó đứng chờ, như thể tôi mới là cái bóng.",
+      "seconds": 5,
+      "action": "Người ngả đầu kinh ngạc; bóng giữ chìa khóa cao, chủ nhân không chuyển động theo.",
+      "camera": "Lùi để thấy hai tư thế độc lập."
+    },
+    {
+      "id": "end",
+      "text": "",
+      "seconds": 4,
+      "action": "Bóng lắc chìa khóa một lần; giữ hình rồi tối dần.",
+      "camera": "Khung kết thúc thấy rõ bàn tay bóng sở hữu khóa."
+    }
+  ],
+  "assets": [
+    {
+      "path": "scene.tsx",
+      "source": "original",
+      "license": "original project artwork"
+    }
+  ],
+  "sources": [],
+  "effects": [
+    {
+      "scene": "lift",
+      "offset": 0.2,
+      "frequency": 1200,
+      "duration": 0.13,
+      "gain": 0.04
+    }
+  ]
+}

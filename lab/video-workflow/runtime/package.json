@@ -1,0 +1,16 @@
+{
+  "name": "video-lab-motion-canvas",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vite build",
+    "dev": "vite --host 127.0.0.1"
+  },
+  "dependencies": {
+    "@motion-canvas/core": "3.17.2",
+    "@motion-canvas/2d": "3.17.2",
+    "@motion-canvas/vite-plugin": "3.17.2",
+    "vite": "5.4.21",
+    "@motion-canvas/ui": "3.17.2"
+  }
+}

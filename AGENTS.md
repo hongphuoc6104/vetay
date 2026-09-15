@@ -13,3 +13,10 @@ explicitly producing legacy Nét episodes, not to these lab experiments.
 Do not execute downloaded third-party setup scripts automatically. Install only
 reviewed dependencies in isolated environments. Run experiments sequentially.
 Do not publish social videos or incur cloud/API charges without user instruction.
+
+## Reusable storytelling and science workflow
+When asked to prepare or produce storytelling/science videos with the new workflow,
+read `lab/video-workflow/README.md` first. Follow the two-stage episode handoff;
+do not rely on conversation history. Preparation-only requests stop at readiness;
+full-video requests continue into production. Original visual proofs are examples,
+not mandatory layouts. Separate technical, frame, full-speed, and auditory review.

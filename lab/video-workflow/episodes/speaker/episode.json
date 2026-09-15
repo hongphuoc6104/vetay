@@ -1,0 +1,75 @@
+{
+  "id": "speaker",
+  "title": "Âm thanh đi, không khí ở lại",
+  "domain": "science",
+  "audience": "Người xem phổ thông từ khoảng 15 tuổi",
+  "language": "vi",
+  "duration": 24,
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "status": "draft",
+  "scenes": [
+    {
+      "id": "source",
+      "text": "Màng loa rung. Nhưng không khí có bay đến tai bạn không?",
+      "seconds": 5,
+      "action": "Màng loa chuyển động tới lui, camera hé lộ không khí.",
+      "camera": "Mặt cắt loa trái, không khí phải."
+    },
+    {
+      "id": "compress",
+      "text": "Màng loa đẩy tới, tạo vùng khí nén.",
+      "seconds": 5,
+      "action": "Mật độ hạt tăng thành dải nén chuyển sang phải.",
+      "camera": "Toàn mô hình, highlight vùng nén."
+    },
+    {
+      "id": "rare",
+      "text": "Lùi lại, nó tạo vùng khí giãn.",
+      "seconds": 4,
+      "action": "Dải thưa theo sau dải dày; màng tiếp tục dao động.",
+      "camera": "Giữ mô hình để so sánh mật độ."
+    },
+    {
+      "id": "particle",
+      "text": "Mỗi phần tử chỉ dao động quanh vị trí cân bằng.",
+      "seconds": 6,
+      "action": "Một hạt vàng có vòng cân bằng cố định; hạt rung ngang trong vùng nhỏ.",
+      "camera": "Chi tiết hạt vàng, các hạt khác giảm độ sáng."
+    },
+    {
+      "id": "wave",
+      "text": "Sự dao động truyền đi, mang năng lượng âm thanh.",
+      "seconds": 4,
+      "action": "Mũi tên truyền sóng chạy sang phải; hạt vàng vẫn dao động tại chỗ.",
+      "camera": "Toàn mô hình kết luận."
+    }
+  ],
+  "assets": [
+    {
+      "path": "scene.tsx",
+      "source": "original",
+      "license": "original project artwork"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.physicsclassroom.com/class/sound/u11l1c.cfm",
+      "claim": "Âm thanh là dao động áp suất; phần tử môi trường chuyển động tới lui."
+    },
+    {
+      "url": "https://www.physicsclassroom.com/Class/sound/u11l1a.cfm",
+      "claim": "Dao động lân cận truyền năng lượng; phần tử bị dịch khỏi vị trí cân bằng rồi dao động."
+    }
+  ],
+  "effects": [
+    {
+      "scene": "source",
+      "offset": 0.15,
+      "frequency": 220,
+      "duration": 0.2,
+      "gain": 0.025
+    }
+  ]
+}
